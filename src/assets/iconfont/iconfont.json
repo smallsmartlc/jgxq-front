@@ -1,0 +1,86 @@
+{
+  "id": "2289111",
+  "name": "经管雄起",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4482839",
+      "name": "助攻",
+      "font_class": "zhugong",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "13644934",
+      "name": "红牌",
+      "font_class": "red-card",
+      "unicode": "e6bb",
+      "unicode_decimal": 59067
+    },
+    {
+      "icon_id": "10204026",
+      "name": "足球",
+      "font_class": "zuqiu",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "8709772",
+      "name": "bilibili",
+      "font_class": "bilibili",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "3277672",
+      "name": "空间",
+      "font_class": "kongjian",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "14729441",
+      "name": "微博",
+      "font_class": "weibo",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "15107756",
+      "name": "微信",
+      "font_class": "weixin1",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "15953978",
+      "name": "qq",
+      "font_class": "qq",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "15998380",
+      "name": "QQ",
+      "font_class": "QQ",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "18591211",
+      "name": "邮箱",
+      "font_class": "youxiang",
+      "unicode": "e670",
+      "unicode_decimal": 58992
+    },
+    {
+      "icon_id": "18739471",
+      "name": "赞",
+      "font_class": "zan",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    }
+  ]
+}
