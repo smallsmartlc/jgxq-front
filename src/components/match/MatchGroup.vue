@@ -7,7 +7,7 @@
             </div>
             <ul>
                 <li style="padding:2px" :style="{'background-color':index%2==0?'#fff':'#f7f7f7'}" v-for="(item,index) in matchlist.matchlist" :key="item.id">
-                    <router-link replace :to="'/match/'+item.id">
+                    <router-link :to="'/match/'+item.id">
                     <match-bigbox :match="item"  style="width:100%;height:60px"></match-bigbox>
                     </router-link>
                 </li>

@@ -11,7 +11,7 @@
       </div>
       <div>
         <div v-for="item in comments" :key="item.id" style="width:100%">
-            <comment-box :comment="item" :user="user"/>
+            <comment-box @delete="deleteComment(item.id)" :objType="0" :comment="item" :user="user"/>
         </div>
       </div>
       <div class="loadmore">
@@ -23,7 +23,7 @@
 
 <script>
 import {pageComment} from '@/api/news'
-import {commentObj} from '@/api/hit'
+import {commentObj} from '@/api/comment'
 import CommentBox from '../common/CommentBox.vue'
 export default {
     components: { CommentBox },
@@ -51,7 +51,7 @@ export default {
                 var temp = res.data.records;
                 this.total = res.data.total
                 this.comments = this.comments.concat(temp);
-            }
+                }else this.cur--;
             })
         },
         commentNews(){
@@ -66,7 +66,7 @@ export default {
             commentObj(commentReq).then((res)=>{
                 if(res.code == 200){
                     var temp = {
-                        id : res.data.id,
+                        id : res.data,
                         userkey : this.user,
                         "hits": {
                             "thumbs": 0,
@@ -77,9 +77,18 @@ export default {
                         "createAt" : new Date(),
                     }
                     this.content = "";
+                    this.$message({
+                        message: '评论成功',
+                        type: 'success'
+                    });
                     this.comments.unshift(temp);
+                    this.total++;
                 }
             })
+        },
+        deleteComment(id){
+            this.comments = this.comments.filter(c=>c.id!=id)
+            this.total--;
         }
     },
 }

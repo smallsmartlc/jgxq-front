@@ -11,7 +11,7 @@
         </div>
         <ul>
             <li style="padding:2px" v-for="item in matchlist.matchlist" :key="item.id">
-                <router-link replace :to="'/match/'+item.id">
+                <router-link :to="'/match/'+item.id">
                 <match-box-basic :match="item"  style="width:100%;height:60px" ></match-box-basic>
                 </router-link>
             </li>
@@ -25,130 +25,30 @@
 </template>
 
 <script>
+import {pageMatches} from '@/api/match'
 import MatchBoxBasic from '../common/MatchBoxBasic.vue';
 import PageLoading from '../common/PageLoading.vue';
 import NoMore from '../common/NoMore.vue';
 export default {
     components : {MatchBoxBasic,PageLoading,NoMore},
+    mounted() {
+        this.load();
+    },
     data() {
         return {
-          count: 2,
+          cur: 0,
+          pageSize:10,
+          total:1,
           loading: false,
-          matches:[{
-              "id": 6,
-              "title": "邮超联赛38轮",
-              "homeTeam": {
-                  "id": 1,
-                  "name": "重邮经管足球队",
-                  "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-              },
-              "homeScore": 3,
-              "visitingTeam": {
-                  "id": 5,
-                  "name": "莫斯科中央陆军",
-                  "logo": "images/jgxq/headimg/2cbb204cfc7e40178f81931859510c07.jpg"
-              },
-              "visitingScore": 99,
-              "startTime": "2020-12-24T12:00:00.000+00:00",
-              "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-          },
-          {
-              "id": 5,
-              "title": "友谊赛",
-              "homeTeam": {
-                  "id": 1,
-                  "name": "重邮经管",
-                  "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-              },
-              "homeScore": 1,
-              "visitingTeam": {
-                  "id": 5,
-                  "name": "好球队",
-                  "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-              },
-              "visitingScore": 0,
-              "startTime": "2020-12-23T04:00:09.000+00:00",
-              "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-          },
-          {
-              "id": 16,
-              "title": "邮超联赛38轮",
-              "homeTeam": {
-                  "id": 1,
-                  "name": "重邮经管",
-                  "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-              },
-              "homeScore": 3,
-              "visitingTeam": {
-                  "id": 5,
-                  "name": "拜仁慕尼黑",
-                  "logo": "images/jgxq/headimg/2cbb204cfc7e40178f81931859510c07.jpg"
-              },
-              "visitingScore": 99,
-              "startTime": "2020-12-24T14:00:00.000+00:00",
-              "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-          },
-          {
-              "id": 15,
-              "title": "友谊赛",
-              "homeTeam": {
-                  "id": 1,
-                  "name": "重邮经管",
-                  "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-              },
-              "homeScore": 1,
-              "visitingTeam": {
-                  "id": 5,
-                  "name": "好球队",
-                  "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-              },
-              "visitingScore": 0,
-              "startTime": "2020-12-12T04:00:09.000+00:00",
-              "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-          },
-          {
-              "id": 26,
-              "title": "邮超联赛38轮",
-              "homeTeam": {
-                  "id": 1,
-                  "name": "重邮经管",
-                  "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-              },
-              "homeScore": 3,
-              "visitingTeam": {
-                  "id": 5,
-                  "name": "拜仁慕尼黑",
-                  "logo": "images/jgxq/headimg/2cbb204cfc7e40178f81931859510c07.jpg"
-              },
-              "visitingScore": 99,
-              "startTime": "2020-12-22T12:00:00.000+00:00",
-              "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-          },
-          {
-              "id": 25,
-              "title": "友谊赛",
-              "homeTeam": {
-                  "id": 1,
-                  "name": "重邮经管",
-                  "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-              },
-              "homeScore": 1,
-              "visitingTeam": {
-                  "id": 5,
-                  "name": "好球队",
-                  "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-              },
-              "visitingScore": 0,
-              "startTime": "2020-12-12T04:00:09.000+00:00",
-              "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-          }],
+          matches:[],
         }
     },
     props : {
+        homeTeam : Object,
     },
     computed: {
       noMore () {
-        return this.count>= 10
+        return this.matches.length >= this.total;
       },
       disabled () {
         return this.loading || this.noMore
@@ -192,12 +92,17 @@ export default {
     methods: {
       load () {
         this.loading = true
-        setTimeout(() => {
-          this.count += 2
-          //TODO 无限滚动逻辑
-          
-          this.loading = false
-        }, 2000)
+        this.cur++;
+        pageMatches({pageNum:this.cur,pageSize:this.pageSize,teamId:this.homeTeam.id,start : this.$moment(new Date - (1000*60*60*24*7)).format("YYYY/MM/DD HH:mm:ss")})
+        .then((res)=>{
+            if(res.code == 200){
+                var temp = res.data.records;
+                this.total = res.data.total;
+                this.matches = this.matches.concat(temp),
+                this.news = temp;
+            }else{this.cur--;}
+        })
+        this.loading = false
       }
     }
 }

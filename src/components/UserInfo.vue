@@ -1,7 +1,7 @@
 <template>
     <div class="userInfoBox">
         <div class="title">
-            <router-link replace to="/center">
+            <router-link to="/center">
                 <el-avatar :size="90" 
                     :src="'http://localhost:6800/images/'+user.userInfo.headImage" 
                     fit="cover"
@@ -19,25 +19,25 @@
         </div>
         <div class="info">
             <div style="display:flex">
-                <router-link replace to="/center/interact/issue">
+                <router-link to="/center/interact/issue">
                     <div class="info-num">
                         <div>{{user.talks}}</div>
                         <div class = "description">发表</div>
                     </div>
                 </router-link>
-                <router-link replace to="/center/interact/comment">
+                <router-link to="/center/interact/comment">
                     <div class="info-num">
                         <div>{{user.comments}}</div>
                         <div class = "description">评论</div>
                     </div>
                 </router-link>
-                <router-link replace to="/center/interact/focus">
+                <router-link to="/center/interact/focus">
                     <div class="info-num">
                         <div>{{user.focus}}</div>
                         <div class = "description">关注</div>
                     </div>
                 </router-link>
-                <router-link replace to="/center/interact/fans">
+                <router-link to="/center/interact/fans">
                     <div class="info-num">
                         <div>{{user.fans}}</div>
                         <div class = "description">粉丝</div>
@@ -46,7 +46,7 @@
             </div>
             <el-divider></el-divider>
             <div>
-                <router-link replace to="/center/message">
+                <router-link to="/center/message">
                 <el-dropdown-item >
                     <el-badge :is-dot="message" style="display:inline" class="icon_box">
                         <i class="el-icon-chat-line-round"></i>
@@ -54,17 +54,17 @@
                     <span>消息</span>
                 </el-dropdown-item>
                 </router-link>
-                <router-link replace to="/center/collect">
+                <router-link to="/center/collect">
                 <el-dropdown-item>
                     <span><i class="el-icon-star-off"></i>我的收藏</span>
                 </el-dropdown-item>
                 </router-link>
-                <router-link replace to="/center/info" >
+                <router-link to="/center/info" >
                 <el-dropdown-item>
                     <span><i class="el-icon-user"></i>个人资料</span>
                 </el-dropdown-item>
                 </router-link>
-                <router-link replace to="/center/author" >
+                <router-link to="/center/author" >
                 <el-dropdown-item>
                     <span><i class="el-icon-edit"></i>创作中心</span>
                 </el-dropdown-item>

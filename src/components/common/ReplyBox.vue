@@ -11,7 +11,7 @@
         <div class="name">
             <div style="display:flex;align-items:center">
                 <div style="font-weight:bold;font-size:20px">{{reply.userkey.nickName}}&nbsp;</div>
-                <el-image style="width:20px;height:20px;"
+                <el-image v-if="reply.userkey.homeTeam" style="width:20px;height:20px;"
                     :src="'http://localhost:6800/images/'+reply.userkey.homeTeam.logo"
                     fit="cover"/>
             </div>
@@ -22,7 +22,7 @@
         <div v-if="reply.reply!=null" style="background-color:#f2f2f2;width:100%;padding:10px;box-sizing:border-box">
             <div style="display:flex;align-items:center;margin-bottom:10px;">
                 <div style="">{{reply.reply.userkey.nickName}}&nbsp;</div>
-                <el-image style="width:20px;height:20px;"
+                <el-image v-if="reply.reply.userkey.homeTeam" style="width:20px;height:20px;"
                     :src="'http://localhost:6800/images/'+reply.reply.userkey.homeTeam.logo"
                     fit="cover"/>
             </div>
@@ -30,10 +30,14 @@
         </div>
         <div class="interact">
             <div style="display:flex;">
-                <div><el-link :underline="false" @click="thumb(reply)" :style="{'color':reply.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{reply.thumbs}}</div>
+                <div><el-link :underline="false" @click="thumb" :style="{'color':reply.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{reply.thumbs}}</div>
                 <div><el-link :underline="false" @click="doComment"><i class="el-icon-chat-dot-round"/></el-link></div>
             </div>
-            <div v-if="reply.userkey.userkey === user.userkey"><el-link :underline="false" @click="deleteTalk()"><i class="el-icon-delete"/></el-link></div>
+            <div v-if="reply.userkey.userkey === user.userkey">
+                <el-popconfirm cancel-button-type="warning" @confirm="deleteReply" title="确定要删除这条回复吗?">
+                    <el-link slot="reference" :underline="false"><i class="el-icon-delete"/></el-link>
+                </el-popconfirm>    
+            </div>
         </div>
         <div v-if="replyBox" class="reply">
             <el-input
@@ -49,24 +53,69 @@
 </template>
 
 <script>
+import {thumbById} from '@/api/hit'
+import {commentObj,deleteComment}  from '@/api/comment'
 export default {
 props:{
     reply : Object,
-    user : Object
+    user : Object,
+    commentId : Number,
+    objType : Number,
 },
 methods: {
-    thumb(hit){
-        hit.thumb=!hit.thumb;
+    thumb(){
+        thumbById(2,this.reply.id).then((res)=>{
+            if(res.code == 200){
+                if(res.data){
+                    this.reply.thumb = true;
+                    this.reply.thumbs++;
+                }else{
+                    this.$message({
+                        message: '您已经赞过了',
+                        type: 'warning'
+                    });
+                }
+            }
+        })
     },
     doComment(){
         this.replyBox = !this.replyBox;
     },
     submitComment(){
-        console.log(this.replytxt);
-        this.replytxt = "";
+        if(this.replytxt.length<1){
+                return;
+            }
+        var commentReq = {
+            type : this.objType,
+            objectId : this.$route.params.id,
+            content : this.replytxt,
+            parentId : this.commentId,
+            replyId : this.reply.id,
+        }
+        commentObj(commentReq).then((res)=>{
+            if(res.code == 200){
+                if(res.data){
+                    this.$message({
+                        message: '评论成功',
+                        type: 'success'
+                    });
+                    this.replytxt = ""
+                }
+            }
+        })
     },
-    deleteTalk(){
-        console.log("删除");
+    deleteReply(){
+        deleteComment(this.reply.id).then((res)=>{
+            if(res.code == 200){
+                if(res.data==true){
+                    this.$message({
+                        message: '已删除',
+                        type: 'success'
+                    });
+                    this.$emit('delete');
+                }
+            }
+        })
     }
 },
 data() {

@@ -1,7 +1,11 @@
 import request from '@/utils/request'
 
-export const commentObj = (commentReq)=> request({
+export const thumbById = (type,id)=>request({
     method: 'post',
-    url: `/comment`,
-    data :  commentReq
+    url: `/thumb/${type}/${id}`,
+});
+export const collectById = (type,id,collected)=>request({
+    method: 'post',
+    url: `/collect/${type}/${id}`,
+    params : {collected}
 })

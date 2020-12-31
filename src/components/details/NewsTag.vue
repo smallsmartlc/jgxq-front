@@ -23,7 +23,7 @@
       <div style="margin-top:40px">
           <diamond-title :dstyle="{'margin-bottom':'10px'}" dname="相关新闻"/>
           <div v-for="item in news" :key="item.id" style="background-color:#fff;padding:10px;border-bottom:1px solid #f2f2f2">
-            <el-link :underline="false">{{item.title}}</el-link>
+            <a :href="'/news/'+item.id"><el-link :underline="false">{{item.title}}</el-link></a>
           </div>
       </div>
   </div>

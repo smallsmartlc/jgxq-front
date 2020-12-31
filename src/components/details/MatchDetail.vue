@@ -36,7 +36,7 @@
                     <el-divider/>
                     <div>
                         <div v-if="match.matchNews" style="padding:10px">
-                        <router-link replace :to="'/news/'+match.matchNews.id">
+                        <router-link :to="'/news/'+match.matchNews.id">
                         <news-l-box :news='match.matchNews'  imgSize="80px" width="500px" />
                         </router-link>
                         </div>

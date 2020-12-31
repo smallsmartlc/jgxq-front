@@ -16,3 +16,10 @@ export const pageNewsByTag = (cur,pageSize,objectId,type) =>request({
         type
     }
 })
+export const homeNews = (size)=>request({
+    method : "get",
+    url: `news/home/top`,
+    params:{
+        size,
+    }
+})

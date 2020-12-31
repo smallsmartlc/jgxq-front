@@ -114,9 +114,12 @@ http.interceptors.response.use(
                         .join('.')
                     // setLocalCookieDomain(userTokenStorageKey, '', domain)
                     localStorage.clear()
+                    Message({
+                        message: '请先登陆再操作',
+                        type: 'warning'
+                    });
                     router.push('/login')
                 }
-                console.log(error.response)
                 // 400,500异常处理，统一提示错误消息
                 if (error.response.status === 500 || error.response.status === 400) {
                     Message({

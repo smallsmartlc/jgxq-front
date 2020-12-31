@@ -2,8 +2,8 @@
     <div>
       <el-row>
         <el-col :span="16">
-          <home-title/>
-          <home-news/>
+          <home-title :news="news"/>
+          <home-news :news="news"/>
         </el-col>
         <el-col :span="6" :offset="2" class = "hidden-md-and-down">
           <home-team/>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import {homeNews} from '@/api/news' 
   import HomeTitle from './home/HomeTitle.vue'
   import HomeTeam from './home/HomeTeam.vue'
   import HomeNews from './home/HomeNews.vue'
@@ -23,7 +24,7 @@ export default {
   name: 'JGHome',
   data () {
     return {
-      
+      news : []
     }
   },
   components : {
@@ -31,6 +32,21 @@ export default {
     HomeTeam,
     HomeNews,
     LastMatches
+  },
+  mounted(){
+    this.load();
+  },
+  methods: {
+    load () {
+      this.loading = true
+      homeNews(10).then((res)=>{
+        if(res.code == 200){
+          var temp = res.data;
+          this.news = temp;
+        }
+      })
+      this.loading = false
+    }
   }
 }
 </script>

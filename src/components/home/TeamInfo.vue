@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;width:100%;">
+  <div v-if="teamInfo" style="height:100%;width:100%;">
     <el-scrollbar style="height:100%;">
       <infos-box v-if="teamInfo.infos.normal" title = "基本信息" :items = 'teamInfo.infos.normal'></infos-box>
       <infos-box v-if="teamInfo.infos.contact" title = "联系方式" :items = 'teamInfo.infos.contact'></infos-box>
@@ -9,71 +9,32 @@
 </template>
 
 <script>
+import {getTeamById} from '@/api/team'
 import InfosBox from '../common/InfosBox'
 import ChampionBox from '../common/ChampionBox'
 export default {
     components : {InfosBox,ChampionBox},
+    mounted() {
+        this.load();
+    },
+    methods: {
+        load(){
+            getTeamById(this.homeTeam.id).then((res)=>{
+                if(res.code == 200){
+                    this.teamInfo = res.data;
+                }
+            })
+        }
+    },
     data() {
         return {
           count: 2,
           loading: false,
-          teamInfo : {
-          "id": 1,
-          "name": "重邮经管",
-          "enName": "JINGGUAN FC",
-          "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png",
-          "infos": {
-              "normal": [
-                  {
-                      "name": "成立时间",
-                      "value": "xxxx年"
-                  },
-                  {
-                      "name": "所在地区",
-                      "value": "中国 重庆"
-                  },
-                  {
-                      "name": "球队主场",
-                      "value": "风华体育场"
-                  }
-              ],
-              "contact": [
-                  {
-                      "name": "qq",
-                      "value": "cquptjgxq"
-                  },
-                  {
-                      "name": "bilibili",
-                      "value": "经管雄起"
-                  },
-                  {
-                      "name": "email",
-                      "value": "jgxq@foxmail.com"
-                  },
-                  {
-                      "name": "地址",
-                      "value": "重庆邮电大学18栋705"
-                  }
-              ],
-              "champions": [
-                  {
-                      "name": "重庆邮电大学超级联赛乙组",
-                      "time": [
-                          "2019/2020","2020/2021","2020/2021","2020/2021","2020/2021","2020/2021"
-                      ]
-                  },
-                  {
-                      "name": "重庆邮电大学青春杯",
-                      "time": [
-                          "2012/2013"
-                      ]
-                  }
-              ]
-          }
+          teamInfo : null,
         }
-      }
     },
     props : {
+        homeTeam:Object,
     },
     computed: {
     },

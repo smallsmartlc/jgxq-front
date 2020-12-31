@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import {thumbById,collectById} from '@/api/hit'
 export default {
 props:{
     news :  Object,
@@ -45,10 +46,40 @@ computed : {
 },
 methods: {
     thumb(){
-        this.news.hit.thumb = !this.news.hit.thumb;
+        thumbById(0,this.news.id).then((res)=>{
+            if(res.code == 200){
+                if(res.data){
+                    this.news.hit.thumb = true;
+                    this.news.hit.thumbs++;
+                }else{
+                    this.$message({
+                        message: '您已经赞过了',
+                        type: 'warning'
+                    });
+                }
+            }
+        })
     },
     collect(){
-        this.news.hit.collect = !this.news.hit.collect;
+        collectById(0,this.news.id,this.news.hit.collect).then((res)=>{
+            if(res.code == 200){
+                if(res.data == true){
+                   var str = this.news.hit.collect?"取消收藏成功":"已添加到我的收藏";
+                    this.$message({
+                        message: str,
+                        type: 'success'
+                    });
+                    this.news.hit.collect = !this.news.hit.collect;
+                }else{
+                    var str = this.news.hit.collect?"取消收藏失败":"收藏失败"
+                    this.$message({
+                        message: str,
+                        type: 'warning'
+                    });
+                }
+            }
+        })
+        
     },
     shareqq(){
         var url = window.location.href;

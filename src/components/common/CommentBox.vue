@@ -11,7 +11,7 @@
         <div class="name">
             <div style="display:flex;align-items:center">
                 <div style="font-weight:bold;font-size:20px">{{comment.userkey.nickName}}&nbsp;</div>
-                <el-image style="width:20px;height:20px;"
+                <el-image v-if="comment.userkey.homeTeam" style="width:20px;height:20px;"
                 :src="'http://localhost:6800/images/'+comment.userkey.homeTeam.logo"
                 fit="cover"/>
             </div>
@@ -21,10 +21,15 @@
         <div class="message" v-html="comment.content"></div>
         <div class="interact">
             <div style="display:flex;">
-                <div><el-link :underline="false" @click="thumb(comment.hits)" :style="{'color':comment.hits.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{comment.hits.thumbs}}</div>
+                <div><el-link :underline="false" @click="thumb" :style="{'color':comment.hits.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{comment.hits.thumbs}}</div>
                 <div><el-link :underline="false" @click="doComment"><i class="el-icon-chat-dot-round"/></el-link></div>
             </div>
-            <div v-if="comment.userkey.userkey === user.userkey"><el-link :underline="false" @click="deleteTalk()"><i class="el-icon-delete"/></el-link></div>
+            <div v-if="comment.userkey.userkey === user.userkey">
+                <el-popconfirm cancel-button-type="warning" @confirm="deleteComment" title="确定要删除这条评论吗?">   
+                    <el-link slot="reference" :underline="false"><i 
+                class="el-icon-delete"/></el-link>
+                </el-popconfirm>
+            </div>
         </div>
         <div v-if="replyBox" class="comment">
             <el-input
@@ -36,11 +41,11 @@
             <el-button type="primary" @click="submitComment">评论</el-button>
         </div>
         <div v-for="item in replys" :key="item.id" style="width:100%">
-            <reply-box :reply="item" :user="user"/>
+            <reply-box @delete="deleteReply(item.id)" :objType="objType" :commentId="comment.id" :reply="item" :user="user"/>
         </div>
-        <div class="reply"  v-if="replys.length<comment.hits.comments">
+        <div class="reply"  v-if="replys.length<total">
             <el-link :underline="false" @click="loadingComment">
-                <span v-if="cur<1">共{{comment.hits.comments}}条回复</span>
+                <span v-if="cur<1">共{{total}}条回复</span>
                 <span v-else>查看更多回复</span>
                 <i class="el-icon-arrow-right"></i>
             </el-link>
@@ -50,148 +55,15 @@
 </template>
 
 <script>
+import {commentObj,pageReply,deleteComment} from '@/api/comment'
+import {thumbById} from '@/api/hit'
 import ReplyBox from './ReplyBox.vue';
 export default {
 components:{ReplyBox},
 props:{
     comment : Object,
-    user : Object
-},
-methods: {
-    thumb(hit){
-        hit.thumb=!hit.thumb;
-    },
-    doComment(){
-        this.replyBox = !this.replyBox;
-    },
-    submitComment(){
-        console.log(this.reply);
-        this.reply = "";
-    },
-    deleteTalk(){
-        console.log("删除");
-    },
-    loadingComment(){
-        console.log("加载评论");
-        this.cur++;
-        var temp = [
-            {
-                "id": 3,
-                "userkey": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                    "city": "贵州 安顺",
-                    "createAt": "2020-12-13T13:19:07.000+00:00",
-                    "homeTeam": {
-                        "id": 1,
-                        "name": "重邮经管",
-                        "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                    }
-                },
-                "thumbs": 1,
-                "thumb": false,
-                "content": "第二条评论的第一条回复",
-                "createAt": "2020-12-13T06:08:39.000+00:00",
-                "reply": null
-            },
-            {
-                "id": 4,
-                "userkey": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                    "city": "贵州 安顺",
-                    "createAt": "2020-12-13T13:19:07.000+00:00",
-                    "homeTeam": {
-                        "id": 1,
-                        "name": "重邮经管",
-                        "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                    }
-                },
-                "thumbs": 0,
-                "thumb": false,
-                "content": "我回复了第二条评论的第一条回复",
-                "createAt": "2020-12-13T06:09:00.000+00:00",
-                "reply": {
-                    "id": 3,
-                    "userkey": {
-                        "userkey": "SmArTkEy",
-                        "nickName": "小聪明",
-                        "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                        "city": "贵州 安顺",
-                        "createAt": "2020-12-13T13:19:07.000+00:00",
-                        "homeTeam": {
-                            "id": 1,
-                            "name": "重邮经管",
-                            "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                        }
-                    },
-                    "hits": null,
-                    "content": "第二条评论的第一条回复",
-                    "createAt": "2020-12-13T06:08:39.000+00:00"
-                }
-            },
-            {
-                "id": 5,
-                "userkey": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                    "city": "贵州 安顺",
-                    "createAt": "2020-12-13T13:19:07.000+00:00",
-                    "homeTeam": {
-                        "id": 1,
-                        "name": "重邮经管",
-                        "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                    }
-                },
-                "thumbs": 0,
-                "thumb": false,
-                "content": "第二条评论的第2条回复",
-                "createAt": "2020-12-14T02:50:50.000+00:00",
-                "reply": null
-            },
-            {
-                "id": 6,
-                "userkey": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                    "city": "贵州 安顺",
-                    "createAt": "2020-12-13T13:19:07.000+00:00",
-                    "homeTeam": {
-                        "id": 1,
-                        "name": "重邮经管",
-                        "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                    }
-                },
-                "thumbs": 0,
-                "thumb": false,
-                "content": "我也回复了第二条评论的第三条回复",
-                "createAt": "2020-12-14T02:53:33.000+00:00",
-                "reply": {
-                    "id": 3,
-                    "userkey": {
-                        "userkey": "SmArTkEy",
-                        "nickName": "小聪明",
-                        "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                        "city": "贵州 安顺",
-                        "createAt": "2020-12-13T13:19:07.000+00:00",
-                        "homeTeam": {
-                            "id": 1,
-                            "name": "重邮经管",
-                            "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                        }
-                    },
-                    "hits": null,
-                    "content": "第二条评论的第一条回复",
-                    "createAt": "2020-12-13T06:08:39.000+00:00"
-                }
-            }
-        ];
-        this.replys = this.replys.concat(temp);
-    }
+    user : Object,
+    objType : Number,
 },
 data() {
     return {
@@ -200,6 +72,90 @@ data() {
         replyBox : false,
         cur : 0,
         pageSize:10,
+        total: this.comment.hits.comments
+    }
+},
+methods: {
+    thumb(){
+        thumbById(2,this.comment.id).then((res)=>{
+            if(res.code == 200){
+                if(res.data){
+                    this.comment.hits.thumb = true;
+                    this.comment.hits.thumbs++;
+                }else{
+                    this.$message({
+                        message: '您已经赞过了',
+                        type: 'warning'
+                    });
+                }
+            }
+        })
+        hit.thumb=!hit.thumb;
+    },
+    doComment(){
+        this.replyBox = !this.replyBox;
+    },
+    submitComment(){
+        if(this.reply.length<1){
+                return;
+            }
+        var commentReq = {
+            type : this.objType,
+            objectId : this.$route.params.id,
+            content : this.reply,
+            parentId : this.comment.id,
+        }
+        commentObj(commentReq).then((res)=>{
+            if(res.code == 200){
+                var temp = {
+                    id : res.data,
+                    userkey : this.user,
+                    "hits": {
+                        "thumbs": 0,
+                        "comments": 0,
+                        "thumb": false
+                    },
+                    "content":commentReq.content,
+                    "createAt" : new Date(),
+                }
+                this.content = "";
+                this.$message({
+                    message: '评论成功',
+                    type: 'success'
+                });
+                this.replys.unshift(temp);
+                this.total++;
+            }
+        })
+        
+        this.reply = "";
+    },
+    deleteComment(){
+        deleteComment(this.comment.id).then((res)=>{
+            if(res.code == 200){
+                if(res.data==true){
+                    this.$message({
+                        message: '已删除',
+                        type: 'success'
+                    });
+                    this.$emit('delete');
+                }
+            }
+        })
+    },
+    loadingComment(){
+        this.cur++;
+        pageReply(this.comment.id,this.cur,this.pageSize).then((res)=>{
+            if(res.code == 200){
+                var temp = res.data.records;
+                this.total = res.data.total
+                this.replys = this.replys.concat(temp);
+            }else{this.cur--};
+        })
+    },
+    deleteReply(id){
+        this.replys = this.replys.filter(r=>r.id!=id);
+        this.total--;
     }
 },
 computed : {

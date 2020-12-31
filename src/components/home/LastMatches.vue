@@ -9,7 +9,7 @@
             v-infinite-scroll="load"
             infinite-scroll-disabled="disabled">
                 <li v-for="item in matches" :key="item.id" style="margin : 5px 5px">
-                    <router-link replace :to="'/match/'+item.id">
+                    <router-link :to="'/match/'+item.id">
                     <match-box fontSize='14px' imgSize="25px" margin="8px" :match='item' style="width:100%;height:80px"></match-box>
                     </router-link>
                 </li>
@@ -21,6 +21,7 @@
 </div>
 </template>
 <script>
+import {pageMatches} from '@/api/match'
 import MatchBox from '../common/MatchBox'
 import PageLoading from '../common/PageLoading'
 import NoMore from '../common/NoMore'
@@ -28,123 +29,16 @@ export default {
     components : {MatchBox,PageLoading,NoMore},
     data() {
         return {
-            count: 2,
+            cur: 0,
+            pageSize:10,
+            total:1,
             loading: false,
-            matches : [
-        {
-            "id": 6,
-            "title": "邮超联赛38轮",
-            "homeTeam": {
-                "id": 1,
-                "name": "重邮经管",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "homeScore": 5,
-            "visitingTeam": {
-                "id": 6,
-                "name": "好球队",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "visitingScore": 1,
-            "startTime": "2020-12-23T04:00:00.000+00:00",
-            "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-        },
-        {
-            "id": 5,
-            "title": "友谊赛",
-            "homeTeam": {
-                "id": 1,
-                "name": "重邮经管",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "homeScore": 0,
-            "visitingTeam": {
-                "id": 5,
-                "name": "好球队",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "visitingScore": 0,
-            "startTime": "2020-12-24T04:00:09.000+00:00",
-            "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-        },
-        {
-            "id": 16,
-            "title": "邮超联赛38轮",
-            "homeTeam": {
-                "id": 1,
-                "name": "重邮经管",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "homeScore": 5,
-            "visitingTeam": {
-                "id": 6,
-                "name": "好球队",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "visitingScore": 1,
-            "startTime": "2020-12-19T04:00:00.000+00:00",
-            "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-        },
-        {
-            "id": 15,
-            "title": "友谊赛",
-            "homeTeam": {
-                "id": 1,
-                "name": "重邮经管",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "homeScore": 0,
-            "visitingTeam": {
-                "id": 5,
-                "name": "好球队",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "visitingScore": 0,
-            "startTime": "2020-12-12T04:00:09.000+00:00",
-            "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-        },
-        {
-            "id": 26,
-            "title": "邮超联赛38轮",
-            "homeTeam": {
-                "id": 1,
-                "name": "重邮经管",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "homeScore": 5,
-            "visitingTeam": {
-                "id": 6,
-                "name": "好球队",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "visitingScore": 1,
-            "startTime": "2020-12-19T04:00:00.000+00:00",
-            "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-        },
-        {
-            "id": 25,
-            "title": "友谊赛",
-            "homeTeam": {
-                "id": 1,
-                "name": "重邮经管",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "homeScore": 0,
-            "visitingTeam": {
-                "id": 5,
-                "name": "好球队",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
-            "visitingScore": 0,
-            "startTime": "2020-12-12T04:00:09.000+00:00",
-            "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025"
-        }
-    ],
+            matches : [],
         }
     },
     computed: {
       noMore () {
-        return this.count>= 10
+        return this.matches.length >= this.total;
       },
       disabled () {
         return this.loading || this.noMore
@@ -153,12 +47,17 @@ export default {
     methods: {
       load () {
         this.loading = true
-        setTimeout(() => {
-          this.count += 2
-          //TODO 无限滚动逻辑
-          
-          this.loading = false
-        }, 2000)
+        this.cur++;
+        pageMatches({pageNum:this.cur,pageSize:this.pageSize,start : this.$moment().subtract(2, 'days').format("YYYY/MM/DD HH:mm:ss")})
+        .then((res)=>{
+            if(res.code == 200){
+                var temp = res.data.records;
+                this.total = res.data.total;
+                this.matches = this.matches.concat(temp),
+                this.news = temp;
+            }else{this.cur--;}
+        })
+        this.loading = false
       }
     }
 }

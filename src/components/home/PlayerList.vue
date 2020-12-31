@@ -22,74 +22,30 @@
 </template>
 
 <script>
-
+import {getTeamMembers} from '@/api/player.js'
 export default {
    
+    mounted() {
+        this.load();
+    },
+    methods: {
+        load(){
+            getTeamMembers(this.homeTeam.id).then((res)=>{
+                if(res.code==200){
+                    this.playerList = res.data;
+                }
+            })     
+        }
+    },
     data() {
         return {
           count: 2,
           loading: false,
-          playerList : [
-        {
-            "name": "前锋",
-            "playerList": [
-                {
-                    "id": 0,
-                    "name": "梅西",
-                    "headImage": "images/jgxq/playerimg/a952b1aca54f4344ac2a4630163cdd94.jpg",
-                    "nation": "阿根廷",
-                    "number": 10,
-                    "position": 3,
-                    "age": 33
-                }
-            ]
-        },
-        {
-            "name": "中场",
-            "playerList": [
-                {
-                    "id": 6,
-                    "name": "小聪明",
-                    "headImage": "images/jgxq/headimg/6413a281ef1f4a7a9a81f9933a8482b6.gif",
-                    "nation": "中国",
-                    "number": 7,
-                    "position": 2,
-                    "age": 22
-                }
-            ]
-        },
-        {
-            "name": "后卫",
-            "playerList": [
-                {
-                    "id": 5,
-                    "name": "刘柏辛",
-                    "headImage": "images/jgxq/playerimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                    "nation": "中国",
-                    "number": 1,
-                    "position": 1,
-                    "age": 22
-                }
-            ]
-        },
-        {
-            "name": "门将",
-            "playerList": [
-                {
-                    "id": 4,
-                    "name": "胡杰洋",
-                    "headImage": "images/jgxq/playerimg/9e6bcad3a6e04c3fb753433337357f51.png",
-                    "nation": "中国",
-                    "number": 1,
-                    "position": 0,
-                    "age": 22
-                }
-            ]
-        }
-    ]
+          playerList : []
         }
     },
     props : {
+        homeTeam : Object,
     },
     computed: {
     },
