@@ -6,7 +6,7 @@
       <div style="background-color:#f7f7f7;padding:5px;color:#666;">{{item.name}}</div>
       <div v-for="player in item.playerList" :key="player.id" style="padding:5px;display:flex">
         <div><el-avatar :size="60" 
-                :src="'http://localhost:6800/images/'+player.headImage" 
+                :src="$utils.url2img(player.headImage)" 
                 fit="cover"
                 style="background:#fff;margin:auto 0"
                 ></el-avatar></div>

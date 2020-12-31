@@ -4,7 +4,7 @@
             <el-image
                 style="margin-right:20px"
                 :style="{'width':imgSize,'height':imgSize}"
-                :src="'http://localhost:6800/images/'+news.cover"
+                :src="$utils.url2img(news.cover)"
                 fit="cover"></el-image>
             <div class="title_box">
                 <span class="news-title" :style="{'width':width}">{{news.title}}</span>

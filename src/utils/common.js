@@ -7,6 +7,6 @@ export function isEmpty(str){
         return false;
     }
 }
-export function img(str){
+export function url2img(str){
     return imgUrl + str;
 }

@@ -7,7 +7,7 @@
             </div>
             <el-image
                 :style="{'width':imgSize,'height':imgSize}"
-                :src="'http://localhost:6800/images/'+news.cover"
+                :src="$utils.url2img(news.cover)"
                 fit="cover"></el-image>
         </div>
     </div>

@@ -4,7 +4,7 @@
     <div class="match_box" v-for="match in matches" :key="match.id">
         <div class="imgbox">
             <el-image style="width:40px;height:40px"
-            :src="'http://localhost:6800/images/'+match.homeTeam.logo"
+            :src="$utils.url2img(match.homeTeam.logo)"
             fit="cover"/>
             <div style="text-align:center">{{match.homeTeam.name}}</div>
         </div>
@@ -15,7 +15,7 @@
         </div>
         <div class="imgbox">
             <el-image style="width:40px;height:40px"
-            :src="'http://localhost:6800/images/'+match.visitingTeam.logo"
+            :src="$utils.url2img(match.visitingTeam.logo)"
             fit="cover"/>
             <div style="text-align:center">{{match.visitingTeam.name}}</div>
         </div>

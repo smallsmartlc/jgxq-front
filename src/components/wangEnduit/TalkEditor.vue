@@ -104,7 +104,7 @@
              //循环插入图片
             // for (let i = 0; i < 1; i++) {
               // console.log(result)
-              let url = "http://localhost:6800/images/"+result.url
+              let url = this.$utils.url2img(result.url);
               insertImg(url)
             // }
           }

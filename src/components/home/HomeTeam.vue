@@ -5,7 +5,7 @@
         <div v-if="homeTeam">
             <el-image
             style="width: 50px; height: 50px;margin:5px"
-            :src="'http://localhost:6800/images/'+homeTeam.logo"
+            :src="$utils.url2img(homeTeam.logo)"
             fit="cover"></el-image>
         </div>
       </div>

@@ -25,7 +25,7 @@
               <div class="title-box">
                 <el-badge :is-dot="message" class="item head-message">
                   <el-avatar :size="60" 
-                  :src="img(user.headImage)" 
+                  :src="$utils.url2img(user.headImage)" 
                   fit="cover"
                   style="border:4px solid #fc0;background:transparent;"
                   ></el-avatar>
@@ -45,7 +45,7 @@
               <div class="title-box">
                 <el-badge :is-dot="message" class="item head-message">
                   <el-avatar :size="60" 
-                  :src="'http://localhost:6800/images/'+user.headImage" 
+                  :src="'$utils.url2img(user.headImage)" 
                   fit="cover"
                   style="border:4px solid #fc0;background:transparent;"
                   ></el-avatar>
@@ -63,13 +63,11 @@
 </template>
 
 <script>
-import { imgUrl } from '@/constants/index'
 import UserInfo from './UserInfo.vue'
 export default {
   name: 'JGHeader',
   data() {
     return {
-      imgUrl : imgUrl,
       activeIndex: '1',
       activeIndex2: '2',
       navs : [{
@@ -108,11 +106,6 @@ export default {
       var res = '/' + this.$route.path.split('/')[1]
       return res;
     },
-    img(){
-      return (url)=>{
-        return imgUrl + url;
-      }
-    }
   }
     
 }

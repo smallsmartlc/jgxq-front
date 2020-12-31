@@ -4,7 +4,7 @@
     <div class="header">
       <div style="margin-right:10px">
         <el-avatar :size="40" 
-            :src="img(user.headImage)" 
+            :src="$utils.url2img(user.headImage)" 
             fit="cover"
             style="background:transparent;"
             ></el-avatar>
@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { imgUrl } from '@/constants/index'
-
 export default {
   name: 'CenterComment',
   props : {user:Object},
@@ -101,11 +99,6 @@ export default {
     }
   },
   computed : {
-    img(){
-      return (url)=>{
-        return imgUrl + url;
-      }
-    },
     fromNowStr(){
         return (time)=>{
             var now = this.$moment();

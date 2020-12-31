@@ -10,7 +10,9 @@ import moment from "moment"
 import './assets/iconfont/iconfont.css'
 import './assets/iconfont/iconfont.js'
 
+import * as utils from '@/utils/common'
 
+Vue.prototype.$utils = utils
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 Vue.prototype.$moment = moment;

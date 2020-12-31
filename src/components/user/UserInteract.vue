@@ -1,16 +1,16 @@
 <template>
 <div style="padding-right:20px">
   <div class="main">
-    <div class="mask_bg" :style="{'background-image':'url(http://localhost:6800/images/'+user.userInfo.headImage+')'}"></div>
+    <div class="mask_bg" :style="{'background-image':'url('+$utils.url2img(user.userInfo.headImage)+')'}"></div>
     <div class="info">
       <el-avatar :size="80" 
-        :src="'http://localhost:6800/images/'+user.userInfo.headImage" 
+        :src="$utils.url2img(user.userInfo.headImage)" 
         fit="cover"
         style="border:4px solid #fc0;background:transparent;"></el-avatar>
       <div style="display:flex;align-items:center">
         <div style="color:#fff;font-size:20px">{{user.userInfo.nickName}}&nbsp;</div>
         <el-image style="width:20px;height:20px;"
-          :src="'http://localhost:6800/images/'+user.userInfo.homeTeam.logo"
+          :src="$utils.url2img(user.userInfo.homeTeam.logo)"
           fit="cover"/>
       </div>
       <div style="color:#CCCBC0;font-size:12px">{{user.userInfo.homeTeam.name}}球迷</div>

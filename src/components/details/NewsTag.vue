@@ -6,14 +6,14 @@
             <div v-for="team in tag.teams" :key="'team'+team.id" class="tagbox">
                 <el-image
             style="width: 40px; height: 40px"
-            :src="'http://localhost:6800/images/'+team.logo"
+            :src="$utils.url2img(team.logo)"
             fit="cover"></el-image>
                 <div>{{team.name}}</div>
             </div>
             <div v-for="player in tag.players" :key="'player'+player.id" class="tagbox">
                 <el-image
             style="width: 40px; height: 40px"
-            :src="'http://localhost:6800/images/'+player.headImage"
+            :src="$utils.url2img(player.headImage)"
             fit="cover"></el-image>
                 <div>{{player.name}}</div>
             </div>

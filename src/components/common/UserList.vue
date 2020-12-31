@@ -4,7 +4,7 @@
             <div class="left">
                 <div style="margin-right:20px">
                     <el-avatar :size="80" 
-                    :src="img(user.headImage)" 
+                    :src="$utils.url2img(user.headImage)" 
                     fit="cover"
                     style="background:transparent;"
                     ></el-avatar>
@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import { imgUrl } from '@/constants/index'
 export default {
 data() {
     return {
@@ -36,11 +35,7 @@ props : {
     users : Array,
 },
 computed : {
-img(){
-    return (url)=>{
-    return imgUrl + url;
-    }
-}
+
 }
 }
 </script>

@@ -5,7 +5,7 @@
   <div class="info_row">
     <div style="margin-right:20px">
       <el-avatar :size="80" 
-      :src="img(user.headImage)" 
+      :src="$utils.url2img(user.headImage)" 
       fit="cover"
       style="border:4px solid #fc0;background:transparent;"
       ></el-avatar>
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import { imgUrl } from '@/constants/index'
 export default {
   name: 'UserInfo',
   data () {
@@ -50,11 +49,6 @@ export default {
     user:Object,
   },
   computed : {
-    img(){
-      return (url)=>{
-        return imgUrl + url;
-      }
-    }
   }
 }
 </script>

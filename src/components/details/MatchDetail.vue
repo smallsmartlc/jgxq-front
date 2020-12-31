@@ -5,7 +5,7 @@
             <div class="matchTitle">
                 <div>
                     <el-image style="width:60px;height:60px"
-                    :src="'http://localhost:6800/images/'+match.homeTeam.logo"
+                    :src="$utils.url2img(match.homeTeam.logo)"
                     fit="cover"/>
                     <div style="text-align:center">{{match.homeTeam.name}}</div>
                 </div>
@@ -25,7 +25,7 @@
                 </div>
                 <div>
                     <el-image style="width:60px;height:60px"
-                    :src="'http://localhost:6800/images/'+match.visitingTeam.logo"
+                    :src="$utils.url2img(match.visitingTeam.logo)"
                     fit="cover"/>
                     <div style="text-align:center">{{match.visitingTeam.name}}</div>
                 </div>

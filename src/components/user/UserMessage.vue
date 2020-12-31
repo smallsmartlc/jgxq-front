@@ -6,7 +6,7 @@
       <div class="header">
         <div style="margin-right:10px">
           <el-avatar :size="40" 
-              :src="img(item.user.headImage)" 
+              :src="$utils.url2img(item.user.headImage)" 
               fit="cover"
               style="background:transparent;"
               ></el-avatar>
@@ -24,8 +24,6 @@
 </template>
 
 <script>
-
-import { imgUrl } from '@/constants/index'
 export default {
   name: 'UserMessage',
   data () {
@@ -104,12 +102,7 @@ export default {
         ],
     }
   },
-    computed : {
-    img(){
-      return (url)=>{
-        return imgUrl + url;
-      }
-    },
+  computed : {
     fromNowStr(){
         return (time)=>{
             var now = this.$moment();

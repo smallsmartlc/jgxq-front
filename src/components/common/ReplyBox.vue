@@ -2,7 +2,7 @@
   <div class="main">
     <div class="info">
         <el-avatar :size="60" 
-        :src="'http://localhost:6800/images/'+reply.userkey.headImage" 
+        :src="$utils.url2img(reply.userkey.headImage)" 
         fit="cover"
         style="background:transparent;"
         ></el-avatar>
@@ -12,7 +12,7 @@
             <div style="display:flex;align-items:center">
                 <div style="font-weight:bold;font-size:20px">{{reply.userkey.nickName}}&nbsp;</div>
                 <el-image v-if="reply.userkey.homeTeam" style="width:20px;height:20px;"
-                    :src="'http://localhost:6800/images/'+reply.userkey.homeTeam.logo"
+                    :src="$utils.url2img(reply.userkey.homeTeam.logo)"
                     fit="cover"/>
             </div>
             <div style="font-size:12px;color:#666">{{fromNowStr(reply.createAt)}}</div>
@@ -23,7 +23,7 @@
             <div v-if="reply.reply.id" style="display:flex;align-items:center;margin-bottom:10px;">
                 <div style="">{{reply.reply.userkey.nickName}}&nbsp;</div>
                 <el-image v-if="reply.reply.userkey.homeTeam" style="width:20px;height:20px;"
-                    :src="'http://localhost:6800/images/'+reply.reply.userkey.homeTeam.logo"
+                    :src="$utils.url2img(reply.reply.userkey.homeTeam.logo)"
                     fit="cover"/>
             </div>
             <div style="color:#666">{{reply.reply.id?reply.reply.content:'该评论已被删除'}}</div>

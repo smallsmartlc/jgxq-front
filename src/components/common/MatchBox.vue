@@ -9,7 +9,7 @@
         <div v-if="match.homeTeam" class="team-box">
             <div class="info">
                 <el-image :style="{'width':imgSize,'height':imgSize,'margin-right':margin}"
-                :src="'http://localhost:6800/images/'+match.homeTeam.logo"
+                :src="$utils.url2img(match.homeTeam.logo)"
                 fit="cover"/>
                 <div>{{match.homeTeam.name}}</div>
             </div>
@@ -21,7 +21,7 @@
         <div v-if="match.visitingTeam" class="team-box">
             <div class="info">
                 <el-image :style="{'width':imgSize,'height':imgSize,'margin-right':margin}"
-                :src="'http://localhost:6800/images/'+match.visitingTeam.logo"
+                :src="$utils.url2img(match.visitingTeam.logo)"
                 fit="cover"/>
                 <div>{{match.visitingTeam.name}}</div>
             </div>

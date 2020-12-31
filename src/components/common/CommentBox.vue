@@ -2,7 +2,7 @@
   <div class="main">
     <div class="info">
         <el-avatar :size="60" 
-        :src="'http://localhost:6800/images/'+comment.userkey.headImage" 
+        :src="$utils.url2img(comment.userkey.headImage)" 
         fit="cover"
         style="background:transparent;"
         ></el-avatar>
@@ -12,7 +12,7 @@
             <div style="display:flex;align-items:center">
                 <div style="font-weight:bold;font-size:20px">{{comment.userkey.nickName}}&nbsp;</div>
                 <el-image v-if="comment.userkey.homeTeam" style="width:20px;height:20px;"
-                :src="'http://localhost:6800/images/'+comment.userkey.homeTeam.logo"
+                :src="$utils.url2img(comment.userkey.homeTeam.logo)"
                 fit="cover"/>
             </div>
             <div style="font-size:12px;color:#666">{{fromNowStr(comment.createAt)}}</div>

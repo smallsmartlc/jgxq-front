@@ -7,7 +7,7 @@
         <div style="text-align:right">{{match.homeTeam.name}}</div>
         <el-image
         style="width: 40px; height: 40px;margin: 0 4px"
-        :src="'http://localhost:6800/images/'+match.homeTeam.logo"
+        :src="$utils.url2img(match.homeTeam.logo)"
         fit="cover"></el-image>
       </div>
       <div class="score">
@@ -17,7 +17,7 @@
       <div style="width:40%;display:flex;align-items:center;">
         <el-image
         style="width: 40px; height: 40px;margin: 0 4px"
-        :src="'http://localhost:6800/images/'+match.visitingTeam.logo"
+        :src="$utils.url2img(match.visitingTeam.logo)"
         fit="cover"></el-image>
         <div style="width:100px;text-align:left">{{match.visitingTeam.name}}</div>
       </div>

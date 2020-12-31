@@ -86,7 +86,7 @@ methods: {
         var title = this.news.title;
         var site = url.split('/')[0];
         var summary = this.news.text.substring(0, 30);
-        var pics = "http://localhost:6800/images/"+this.news.cover;
+        var pics = this.$utils.url2img(this.news.cover);
         var desc = "我在“经管雄起”看到一条新闻，一起来看看吧"
         var link =  "http://connect.qq.com/widget/shareqq/index.html?url="+url+"&title="+title+"&desc="+desc+"&summary="+summary+"&site="+site+"&pics="+pics
         window.open(link);
@@ -95,7 +95,7 @@ methods: {
         var url = window.location.href;
         var title = this.news.title;
         var summary = this.news.text.substring(0, 30);
-        var pics = "http://localhost:6800/images/"+this.news.cover;
+        var pics = $utils.url2img(this.news.cover);
         var link =  "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url="+url+"&sharesource=qzone&title="+title+"&pics="+pics+"&summary="+summary;
         window.open(link);
     }

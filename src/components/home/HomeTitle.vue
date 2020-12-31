@@ -4,7 +4,7 @@
             <el-carousel-item v-for="item in news.slice(0,5)" :key="item.id" style="display:relative">
                 <div>
                     <el-image
-                    :src="'http://localhost:6800/images/'+item.cover"
+                    :src="$utils.url2img(item.cover)"
                     fit="cover"></el-image>
                     <div class="small">{{ item.title }}</div>
                 </div>

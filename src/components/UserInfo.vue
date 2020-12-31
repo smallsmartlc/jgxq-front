@@ -3,14 +3,14 @@
         <div class="title">
             <router-link to="/center">
                 <el-avatar :size="90" 
-                    :src="'http://localhost:6800/images/'+user.userInfo.headImage" 
+                    :src="$utils.url2img(user.userInfo.headImage)" 
                     fit="cover"
                     style="border:4px solid #fc0;background:transparent;"
                     ></el-avatar>
                 <div class="nick-name">
                     <span style="color:#fc0">{{user.userInfo.nickName}}</span><el-image
                     style="max-width: 24px; max-height: 24px;vertical-align :text-bottom;"
-                    :src="'http://localhost:6800/images/'+user.userInfo.homeTeam.logo"
+                    :src="$utils.url2img(user.userInfo.homeTeam.logo)"
                     fit="fill"> <div slot="error"></div></el-image>
                 </div>
             </router-link>

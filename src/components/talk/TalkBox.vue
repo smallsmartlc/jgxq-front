@@ -2,7 +2,7 @@
   <div class="main">
     <div class="info">
         <el-avatar :size="60" 
-        :src="'http://localhost:6800/images/'+talk.author.headImage" 
+        :src="$utils.url2img(talk.author.headImage)" 
         fit="cover"
         style="background:transparent;"
         ></el-avatar>
