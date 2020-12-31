@@ -53,8 +53,7 @@ export default {
             if(res.code == 200){
                 var temp = res.data.records;
                 this.total = res.data.total;
-                this.matches = this.matches.concat(temp),
-                this.news = temp;
+                this.matches = this.matches.concat(temp);
             }else{this.cur--;}
         })
         this.loading = false

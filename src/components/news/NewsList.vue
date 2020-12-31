@@ -18,25 +18,25 @@
 </div>
 </template>
 <script>
+import {pageNews} from '@/api/news'
 import NewsBox from '../common/NewsBox'
 import NoMore from '../common/NoMore.vue'
 import PageLoading from '../common/PageLoading.vue'
 import DiamondTitle from '../common/DiamondTitle.vue'
 export default {
     components : {NewsBox,PageLoading, NoMore,DiamondTitle},
-    props : {
-      news : Array,
-    },
     data() {
         return {
-            count: 2,
+            cur: 0,
+            pageSize:20,
+            total:1,
             loading: false,
-            
+            news : [],    
         }
     },
     computed: {
       noMore () {
-        return this.count>= 10
+        return this.news.length >= this.total
       },
       disabled () {
         return this.loading || this.noMore
@@ -45,12 +45,15 @@ export default {
     methods: {
       load () {
         this.loading = true
-        setTimeout(() => {
-          this.count += 2
-          //TODO 无限滚动逻辑
-          
-          this.loading = false
-        }, 2000)
+        this.cur ++;
+        pageNews(this.cur,this.pageSize).then((res) => {
+          if(res.code == 200){
+                var temp = res.data.records;
+                this.total = res.data.total
+                this.news = this.news.concat(temp);
+            }else this.cur--;
+        })
+        this.loading = false
       }
     }
 }
