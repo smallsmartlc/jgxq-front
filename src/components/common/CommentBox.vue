@@ -41,7 +41,7 @@
             <el-button type="primary" @click="submitComment">评论</el-button>
         </div>
         <div v-for="item in replys" :key="item.id" style="width:100%">
-            <reply-box @delete="deleteReply(item.id)" :objType="objType" :commentId="comment.id" :reply="item" :user="user"/>
+            <reply-box @delete="deleteReply(item.id)" :reply="item" :user="user"/>
         </div>
         <div class="reply"  v-if="replys.length<total">
             <el-link :underline="false" @click="loadingComment">
@@ -63,7 +63,6 @@ components:{ReplyBox},
 props:{
     comment : Object,
     user : Object,
-    objType : Number,
 },
 data() {
     return {
@@ -90,7 +89,6 @@ methods: {
                 }
             }
         })
-        hit.thumb=!hit.thumb;
     },
     doComment(){
         this.replyBox = !this.replyBox;
@@ -100,8 +98,8 @@ methods: {
                 return;
             }
         var commentReq = {
-            type : this.objType,
-            objectId : this.$route.params.id,
+            type : this.comment.type,
+            objectId : this.comment.objectId,
             content : this.reply,
             parentId : this.comment.id,
         }
@@ -115,6 +113,8 @@ methods: {
                         "comments": 0,
                         "thumb": false
                     },
+                    objectId : commentReq.objectId,
+                    type : commentReq.type,
                     "content":commentReq.content,
                     "createAt" : new Date(),
                 }
@@ -139,7 +139,10 @@ methods: {
                         type: 'success'
                     });
                     this.$emit('delete');
-                }
+                }else{this.$message({
+                        message: '删除失败,评论不存在',
+                        type: 'warning'
+                    });}
             }
         })
     },

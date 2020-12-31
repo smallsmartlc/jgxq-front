@@ -17,10 +17,14 @@
         </router-link>
         <div class="interact">
             <div style="display:flex;">
-                <div><el-link :underline="false" @click="thumb(talk.hit)" :style="{'color':talk.hit.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{talk.hit.thumbs}}</div>
+                <div><el-link :underline="false" @click="thumb" :style="{'color':talk.hit.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{talk.hit.thumbs}}</div>
                 <div><el-link :underline="false" @click="doComment"><i class="el-icon-chat-dot-round"/></el-link>{{talk.hit.comments}}</div> 
             </div>
-            <div v-if="talk.author.userkey === user.userkey"><el-link :underline="false" @click="deleteTalk()"><i class="el-icon-delete"/></el-link></div>
+            <div v-if="talk.author.userkey === user.userkey">
+                <el-popconfirm cancel-button-type="warning" @confirm="deleteTalk" title="确定要删除这条内容吗?">   
+                    <el-link slot="reference" :underline="false"><i class="el-icon-delete"/></el-link>
+                </el-popconfirm>
+            </div>
         </div>
         <div v-if="commentBox" class="comment">
             <el-input
@@ -32,7 +36,7 @@
             <el-button type="primary" @click="submitComment">评论</el-button>
         </div>
         <div v-for="item in comments" :key="item.id" style="width:100%">
-            <comment-box :comment="item" :user="user"/>
+            <comment-box  @delete="deleteComment(item.id)" :objType="1" :comment="item" :user="user"/>
         </div>
         <div class="reply" v-if="comments.length<talk.hit.comments">
             <el-link :underline="false" @click="loadingComment">
@@ -46,6 +50,9 @@
 </template>
 
 <script>
+import {pageComment,deleteTalk} from '@/api/talk'
+import {thumbById} from '@/api/hit'
+import {commentObj} from '@/api/comment'
 import CommentBox from '../common/CommentBox.vue';
 export default {
 components:{CommentBox,},
@@ -54,67 +61,91 @@ props:{
     user : Object
 },
 methods: {
-    thumb(hit){
-        hit.thumb=!hit.thumb;
+    thumb(){
+        thumbById(1,this.talk.id).then((res)=>{
+            if(res.code == 200){
+                if(res.data){
+                    this.talk.hit.thumb = true;
+                    this.talk.hit.thumbs++;
+                }else{
+                    this.$message({
+                        message: '您已经赞过了',
+                        type: 'warning'
+                    });
+                }
+            }
+        })
     },
     doComment(){
         this.commentBox = !this.commentBox;
     },
     submitComment(){
-        console.log(this.comment);
-        this.comment = "";
+        if(this.comment.length<1){
+            return;
+        }
+        var commentReq = {
+            type : 1,
+            objectId : this.talk.id,
+            content : this.comment,
+        }
+        commentObj(commentReq).then((res)=>{
+            if(res.code == 200){
+                var temp = {
+                    id : res.data,
+                    userkey : this.user,
+                    "hits": {
+                        "thumbs": 0,
+                        "comments": 0,
+                        "thumb": false
+                    },
+                    objectId : commentReq.objectId,
+                    type : commentReq.type,
+                    "content":commentReq.content,
+                    "createAt" : new Date(),
+                }
+                this.comment = "";
+                this.$message({
+                    message: '评论成功',
+                    type: 'success'
+                });
+                this.comments.unshift(temp);
+                this.talk.hit.comments++;
+            }
+        })
     },
     deleteTalk(){
+        deleteTalk(this.talk.id).then((res)=>{
+            if(res.code==200){
+                if(res.data==true){
+                    this.$message({
+                        message: '已删除',
+                        type: 'success'
+                    });
+                    this.$emit('delete');
+                }else{
+                    this.$message({
+                        message: '删除失败,内容不存在',
+                        type: 'warning'
+                    });}
+            }else{
+
+            }
+        });
         console.log("删除");
     },
+    deleteComment(id){
+      this.comments = this.comments.filter(c=>c.id!=id)
+      this.total--;
+    },
     loadingComment(){
-        console.log("加载评论");
         this.cur++;
-        var com = [{
-                "id": 1,
-                "userkey": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                    "city": "贵州 安顺",
-                    "createAt": "2020-12-23T13:19:07.000+00:00",
-                    "homeTeam": {
-                        "id": 1,
-                        "name": "重邮经管",
-                        "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                    }
-                },
-                "hits": {
-                    "thumbs": 1,
-                    "comments": 0,
-                    "thumb": true
-                },
-                "content": "我是第一条评论",
-                "createAt": "2020-12-23T06:07:28.000+00:00"
-            },
-            {
-                "id": 2,
-                "userkey": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                    "city": "贵州 安顺",
-                    "createAt": "2020-12-13T13:19:07.000+00:00",
-                    "homeTeam": {
-                        "id": 1,
-                        "name": "重邮经管",
-                        "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                    }
-                },
-                "hits": {
-                    "thumbs": 0,
-                    "comments": 4,
-                    "thumb": false
-                },
-                "content": "我是第二条评论",
-                "createAt": "2020-12-13T06:08:26.000+00:00"
-            }];
-        this.comments = this.comments.concat(com);
+        pageComment(this.talk.id,this.cur,this.pageSize).then((res)=>{
+            if(res.code == 200){
+            var temp = res.data.records;
+            this.total = res.data.total
+            this.comments = this.comments.concat(temp);
+            }else this.cur--;
+        })
     }
 },
 computed : {
@@ -137,6 +168,7 @@ data() {
         commentBox : false,
         cur : 0,
         pageSize:10,
+        total : 1,
     }
 },
 }

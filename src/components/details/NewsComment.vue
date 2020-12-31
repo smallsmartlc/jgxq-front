@@ -11,7 +11,7 @@
       </div>
       <div>
         <div v-for="item in comments" :key="item.id" style="width:100%">
-            <comment-box @delete="deleteComment(item.id)" :objType="0" :comment="item" :user="user"/>
+            <comment-box @delete="deleteComment(item.id)" :comment="item" :user="user"/>
         </div>
       </div>
       <div class="loadmore">
@@ -74,6 +74,8 @@ export default {
                             "thumb": false
                         },
                         "content":commentReq.content,
+                        objectId : this.$route.params.id,
+                        type : 0,
                         "createAt" : new Date(),
                     }
                     this.content = "";

@@ -20,13 +20,13 @@
         <div style="width:100%;color:#666;font-size:12px;height:24px;align-items:center;display:flex;">{{reply.userkey.city}}</div>
         <div class="message" v-html="reply.content"></div>
         <div v-if="reply.reply!=null" style="background-color:#f2f2f2;width:100%;padding:10px;box-sizing:border-box">
-            <div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div v-if="reply.reply.id" style="display:flex;align-items:center;margin-bottom:10px;">
                 <div style="">{{reply.reply.userkey.nickName}}&nbsp;</div>
                 <el-image v-if="reply.reply.userkey.homeTeam" style="width:20px;height:20px;"
                     :src="'http://localhost:6800/images/'+reply.reply.userkey.homeTeam.logo"
                     fit="cover"/>
             </div>
-            <div style="color:#666">{{reply.reply.content}}</div>
+            <div style="color:#666">{{reply.reply.id?reply.reply.content:'该评论已被删除'}}</div>
         </div>
         <div class="interact">
             <div style="display:flex;">
@@ -59,8 +59,6 @@ export default {
 props:{
     reply : Object,
     user : Object,
-    commentId : Number,
-    objType : Number,
 },
 methods: {
     thumb(){
@@ -86,10 +84,10 @@ methods: {
                 return;
             }
         var commentReq = {
-            type : this.objType,
-            objectId : this.$route.params.id,
+            type : this.reply.type,
+            objectId : this.reply.objectId,
             content : this.replytxt,
-            parentId : this.commentId,
+            parentId : this.reply.parentId,
             replyId : this.reply.id,
         }
         commentObj(commentReq).then((res)=>{
