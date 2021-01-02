@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="24" style="margin-bottom:40px"><jg-header :user="user" :message="message"></jg-header></el-col>
+      <el-col :span="24" style="margin-bottom:40px"><jg-header :user="user"></jg-header></el-col>
     </el-row>
     <el-row>
       <el-col :span="20" :offset="2"><router-view :user="user"></router-view></el-col>

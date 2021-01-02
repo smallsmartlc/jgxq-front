@@ -16,6 +16,7 @@ import AuthorCenter from '@/components/user/AuthorCenter'
 
 
 
+import UserDetail from '@/components/details/UserDetail'
 import NewsDetail from '@/components/details/NewsDetail'
 import MatchDetail from '@/components/details/MatchDetail'
 import TalkDetail from '@/components/details/TalkDetail'
@@ -85,7 +86,7 @@ export default new Router({
     {
       path: '/user/:userkey',
       name: 'JGUser',
-      component: UserInteract
+      component: UserDetail
     },
     {
       path: '/center',

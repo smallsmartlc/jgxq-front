@@ -63,11 +63,25 @@
 </template>
 
 <script>
+import {hasMessage} from '@/api/message'
 import UserInfo from './UserInfo.vue'
 export default {
   name: 'JGHeader',
+  mounted() {
+    this.hasMessage();
+  },
+  methods:{
+    hasMessage(){
+      hasMessage().then((res)=>{
+        if(res.code == 200){
+          this.message = res.data;
+        }
+      })
+    }
+  },
   data() {
     return {
+      message : false,
       activeIndex: '1',
       activeIndex2: '2',
       navs : [{
@@ -95,8 +109,6 @@ export default {
   },
   props : {
     user : Object,
-    message : Boolean,
-
   },
   components : {
     UserInfo

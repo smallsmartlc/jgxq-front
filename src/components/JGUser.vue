@@ -36,12 +36,24 @@
 </template>
 
 <script>
- 
+import {getUserInfo} from '@/api/user'
 export default {
   name: 'JGUser',
+  mounted() {
+    this.loadingUser();
+  },
+  methods:{
+    loadingUser(){
+      getUserInfo().then((res)=>{
+        if(res.code == 200){
+          this.user = res.data;
+        }
+      })
+    }
+  },
   data () {
     return {
-      
+      user : {},
     }
   },
   // computed: {
@@ -51,9 +63,6 @@ export default {
   //     return res;
   //   }
   // },
-  props : {
-  user : Object,
-  },
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-<div class="userInteract" style="padding-right:20px">
+<div v-if="user.userInfo" class="userInteract" style="padding-right:20px;">
   <div class="main">
     <div class="mask_bg" :style="{'background-image':'url('+$utils.url2img(user.userInfo.headImage)+')'}"></div>
     <div class="info">
@@ -17,19 +17,14 @@
       <div style="color:#fff;font-size:12px">{{user.userInfo.city}}&nbsp;注册经管雄起账号<span style="color:#fc0">{{parseInt((new Date() - new Date(user.userInfo.createAt))/(1*24*60*60*1000))}}</span>天</div>
     </div>
   </div>
-  <!-- <el-menu :default-active="this.$route.path" mode="horizontal" style="background-color:transparent" router>
-    <el-menu-item index="/center/interact/issue">发表{{user.talks}}</el-menu-item>
-    <el-menu-item index="/center/interact/comment">评论{{user.comments}}</el-menu-item>
-    <el-menu-item index="/center/interact/focus">关注{{user.focus}}</el-menu-item>
-    <el-menu-item index="/center/interact/fans">粉丝{{user.fans}}</el-menu-item>
-  </el-menu> -->
-  <el-tabs :value="defaultActive">
-    <el-tab-pane :label="`发表${user.talks}`" name="issue"><center-issue :user="user.userInfo"/></el-tab-pane>
-    <el-tab-pane :label="`评论${user.comments}`" name="comment"><center-comment :user="user.userInfo"/></el-tab-pane>
-    <el-tab-pane :label="`关注${user.focus}`" name="focus"><center-focus :user="user.userInfo"/></el-tab-pane>
-    <el-tab-pane :label="`粉丝${user.fans}`" name="fans"><center-fans :user="user.userInfo"/></el-tab-pane>
-  </el-tabs>
-  <!-- <router-view :user="user.userInfo"></router-view> -->
+  <div style="background-color:#fff;padding-left:20px">
+    <el-tabs :value="defaultActive">
+      <el-tab-pane :label="`发表${user.talks}`" name="issue"><center-issue :user="user.userInfo"/></el-tab-pane>
+      <el-tab-pane :label="`评论${user.comments}`" name="comment"><center-comment :user="user.userInfo"/></el-tab-pane>
+      <el-tab-pane :label="`关注${user.focus}`" name="focus"><center-focus :user="user.userInfo"/></el-tab-pane>
+      <el-tab-pane :label="`粉丝${user.fans}`" name="fans"><center-fans :user="user.userInfo"/></el-tab-pane>
+    </el-tabs>
+  </div>
 </div>
     
 </template>
@@ -42,27 +37,11 @@ import CenterFans from '@/components/user/CenterFans'
 export default {
   components: { CenterComment,CenterIssue,CenterFocus,CenterFans },
   name: 'UserInteract',
+  props:{
+    user : Object
+  },
   data () {
     return {
-      user : {
-        "userInfo": {
-            "userkey": "SmArTkEy",
-            "nickName": "小聪明",
-            "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-            "city": "贵州 安顺",
-            "createAt": "2020-12-13T13:19:07.000+00:00",
-            "homeTeam": {
-                "id": 1,
-                "name": "重邮经管",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            }
-        },
-        "talks": 2,
-        "comments": 7,
-        "focus": 1,
-        "fans": 0,
-        "msg": null
-      },
     }
   },
   computed:{
@@ -113,12 +92,12 @@ export default {
 </style>
 
 <style>
-.userInteract .el-tabs__nav{
+.userInteract .el-tabs__nav{  
   height:60px;
   display: flex;
 }
 .userInteract .el-tabs__item{
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   line-height: 60px;
 }

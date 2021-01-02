@@ -1,5 +1,5 @@
 <template>
-    <div class="userInfoBox">
+    <div v-if="user.userInfo" class="userInfoBox">
         <div class="title">
             <router-link to="/center">
                 <el-avatar :size="90" 
@@ -95,29 +95,15 @@
     </div>
 </template>
 <script>
+import {getUserInfo} from '@/api/user'
 export default {
     data() {
         return{
-            user : {
-                "userInfo": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-                    "city": "贵州 安顺",
-                    "createAt": "2020-12-13T13:19:07.000+00:00",
-                    "homeTeam": {
-                        "id": 1,
-                        "name": "重邮经管",
-                        "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                    }
-                },
-                "talks": 2,
-                "comments": 7,
-                "focus": 1,
-                "fans": 0,
-                "msg": null
-            }
+            user : {},
         }
+    },
+    mounted() {
+        this.loadingUser();
     },
     methods: {
       handleOpen(key, keyPath) {
@@ -125,11 +111,17 @@ export default {
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
-      }
+      },
+    loadingUser(){
+        getUserInfo().then((res)=>{
+            if(res.code == 200){
+                this.user = res.data;
+            }
+        })
+    }
     },
     props : {
       message : Boolean
-
     },
 }
 </script>
