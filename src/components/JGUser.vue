@@ -3,7 +3,7 @@
   <el-aside width="200px">
     <el-menu
       style="height:100%"
-      :default-active="defaultActive"
+      :default-active="this.$route.path"
       class="el-menu-vertical-demo" router>
       <el-menu-item index="/center/interact">
         <i class="el-icon-s-home"></i>
@@ -44,13 +44,13 @@ export default {
       
     }
   },
-  computed: {
-    defaultActive(){
-      var split = this.$route.path.split('/')
-      var res = '/' + split[1]+'/'+ split[2];
-      return res;
-    }
-  },
+  // computed: {
+  //   defaultActive(){
+  //     var split = this.$route.path.split('/')
+  //     var res = '/' + split[1]+'/'+ split[2];
+  //     return res;
+  //   }
+  // },
   props : {
   user : Object,
   },

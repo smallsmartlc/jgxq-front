@@ -13,10 +13,7 @@ import UserMessage from '@/components/user/UserMessage'
 import UserCollect from '@/components/user/UserCollect'
 import UserInfo from '@/components/user/UserInfo'
 import AuthorCenter from '@/components/user/AuthorCenter'
-import CenterComment from '@/components/user/CenterComment'
-import CenterIssue from '@/components/user/CenterIssue'
-import CenterFocus from '@/components/user/CenterFocus'
-import CenterFans from '@/components/user/CenterFans'
+
 
 
 import NewsDetail from '@/components/details/NewsDetail'
@@ -86,7 +83,7 @@ export default new Router({
       component: JGReg
     },
     {
-      path: '/user/:id',
+      path: '/user/:userkey',
       name: 'JGUser',
       component: UserInteract
     },
@@ -101,28 +98,10 @@ export default new Router({
         {
           path: 'interact',
           component: UserInteract,
-          children : [
-            {
-              path: '/',
-              redirect : 'issue',
-            },
-            {
-              path: 'issue',
-              component: CenterIssue,
-            },
-            {
-              path: 'comment',
-              component: CenterComment,
-            },
-            {
-              path: 'focus',
-              component: CenterFocus,
-            },
-            {
-              path: 'fans',
-              component: CenterFans,
-            }
-          ]
+        },
+        {
+          path: 'interact/:info',
+          component: UserInteract,
         },
         {
           path: 'message',

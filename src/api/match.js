@@ -10,3 +10,11 @@ export const homeMatches = (size,teamId) => request({
     url: `/match/home/${size}`,
     params : {teamId}
 })
+export const endMatches = (size) => request({
+    method: 'get',
+    url: `/match/end/${size}`
+})
+export const getMatchById = (id) => request({
+    method: 'get',
+    url: `/match/${id}`,
+})

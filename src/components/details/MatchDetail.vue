@@ -2,7 +2,7 @@
   <el-row>
       <el-col :span="14" :offset="2">
         <div>
-            <div class="matchTitle">
+            <div class="matchTitle" v-if="match.id">
                 <div>
                     <el-image style="width:60px;height:60px"
                     :src="$utils.url2img(match.homeTeam.logo)"
@@ -82,12 +82,16 @@
 </template>
 
 <script>
+import {getMatchById} from '@/api/match'
 import NewsLBox from '../common/NewsLBox'
 import MatchFomation from './MatchFomation.vue'
 import MatchRight from './MatchRight.vue'
 
 export default {
     components: { MatchFomation,MatchRight, NewsLBox },
+    mounted() {
+        this.getMatchById();
+    },
     data() {
         return {
             trueVal : true,
@@ -140,301 +144,17 @@ export default {
                 },
                 
             ],
-            match : {
-                "id": 5,
-                "title": "友谊赛",
-                "homeTeam": {
-                    "id": 1,
-                    "name": "重邮经管",
-                    "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                },
-                "visitingTeam": {
-                    "id": 5,
-                    "name": "经管名宿队",
-                    "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-                },
-                "startTime": "2020-12-27T04:00:00.000+00:00",
-                "matchNews": {
-                    "id": 1,
-                    "title": "我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻",
-                    "cover": "images/jgxq/cover/b6b628f361a647e8acd1032ef93a30c8.png",
-                    "comments": null
-                },
-                "matchInfo": {
-                    "homeLineUp": [
-                        {
-                            "playerId": 4,
-                            "matchPos": 0,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 1,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 1,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 1,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 1,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 2,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 2,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 3,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 3,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 3,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 4,
-                            "name": "胡杰洋",
-                            "number": 0
-                        }
-                    ],
-                    "homeSubstitute": [
-                        {
-                            "playerId": 4,
-                            "matchPos": 0,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 1,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 2,
-                            "name": "胡杰洋",
-                            "number": 0
-                        },
-                        {
-                            "playerId": 4,
-                            "matchPos": 3,
-                            "name": "胡杰洋",
-                            "number": 0
-                        }
-                    ],
-                    "visitingLineUp": [
-                        {
-                            "playerId": 0,
-                            "matchPos": 0,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 1,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 1,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 1,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 1,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 3,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 3,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 3,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 3,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 3,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 0,
-                            "matchPos": 4,
-                            "name": "胡戈汉",
-                            "number": 10
-                        }
-                    ],
-                    "visitingSubstitute": [
-                        {
-                            "playerId": 1,
-                            "matchPos": 1,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 1,
-                            "matchPos": 2,
-                            "name": "胡戈汉",
-                            "number": 10
-                        },
-                        {
-                            "playerId": 1,
-                            "matchPos": 3,
-                            "name": "胡戈汉",
-                            "number": 10
-                        }
-                    ]
-                },
-                "link": "https://space.bilibili.com/383597807?from=search&seid=17263830448621825025",
-                "actions": [
-                    {
-                        "time": "15",
-                        "infoList": [
-                            {
-                                "home": false,
-                                "type": 3,
-                                "playerId": 0,
-                                "name": "胡戈汉"
-                            },
-                            {
-                                "home": true,
-                                "type": 4,
-                                "playerId": 0,
-                                "name": "胡杰洋"
-                            }
-                        ]
-                    },
-                    {
-                        "time": "47",
-                        "infoList": [
-                            {
-                                "home": true,
-                                "type": 6,
-                                "playerId": 0,
-                                "name": "胡杰洋"
-                            }
-                        ]
-                    },
-                    {
-                        "time": "15",
-                        "infoList": [
-                            {
-                                "home": false,
-                                "type": 3,
-                                "playerId": 0,
-                                "name": "胡戈汉"
-                            },
-                            {
-                                "home": true,
-                                "type": 4,
-                                "playerId": 0,
-                                "name": "胡杰洋"
-                            }
-                        ]
-                    },
-                    {
-                        "time": "47",
-                        "infoList": [
-                            {
-                                "home": true,
-                                "type": 6,
-                                "playerId": 0,
-                                "name": "胡杰洋"
-                            }
-                        ]
-                    },
-                    {
-                        "time": "15",
-                        "infoList": [
-                            {
-                                "home": false,
-                                "type": 3,
-                                "playerId": 0,
-                                "name": "胡戈汉"
-                            },
-                            {
-                                "home": true,
-                                "type": 4,
-                                "playerId": 0,
-                                "name": "胡杰洋"
-                            }
-                        ]
-                    },
-                    {
-                        "time": "47",
-                        "infoList": [
-                            {
-                                "home": true,
-                                "type": 6,
-                                "playerId": 0,
-                                "name": "胡杰洋"
-                            }
-                        ]
-                    }
-                ],
-                "homeScore": 0,
-                "visitingScore": 0
-            },
+            match : {},
 
+        }
+    },
+    methods: {
+        getMatchById(){
+            getMatchById(this.$route.params.id).then((res)=>{
+                if(res.code == 200){
+                    this.match = res.data;
+                }
+            })
         }
     },
     computed: {

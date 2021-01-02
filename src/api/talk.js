@@ -12,3 +12,7 @@ export const deleteTalk = (id) => request({
     method : 'delete',
     url: `/talk/${id}`
 })
+export const getTalkById = (id) => request({
+    method: 'get',
+    url: `/talk/${id}`,
+})

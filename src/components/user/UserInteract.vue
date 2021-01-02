@@ -1,5 +1,5 @@
 <template>
-<div style="padding-right:20px">
+<div class="userInteract" style="padding-right:20px">
   <div class="main">
     <div class="mask_bg" :style="{'background-image':'url('+$utils.url2img(user.userInfo.headImage)+')'}"></div>
     <div class="info">
@@ -17,20 +17,30 @@
       <div style="color:#fff;font-size:12px">{{user.userInfo.city}}&nbsp;注册经管雄起账号<span style="color:#fc0">{{parseInt((new Date() - new Date(user.userInfo.createAt))/(1*24*60*60*1000))}}</span>天</div>
     </div>
   </div>
-  <el-menu :default-active="this.$route.path" mode="horizontal" style="background-color:transparent" router>
+  <!-- <el-menu :default-active="this.$route.path" mode="horizontal" style="background-color:transparent" router>
     <el-menu-item index="/center/interact/issue">发表{{user.talks}}</el-menu-item>
     <el-menu-item index="/center/interact/comment">评论{{user.comments}}</el-menu-item>
     <el-menu-item index="/center/interact/focus">关注{{user.focus}}</el-menu-item>
     <el-menu-item index="/center/interact/fans">粉丝{{user.fans}}</el-menu-item>
-  </el-menu>
-  <router-view :user="user.userInfo"></router-view>
+  </el-menu> -->
+  <el-tabs :value="defaultActive">
+    <el-tab-pane :label="`发表${user.talks}`" name="issue"><center-issue :user="user.userInfo"/></el-tab-pane>
+    <el-tab-pane :label="`评论${user.comments}`" name="comment"><center-comment :user="user.userInfo"/></el-tab-pane>
+    <el-tab-pane :label="`关注${user.focus}`" name="focus"><center-focus :user="user.userInfo"/></el-tab-pane>
+    <el-tab-pane :label="`粉丝${user.fans}`" name="fans"><center-fans :user="user.userInfo"/></el-tab-pane>
+  </el-tabs>
+  <!-- <router-view :user="user.userInfo"></router-view> -->
 </div>
     
 </template>
 
 <script>
-
+import CenterComment from '@/components/user/CenterComment'
+import CenterIssue from '@/components/user/CenterIssue'
+import CenterFocus from '@/components/user/CenterFocus'
+import CenterFans from '@/components/user/CenterFans'
 export default {
+  components: { CenterComment,CenterIssue,CenterFocus,CenterFans },
   name: 'UserInteract',
   data () {
     return {
@@ -55,11 +65,20 @@ export default {
       },
     }
   },
+  computed:{
+    defaultActive(){
+      var flag = this.$route.params.info;
+      return flag?flag:'issue';
+    }
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.el-tabs__item{
+  display: block!important;
+}
 .el-menu-item.is-active{
   background-color: transparent !important;
 }
@@ -90,5 +109,17 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+</style>
+
+<style>
+.userInteract .el-tabs__nav{
+  height:60px;
+  display: flex;
+}
+.userInteract .el-tabs__item{
+  font-size: 18px;
+  text-align: center;
+  line-height: 60px;
 }
 </style>
