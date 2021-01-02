@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="userMessage" style="width:100%" v-for="item in messages" :key="item.id">
-    <el-badge :is-dot="item.read==0" class="item" style="width:100%">
+    <el-badge :is-dot="item.read==1" class="item" style="width:100%">
     <div class="box">
       <div class="header">
         <div style="margin-right:10px">
@@ -20,101 +20,63 @@
     </div>
     </el-badge>
   </div>
+  <div class="loadmore">
+      <el-link v-if="!noMore" style="width:100%" :underline="false" type="primary" @click="load">点击加载更多<i class="el-icon-arrow-down"/></el-link>
+      <div v-else style="color:#fc0;text-align:center">没有更多了</div>
+  </div>
 </div>
 </template>
 
 <script>
+import {pageMessage} from '@/api/user'
 export default {
   name: 'UserMessage',
   data () {
     return {
-      messages : [
-            {
-                "id": 5,
-                "messageType": 0,
-                "objectType": 0,
-                "objectId": 1,
-                "user": {
-                    "userkey": "testuser",
-                    "nickName": "测试用户",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg"
-                },
-                "read": 0,
-                "text": " 赞了我的回复：第二条评论的第一条回复",
-                "createAt": "2020-12-15T08:42:32.000+00:00"
-            },
-            {
-                "id": 4,
-                "messageType": 0,
-                "objectType": 1,
-                "objectId": 1,
-                "user": {
-                    "userkey": "testuser",
-                    "nickName": "测试用户",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg"
-                },
-                "read": 0,
-                "text": " 赞了我",
-                "createAt": "2020-12-15T08:41:06.000+00:00"
-            },
-            {
-                "id": 3,
-                "messageType": 0,
-                "objectType": 1,
-                "objectId": 1,
-                "user": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg"
-                },
-                "read": 0,
-                "text": " 赞了我 ",
-                "createAt": "2020-12-15T07:47:52.000+00:00"
-            },
-            {
-                "id": 2,
-                "messageType": 1,
-                "objectType": 1,
-                "objectId": 1,
-                "user": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg"
-                },
-                "read": 0,
-                "text": " 回复了我：真好",
-                "createAt": "2020-12-15T07:47:52.000+00:00"
-            },
-            {
-                "id": 1,
-                "messageType": 0,
-                "objectType": 1,
-                "objectId": 1,
-                "user": {
-                    "userkey": "SmArTkEy",
-                    "nickName": "小聪明",
-                    "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg"
-                },
-                "read": 1,
-                "text": "赞了我",
-                "createAt": "2020-12-15T07:06:39.000+00:00"
-            }
-        ],
+      loading : false,
+      cur : 0,
+      pageSize : 10,
+      total : 1,
+      messages : [],
     }
   },
   computed : {
     fromNowStr(){
-        return (time)=>{
-            var now = this.$moment();
-            var temp =  this.$moment(time);
-            if((now-temp) > (3*24*3600*1000)){
-                return temp.format('MM-DD HH:mm');
-            }else{
-                return temp.fromNow();
-            }
+      return (time)=>{
+        var now = this.$moment();
+        var temp =  this.$moment(time);
+        if((now-temp) > (3*24*3600*1000)){
+            return temp.format('MM-DD HH:mm');
+        }else{
+            return temp.fromNow();
         }
+      }
+    },
+    noMore () {
+      return this.messages.length >= this.total
+    },
+    disabled () {
+      return this.loading || this.noMore
     }
-  }
+  },
+  mounted() {
+    this.load();
+  },
+  methods : {
+    load(){
+      this.loading = true
+      this.cur++;
+      pageMessage(this.cur,this.pageSize)
+      .then((res)=>{
+          if(res.code == 200){
+              var temp = res.data.records;
+              this.total = res.data.total;
+              this.messages = this.messages.concat(temp);
+          }else{this.cur--;}
+      })
+      this.loading = false
+    }
+  },
 }
 </script>
 

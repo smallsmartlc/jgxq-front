@@ -1,7 +1,8 @@
 <template>
 <div>
   <diamond-title dname="最新报道" />
-  <div class="dynamic infinite-list-wrapper" style="margin-top:10px;width:800px;overflow:auto;">
+  <div style="margin-top:10px;width:800px;height:700px;">
+      <el-scrollbar style="height:100%;">
       <ul
       class="list"
       v-infinite-scroll="load"
@@ -12,6 +13,7 @@
             </router-link>
           </li>
       </ul>
+      </el-scrollbar>
       <p v-if="loading"><page-loading/></p>
       <p v-if="noMore"><no-more/></p>
   </div>
@@ -28,7 +30,7 @@ export default {
     data() {
         return {
             cur: 0,
-            pageSize:20,
+            pageSize:10,
             total:1,
             loading: false,
             news : [],    
@@ -55,7 +57,7 @@ export default {
         })
         this.loading = false
       }
-    }
+    },
 }
 </script>
 

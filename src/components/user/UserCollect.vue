@@ -7,6 +7,10 @@
     </router-link>
     <el-divider/>
   </div>
+    <div class="loadmore">
+        <el-link v-if="!noMore" style="width:100%" :underline="false" type="primary" @click="load">点击加载更多<i class="el-icon-arrow-down"/></el-link>
+        <div v-else style="color:#fc0;text-align:center">没有更多了</div>
+    </div>
 </div>
     
 </template>
@@ -14,55 +18,18 @@
 <script>
 import NewsBox from "../common/NewsBox.vue"
 import NewsLBox from '../common/NewsLBox'
-
+import {getCollectNews} from '@/api/user'
 
 export default {
   components: { NewsLBox },
   name: 'UserCollect',
   data () {
     return {
-      collects : [
-            {
-                "id": 6,
-                "createTime": "2020-12-14T08:16:25.000+00:00",
-                "news": {
-                    "id": 1,
-                    "title": "我是一则好新闻",
-                    "cover": "images/jgxq/cover/b6b628f361a647e8acd1032ef93a30c8.png",
-                    "comments": 6
-                }
-            },
-            {
-                "id": 5,
-                "createTime": "2020-12-14T08:13:03.000+00:00",
-                "news": {
-                    "id": 2,
-                    "title": "我是一则好新闻",
-                    "cover": "images/jgxq/cover/b6b628f361a647e8acd1032ef93a30c8.png",
-                    "comments": 0
-                }
-            },
-            {
-                "id": 4,
-                "createTime": "2020-12-14T05:13:28.000+00:00",
-                "news": {
-                    "id": 2,
-                    "title": "我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻我是一则好新闻",
-                    "cover": "images/jgxq/cover/b6b628f361a647e8acd1032ef93a30c8.png",
-                    "comments": 0
-                }
-            },
-            {
-                "id": 3,
-                "createTime": "2020-12-13T05:35:03.000+00:00",
-                "news": {
-                    "id": 3,
-                    "title": "tag修改了!!!!!",
-                    "cover": "images/jgxq/cover/b6b628f361a647e8acd1032ef93a30c8.png",
-                    "comments": 0
-                }
-            }
-        ]
+      collects : [],
+      loading : false,
+      cur : 0,
+      pageSize : 10,
+      total : 1,
     }
   },
   computed : {
@@ -76,8 +43,32 @@ export default {
                 return temp.fromNow();
             }
         }
+    },
+    noMore () {
+      return this.collects.length >= this.total
+    },
+    disabled () {
+      return this.loading || this.noMore
     }
 },
+  mounted() {
+    this.load();
+  },
+  methods : {
+    load(){
+      this.loading = true
+      this.cur++;
+      getCollectNews(this.cur,this.pageSize)
+      .then((res)=>{
+          if(res.code == 200){
+              var temp = res.data.records;
+              this.total = res.data.total;
+              this.collects = this.collects.concat(temp);
+          }else{this.cur--;}
+      })
+      this.loading = false
+    }
+  },
 }
 </script>
 

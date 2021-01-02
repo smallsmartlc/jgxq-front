@@ -1,6 +1,6 @@
 <template>
 <div v-if="user.userInfo" class="userInteract" style="padding-right:20px;">
-  <div class="main">
+  <div class="Interactmain">
     <div class="mask_bg" :style="{'background-image':'url('+$utils.url2img(user.userInfo.headImage)+')'}"></div>
     <div class="info">
       <el-avatar :size="80" 
@@ -64,7 +64,7 @@ export default {
 .el-menu-item:hover{
   background-color: transparent !important;
 }
-.main{
+.Interactmain{
   height: 200px;
   position: relative;
 }

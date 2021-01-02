@@ -16,11 +16,16 @@
                 </el-date-picker>
             </div>
         </div>
-        <div class="dynamic infinite-list-wrapper"  style="overflow:auto">
-            <div v-infinite-scroll="load" infinite-scroll-disabled="disabled">
-                <match-group :matches="matches" class="list"></match-group>
-                <p v-if="loading"><page-loading/></p>
-                <p v-if="noMore"><no-more/></p>
+        <div style="margin-bottom : 30px">
+            <div>
+                <match-group :matches="matches"></match-group>
+                <!-- <p v-if="loading"><page-loading/></p>
+                <p v-if="noMore"><no-more/></p> -->
+                <div class="loadmore">
+                    <p v-if="loading"><page-loading/></p>
+                    <el-link v-if="!noMore" style="width:100%" :underline="false" type="primary" @click="load">点击加载更多<i class="el-icon-arrow-down"/></el-link>
+                    <div v-else style="color:#fc0;text-align:center">没有更多了</div>
+                </div>
             </div>
         </div>
     </div>
@@ -59,6 +64,9 @@ export default {
         return this.loading || this.noMore
       }
     },
+    mounted() {
+        this.load();
+    },
     methods: {
         changeTime(){
             this.cur = 1;
@@ -82,7 +90,7 @@ export default {
                 }else{this.cur--;}
             })
             this.loading = false
-        }
+        },
     },
 }
 </script>

@@ -28,7 +28,7 @@
     </el-menu>
   </el-aside>
   <el-main>
-    <el-scrollbar style="height:100%;">
+    <el-scrollbar class="dynamic infinite-list-wrapper" style="height:100%;">
       <router-view :user="user"></router-view>
     </el-scrollbar>
   </el-main>

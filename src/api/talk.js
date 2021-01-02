@@ -16,3 +16,8 @@ export const getTalkById = (id) => request({
     method: 'get',
     url: `/talk/${id}`,
 })
+export const pageTalkList = (params) => request({
+    method: 'get',
+    url: `/talk/page/user`,
+    params : params,
+})

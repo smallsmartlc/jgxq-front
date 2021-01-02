@@ -1,11 +1,11 @@
 <template>
-<div style="padding:20px">
+<div v-if="user.userInfo" style="padding:20px">
   <div style="font-size:30px">个人资料</div>
   <div>个人信息</div>
   <div class="info_row">
     <div style="margin-right:20px">
       <el-avatar :size="80" 
-      :src="$utils.url2img(user.headImage)" 
+      :src="$utils.url2img(user.userInfo.headImage)" 
       fit="cover"
       style="border:4px solid #fc0;background:transparent;"
       ></el-avatar>
@@ -14,18 +14,18 @@
   </div>
   <div class="info_row">
     <div>姓名</div>
-    <div>{{user.nickName}}</div>
+    <div>{{user.userInfo.nickName}}</div>
     <el-link type="primary" :underline="false">修改</el-link>
   </div>
   <div class="info_row">
     <div>城市</div>
-    <div>{{user.city}}</div>
+    <div>{{user.userInfo.city}}</div>
     <el-link type="primary" :underline="false">修改</el-link>
   </div>
   <div class="info_row">
     <div>主队</div>
-    <div v-if="user.homeTeam">
-      {{user.homeTeam.name}}<el-link type="primary" :underline="false">更改主队</el-link>
+    <div v-if="user.userInfo.homeTeam">
+      {{user.userInfo.homeTeam.name}}<el-link type="primary" :underline="false">更改主队</el-link>
     </div>
     <div v-else>未设置主队<el-link type="primary" :underline="false">点我设置</el-link></div>
   </div>

@@ -13,3 +13,8 @@ export const deleteComment = (id)=> request({
     method : 'delete',
     url:`/comment/${id}`
 })
+export const pageUserComment = (params)=> request({
+    method : 'get',
+    url:`/comment/page/user`,
+    params : params,
+})
