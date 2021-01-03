@@ -93,7 +93,7 @@ export default {
       load () {
         this.loading = true
         this.cur++;
-        pageMatches({pageNum:this.cur,pageSize:this.pageSize,teamId:this.homeTeam.id,start : this.$moment(new Date - (1000*60*60*24*7)).format("YYYY/MM/DD HH:mm:ss")})
+        pageMatches({pageNum:this.cur,pageSize:this.pageSize,"teamId":this.homeTeam.id,start : this.$moment(new Date - (1000*60*60*24*7)).format("YYYY/MM/DD HH:mm:ss")})
         .then((res)=>{
             if(res.code == 200){
                 var temp = res.data.records;

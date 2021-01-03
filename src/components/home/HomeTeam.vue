@@ -3,10 +3,11 @@
       <div style="height : 60px;display:flex">
         <div class="window">主队</div>
         <div v-if="homeTeam">
+            <router-link :to="`/team/${homeTeam.id}`">
             <el-image
             style="width: 50px; height: 50px;margin:5px"
             :src="$utils.url2img(homeTeam.logo)"
-            fit="cover"></el-image>
+            fit="cover"></el-image></router-link>
         </div>
       </div>
     <el-divider></el-divider> 

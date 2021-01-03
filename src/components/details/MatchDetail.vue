@@ -3,12 +3,14 @@
       <el-col :span="14" :offset="2">
         <div>
             <div class="matchTitle" v-if="match.id">
+                <router-link :to="`/team/${match.homeTeam.id}`">
                 <div>
                     <el-image style="width:60px;height:60px"
                     :src="$utils.url2img(match.homeTeam.logo)"
                     fit="cover"/>
                     <div style="text-align:center">{{match.homeTeam.name}}</div>
                 </div>
+                </router-link>
                 <div style="text-align:center;margin:0 20px" :style="{'color':(dateDiff(match.startTime)>0&&dateDiff(match.startTime)<(120*60*1000))?'#fc0':'#fff'}">
                     <div>{{this.$moment(match.startTime).format('MM-DD HH:mm')}}&nbsp;{{match.title}}</div>
                     <div style="font-size:30px">{{match.homeScore}}&nbsp;-&nbsp;{{match.visitingScore}}</div>
@@ -23,12 +25,13 @@
                         <div v-else>未开始</div>
                     </div>
                 </div>
+                <router-link :to="`/team/${match.visitingTeam.id}`">
                 <div>
                     <el-image style="width:60px;height:60px"
                     :src="$utils.url2img(match.visitingTeam.logo)"
                     fit="cover"/>
                     <div style="text-align:center">{{match.visitingTeam.name}}</div>
-                </div>
+                </div></router-link>
             </div>
             <el-tabs v-model="activeName" type="card" style="background-color:#fff">
                 <el-tab-pane label="赛况" name="first" style="padding:10px">

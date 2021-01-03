@@ -12,9 +12,10 @@
         <div class="name">
             <div style="display:flex;align-items:center">
                 <div style="font-weight:bold;font-size:20px">{{comment.userkey.nickName}}&nbsp;</div>
+                <router-link :to="`/team/${comment.userkey.homeTeam.id}`">
                 <el-image v-if="comment.userkey.homeTeam" style="width:20px;height:20px;"
                 :src="$utils.url2img(comment.userkey.homeTeam.logo)"
-                fit="cover"/>
+                fit="cover"/></router-link>
             </div>
             <div style="font-size:12px;color:#666">{{fromNowStr(comment.createAt)}}</div>
         </div>

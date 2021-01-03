@@ -22,8 +22,9 @@
                 <!-- <p v-if="loading"><page-loading/></p>
                 <p v-if="noMore"><no-more/></p> -->
                 <div class="loadmore">
-                    <p v-if="loading"><page-loading/></p>
-                    <el-link v-if="!noMore" style="width:100%" :underline="false" type="primary" @click="load">点击加载更多<i class="el-icon-arrow-down"/></el-link>
+                    <el-link v-if="!noMore" style="width:100%" :underline="false" type="primary" @click="load">
+                        <span v-if="loading"><i class="el-icon-loading"></i>加载中</span>
+                        <span v-else >点击加载更多<i class="el-icon-arrow-down"/></span></el-link>
                     <div v-else style="color:#fc0;text-align:center">没有更多了</div>
                 </div>
             </div>
@@ -79,6 +80,7 @@ export default {
             })
         },
         load () {
+            if(this.disabled) return;
             this.loading = true
             this.cur++;
             pageMatches({pageNum:this.cur,pageSize:this.pageSize,start : this.$moment(this.time).format("YYYY/MM/DD HH:mm:ss")})

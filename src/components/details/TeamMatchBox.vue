@@ -1,0 +1,59 @@
+<template>
+  <div class="main">
+    <div style="width:20%;text-align:center">{{this.$moment(match.startTime).format('MM:DD HH:mm')}}</div>
+    <div style="width:20%;text-align:center">{{match.title}}</div>
+    <div class="match" style="width:60%">
+      <div style="width:40%;display:flex;align-items:center;justify-content:flex-end">
+        <div style="text-align:right">{{match.homeTeam.name}}</div>
+        <el-image
+        style="width: 26px; height: 26px;margin: 0 4px"
+        :src="$utils.url2img(match.homeTeam.logo)"
+        fit="cover"></el-image>
+      </div>
+      <div class="score">
+          <span v-if='dateDiff(match.startTime)>0'>{{match.homeScore}}&nbsp;-&nbsp;{{match.visitingScore}}</span>
+          <span v-else>VS</span>
+      </div>
+      <div style="width:40%;display:flex;align-items:center;">
+        <el-image
+        style="width: 26px; height: 26px;margin: 0 4px"
+        :src="$utils.url2img(match.visitingTeam.logo)"
+        fit="cover"></el-image>
+        <div style="width:100px;text-align:left">{{match.visitingTeam.name}}</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+props : {
+  match : Object,
+},
+computed: {
+  dateDiff(){
+      return function(timeStr){
+          var time = new Date(timeStr)
+          return new Date()-time; 
+      }
+  },
+},
+}
+</script>
+
+<style scoped>
+  .main{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .match{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .score{
+    width:20%;
+    text-align: center;
+  }
+</style>

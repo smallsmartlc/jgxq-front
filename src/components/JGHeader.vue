@@ -171,7 +171,7 @@ sup{
 </style>
 <style>
   a {
-    color: #111;
+    color: inherit;
     text-decoration: none;
   }
   .head-message sup{

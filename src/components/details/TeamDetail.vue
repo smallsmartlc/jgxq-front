@@ -1,47 +1,43 @@
 <template>
   <el-row>
       <el-col :span="14" :offset="2">
-        <div v-if="player.id">
+        <div v-if="team.id">
             <div class="title">
-                <div class="info">
-                    <p class="cn_name">
-                        {{player.name}}
-                        <router-link :to="`/team/${player.team.id}`">
-                        <img v-if="player.team" :src="$utils.url2img(player.team.logo)" alt></router-link>
-                    </p>
-                    <p class="en_name">{{player.enName}}</p>
-                    <div class="detail_info">
-                        <ul>
-                            <li><span>俱乐部：</span>{{player.team.name}}</li>
-                            <li><span>国籍：</span>{{player.nation}}</li>
-                            <li><span>身高：</span>{{player.height}}CM</li>
-                        </ul>
-                        <ul>
-                            <li><span>位置：</span>{{player.position}}</li>
-                            <li><span>年龄：</span>{{$moment().diff($moment(player.birthday),'year')}}岁</li>
-                            <li><span>体重：</span>{{player.weight}}KG</li>
-                        </ul>
-                        <ul>
-                            <li><span>号码：</span>{{player.number}}号</li>
-                            <li><span>生日：</span>{{$moment(player.birthday).format("YYYY-MM-DD")}}</li>
-                            <li><span>惯用脚：</span>{{player.strongFoot}}</li>
-                        </ul>
-                    </div>
-                </div>
                 <div class="img">
                     <el-image
                     style="width: 150px; height: 150px"
-                    :src="$utils.url2img(player.headImage)"
+                    :src="$utils.url2img(team.logo)"
                     fit="contain"></el-image>
-                </div>    
+                </div> 
+                <div class="info">
+                    <p class="cn_name">
+                        {{team.name}}
+                    </p>
+                    <p class="en_name">{{team.enName}}</p>
+                    <div class="detail_info">
+                        <div style="display:flex;flex-wrap:wrap">
+                            <div style="display:flex;margin:10px;" v-for="(item,index) in team.infos.normal" :key="'normal'+index">
+                                <div style="width:80px;color:#666">{{item.name}}：</div>
+                                <div style="white-space:nowrap;">{{item.value}}</div>
+                            </div>
+                            <div style="display:flex;margin:10px;" v-for="(item,index) in team.infos.contact" :key="'contact'+index">
+                                <div style="width:80px;color:#666">{{item.name}}：</div>
+                                <div style="white-space:nowrap;">{{item.value}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
             </div>
             <div class="means">
-                <diamond-title style="margin-bottom:20px" dname="资料"/>
-                <div style="padding:5px;background-color: #F5F5EB;">
-                    <div style="border-left:5px solid #fc0;padding-left:10px;">基本资料</div>
-                    <div style="display:flex;margin:10px auto;padding-left:40px" v-for="(item,index) in player.infos.normal" :key="index">
-                        <div style="width:120px;color:#666">{{item.name}}</div>
-                        <div>{{item.value}}</div>
+                <team-match/>
+            </div>
+            <div class="champion">
+                <diamond-title style="margin-bottom:20px" dname="荣誉"/>
+                <div class="championbox" v-for="(item,index) in team.infos.champions" :key="index">
+                    <div style="color:#fc0;"><i class="el-icon-trophy-1" style="font-size:30px"/></div>
+                    <div style="color:#fc0;">{{item.name}}×{{item.time.length}}</div>
+                    <div style="display:flex;flex-wrap:wrap;font-size:14px">
+                        <div v-for="time in item.time" :key="time">{{time}}</div>
                     </div>
                 </div>
             </div>
@@ -88,20 +84,23 @@
 </template>
 
 <script>
-import {getPlayerById,getTeamMembers} from '@/api/player'
+import {getTeamById} from '@/api/team'
+import {getTeamMembers} from '@/api/player'
 import {pageNewsByTag} from '@/api/news'
 import DiamondTitle from '../common/DiamondTitle.vue';
 import NewsBox from '../common/NewsBox.vue';
+import TeamMatch from './TeamMatch.vue';
 
 export default {
-  components: { DiamondTitle, NewsBox },
+  components: { DiamondTitle, NewsBox, TeamMatch },
     mounted() {
-        this.getPlayerById();
+        this.getTeamById();
+        this.loadPlayers();
         this.loadNews();
     },
     data() {
         return {
-            player : {},
+            team : {},
             news : [],
             playerList : [],
             cur: 0,
@@ -111,11 +110,10 @@ export default {
         }
     },
     methods: {
-        getPlayerById(){
-            getPlayerById(this.$route.params.id).then((res)=>{
+        getTeamById(){
+            getTeamById(this.$route.params.id).then((res)=>{
                 if(res.code == 200){
-                    this.player = res.data;
-                    this.loadPlayers();
+                    this.team = res.data;
                 }
             })
         },
@@ -123,7 +121,7 @@ export default {
             if(this.disabled) return;
             this.loading = true
             this.cur ++;
-            pageNewsByTag(this.cur,this.pageSize,this.$route.params.id,1).then((res)=>{
+            pageNewsByTag(this.cur,this.pageSize,this.$route.params.id,0).then((res)=>{
                 if(res.code == 200){
                 var temp = res.data.records;
                 this.total = res.data.total
@@ -133,13 +131,12 @@ export default {
             this.loading = false;
         },
         loadPlayers(){
-            // if(!this.player.team) return;
-            getTeamMembers(this.player.team.id).then((res)=>{
+            getTeamMembers(this.$route.params.id).then((res)=>{
                 if(res.code==200){
                     this.playerList = res.data;
                 }
             }) 
-        }
+        },
     },
     computed: {
       noMore () {
@@ -157,7 +154,6 @@ export default {
     padding: 30px;
     background-color: #F5F5EB;
     display: flex;
-    justify-content: space-between;
 }
 .cn_name{
     font-size: 24px;
@@ -177,22 +173,7 @@ export default {
     display: flex;
     font-size: 14px;
     margin-top: 20px;
-}
-.detail_info ul{
-    width: 150px;
-}
-.detail_info ul li{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-bottom: 20px;
-}
-.detail_info ul li span{
-    width: 60px;
-    text-align: justify;
-    text-align-last: justify;
-    display: inline-block;
-    white-space: nowrap;
+    flex-wrap : wrap
 }
 .means {
     margin-top: 40px;
@@ -200,5 +181,14 @@ export default {
 .relative{
     background-color: #F5F5EB;
     padding: 10px 0;
+}
+.championbox{
+    display:flex;
+    align-items:center;
+    height:40px;
+    background-color:#fff
+}
+.championbox div{
+    margin: 0 5px;
 }
 </style>
