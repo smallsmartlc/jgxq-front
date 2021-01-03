@@ -20,6 +20,7 @@ import UserDetail from '@/components/details/UserDetail'
 import NewsDetail from '@/components/details/NewsDetail'
 import MatchDetail from '@/components/details/MatchDetail'
 import TalkDetail from '@/components/details/TalkDetail'
+import PlayerDetail from '@/components/details/PlayerDetail'
 
 Vue.use(Router)
 
@@ -87,6 +88,11 @@ export default new Router({
       path: '/user/:userkey',
       name: 'JGUser',
       component: UserDetail
+    },
+    {
+      path: '/player/:id',
+      name: 'PlayerDetail',
+      component: PlayerDetail
     },
     {
       path: '/center',

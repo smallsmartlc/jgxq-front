@@ -1,11 +1,13 @@
 <template>
   <div class="main">
     <div class="info">
+        <router-link :to="`/user/${talk.author.userkey}`">
         <el-avatar :size="60" 
         :src="$utils.url2img(talk.author.headImage)" 
         fit="cover"
         style="background:transparent;"
         ></el-avatar>
+        </router-link>
     </div>
     <div class="text">
         <div class="name">

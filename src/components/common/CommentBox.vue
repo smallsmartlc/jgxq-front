@@ -1,11 +1,12 @@
 <template>
   <div class="main">
     <div class="info">
+        <router-link :to="`/user/${comment.userkey.userkey}`">
         <el-avatar :size="60" 
         :src="$utils.url2img(comment.userkey.headImage)" 
         fit="cover"
         style="background:transparent;"
-        ></el-avatar>
+        ></el-avatar></router-link>
     </div>
     <div class="text">
         <div class="name">
