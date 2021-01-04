@@ -3,7 +3,7 @@
     <div class="container">
       <div>
         <a href="/home"><div class="title">经管雄起</div></a>
-        <div class="desc">重邮经管的足球论坛</div>
+        <div class="desc">找回密码</div>
         <el-form v-loading="loading" @submit.native.prevent :model="user" ref="regForm" :rules="rules">
           <el-form-item prop="email">
             <el-input v-model="user.email" placeholder="请输入电子邮箱" prefix-icon="el-icon-message" clearable/>
@@ -14,15 +14,12 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input placeholder="输入密码" v-model="user.password" show-password prefix-icon="el-icon-lock" clearable/>
+            <el-input placeholder="输入新密码" v-model="user.password" show-password prefix-icon="el-icon-lock" clearable/>
           </el-form-item>
           <el-form-item  prop="checkpass">
             <el-input placeholder="再次输入密码" v-model="user.checkpass" show-password prefix-icon="el-icon-lock" clearable/>
           </el-form-item>
-          <el-form-item  prop="nickName">
-            <el-input placeholder="请输入姓名" v-model="user.nickName" prefix-icon="el-icon-user" clearable/>
-          </el-form-item>
-          <el-form-item><el-button native-type="submit" type="primary" @click="register" style="width:100%;margin:10px 0">注册</el-button></el-form-item>
+          <el-form-item><el-button native-type="submit" type="primary" @click="find" style="width:100%;margin:10px 0">重置密码</el-button></el-form-item>
         </el-form>
       </div>
     </div>
@@ -31,7 +28,7 @@
 
 <script>
 import {validateEmail,validatePass} from "@/utils/validateInput"
-import {getCode,userRegister} from '@/api/register'
+import {getCode,findPassword} from '@/api/findPassword'
 export default {
   name: 'JGReg',
   data () {
@@ -100,14 +97,14 @@ export default {
         }
       })
     },
-    register(){
+    find(){
       this.$refs['regForm'].validate((valid) => {
         if (valid) {
           this.loading = true;
-          userRegister(this.user).then((res)=>{
+          findPassword(this.user).then((res)=>{
             if(res.code==200){
               this.$message({
-                message: '注册成功,快去登陆吧!',
+                message: '密码已找回,快去登陆吧!',
                 type: 'success'
               });
               this.$router.replace("/login");
@@ -157,7 +154,7 @@ export default {
   margin: 20px 0;
 }
 .desc{
-  font-size: 16px;
+  font-size: 25px;
   color: #999;
   text-align: center;
   margin: 20px 0;

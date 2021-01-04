@@ -33,7 +33,7 @@
               </div>
             </div>
             <el-dropdown-menu slot="dropdown" show-timeout="0">
-              <user-info  :message = "message"></user-info>
+              <user-info @logout="logout" :message = "message"></user-info>
             </el-dropdown-menu>
           </el-dropdown>
         </el-menu-item>
@@ -56,8 +56,6 @@
           <user-info  :message = "message"></user-info>
         </el-submenu> -->
       </div>
-      
-
     </el-menu>
   </div>
 </template>
@@ -68,7 +66,9 @@ import UserInfo from './UserInfo.vue'
 export default {
   name: 'JGHeader',
   mounted() {
-    this.hasMessage();
+    if(this.user){
+      this.hasMessage();
+    }
   },
   methods:{
     hasMessage(){
@@ -77,6 +77,9 @@ export default {
           this.message = res.data;
         }
       })
+    },
+    logout(){
+      this.$emit("logout");
     }
   },
   data() {

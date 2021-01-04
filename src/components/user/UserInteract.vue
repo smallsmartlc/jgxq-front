@@ -9,11 +9,11 @@
         style="border:4px solid #fc0;background:transparent;"></el-avatar>
       <div style="display:flex;align-items:center">
         <div style="color:#fff;font-size:20px">{{user.userInfo.nickName}}&nbsp;</div>
-        <el-image style="width:20px;height:20px;"
+        <el-image v-if="user.userInfo.homeTeam" style="width:20px;height:20px;"
           :src="$utils.url2img(user.userInfo.homeTeam.logo)"
           fit="cover"/>
       </div>
-      <div style="color:#CCCBC0;font-size:12px">{{user.userInfo.homeTeam.name}}球迷</div>
+      <div v-if="user.userInfo.homeTeam" style="color:#CCCBC0;font-size:12px">{{user.userInfo.homeTeam.name}}球迷</div>
       <div style="color:#fff;font-size:12px">{{user.userInfo.city}}&nbsp;注册经管雄起账号<span style="color:#fc0">{{parseInt((new Date() - new Date(user.userInfo.createAt))/(1*24*60*60*1000))}}</span>天</div>
     </div>
   </div>

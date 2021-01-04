@@ -1,16 +1,17 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="24" style="margin-bottom:40px"><jg-header :user="user"></jg-header></el-col>
+      <el-col :span="24" style="margin-bottom:40px"><jg-header @logout="logout" :user="user"></jg-header></el-col>
     </el-row>
     <el-row>
-      <el-col :span="20" :offset="2"><router-view :user="user"></router-view></el-col>
+      <el-col :span="20" :offset="2"><router-view @login="login" :user="user"></router-view></el-col>
     </el-row>
     <back-top/>
   </div>
 </template>
 
 <script>
+import {checkUser} from '@/api/login'
 import BackTop from './components/common/BackTop.vue'
 import JGHeader from './components/JGHeader.vue'
 export default {
@@ -19,23 +20,29 @@ export default {
     jgHeader : JGHeader,
     BackTop
   },
+  mounted() {
+    this.checkUser();
+  },
+  methods: {
+    checkUser(){
+      checkUser().then((res)=>{
+        if(res.code==200){
+          this.user = res.data;
+        }
+      })
+    },
+    login(data){
+      this.user = data;
+    },
+    logout(){
+      this.user = null;
+      this.$router.push({ path:'/login'})
+    }
+    
+  },
   data(){
     return {
-      user : {
-        "userkey": "SmArTkEy",
-        "nickName": "小聪明",
-        "headImage": "images/jgxq/headimg/7eb65ce2c4474c5b9cdc08ffdf7ad00b.jpg",
-        "city": "贵州 安顺",
-        "author": false,
-        "createAt": "2020-12-13T13:19:07.000+00:00",
-        // "homeTeam": {
-        //     "id": 1,
-        //     "name": "重邮经管",
-        //     "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-        // }
-        "homeTeam" : null,
-      },
-      message : true,
+      user : null,
     }
   }
 }

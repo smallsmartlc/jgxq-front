@@ -8,5 +8,6 @@ export function isEmpty(str){
     }
 }
 export function url2img(str){
-    return imgUrl + str;
+    if(str){return imgUrl + str;}
+    else return ""; 
 }

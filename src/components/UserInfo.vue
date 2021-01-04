@@ -8,7 +8,7 @@
                     style="border:4px solid #fc0;background:transparent;"
                     ></el-avatar>
                 <div class="nick-name">
-                    <span style="color:#fc0">{{user.userInfo.nickName}}</span><el-image
+                    <span style="color:#fc0">{{user.userInfo.nickName}}</span><el-image v-if="user.userInfo.homeTeam"
                     style="max-width: 24px; max-height: 24px;vertical-align :text-bottom;"
                     :src="$utils.url2img(user.userInfo.homeTeam.logo)"
                     fit="fill"> <div slot="error"></div></el-image>
@@ -69,6 +69,9 @@
                     <span><i class="el-icon-edit"></i>创作中心</span>
                 </el-dropdown-item>
                 </router-link>
+                <el-dropdown-item  @click.native="logOut()">
+                    <span><i class="el-icon-back"></i>退出登陆</span>
+                </el-dropdown-item>
                 <!-- 使用submenu方式实现 -->
                 <!-- 
                 <el-menu-item index="/center/message" class="drop-down-route">
@@ -95,6 +98,7 @@
     </div>
 </template>
 <script>
+import {userLogOut} from '@/api/login'
 import {getUserInfo} from '@/api/user'
 export default {
     data() {
@@ -106,19 +110,23 @@ export default {
         this.loadingUser();
     },
     methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      },
-    loadingUser(){
-        getUserInfo().then((res)=>{
-            if(res.code == 200){
-                this.user = res.data;
-            }
-        })
-    }
+        handleOpen(key, keyPath) {
+            console.log(key, keyPath);
+        },
+        handleClose(key, keyPath) {
+            console.log(key, keyPath);
+        },
+        loadingUser(){
+            getUserInfo().then((res)=>{
+                if(res.code == 200){
+                    this.user = res.data;
+                }
+            })
+        },
+        logOut(){
+            // userLogOut();
+            this.$emit("logout")
+        },
     },
     props : {
       message : Boolean

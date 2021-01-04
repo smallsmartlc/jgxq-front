@@ -6,7 +6,7 @@
           <home-news :news="news"/>
         </el-col>
         <el-col :span="6" :offset="2" class = "hidden-md-and-down">
-          <home-team/>
+          <home-team :homeTeam="user?user.homeTeam:null"/>
           <last-matches style="margin-top:60px"></last-matches>
         </el-col>
       </el-row>
@@ -26,6 +26,9 @@ export default {
     return {
       news : []
     }
+  },
+  props:{
+    user:Object,
   },
   components : {
     HomeTitle,

@@ -77,7 +77,9 @@ import {homeMatches} from '@/api/match'
 export default {
     components: { MatchBox,NewsBox,MatchList,PlayerList,TeamInfo,PageLoading, NoMore,},
     mounted() {
-       this.loadMatch(); 
+        if(this.homeTeam){
+           this.loadMatch();
+        } 
     },
     methods: {
       load () {
@@ -100,13 +102,11 @@ export default {
           })
       }
     },
+    props:{
+        homeTeam : Object,
+    },
     data() {
         return {
-            homeTeam : {
-                "id": 1,
-                "name": "重邮经管",
-                "logo": "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-            },
             matches:[],
             news:[],
             total : 1,
