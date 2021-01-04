@@ -22,7 +22,7 @@
                 <div><el-link :underline="false" @click="thumb" :style="{'color':talk.hit.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{talk.hit.thumbs}}</div>
                 <div><el-link :underline="false" @click="doComment"><i class="el-icon-chat-dot-round"/></el-link>{{talk.hit.comments}}</div> 
             </div>
-            <div v-if="talk.author.userkey === user.userkey">
+            <div v-if="user && talk.author.userkey === user.userkey">
                 <el-popconfirm cancel-button-type="warning" @confirm="deleteTalk" title="确定要删除这条内容吗?">   
                     <el-link slot="reference" :underline="false"><i class="el-icon-delete"/></el-link>
                 </el-popconfirm>

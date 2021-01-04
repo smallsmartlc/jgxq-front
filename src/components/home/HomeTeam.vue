@@ -57,7 +57,7 @@
       </el-tabs>
       <div v-if="!homeTeam" style="height:300px;text-align:center">
           <span style="display:inline-block;margin-top:120px">
-            <div>你还没有设置最爱球队</div>
+            <div style="color:#666;font-size:16px;margin-bottom:10px">你还没有设置最爱球队</div>
             <el-button>立即设置</el-button>
           </span>
       </div>

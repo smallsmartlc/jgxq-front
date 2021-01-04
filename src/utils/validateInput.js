@@ -52,8 +52,24 @@ export const validatePass = (rule, value, callback) => {
         }
     }
 };
+//验证码格式验证
+export const validateVerCode = (rule, value, callback) => {
+    if (value === null || value === '') {
+        callback(new Error('请输入验证码'));
+    }else{
+        const len = value.split('').length
+        const reg = /\d{6}/;
+        if(len != 6){
+            callback(new Error('验证码是6位数字'));
+        }else if(!reg.test(value)){
+            callback(new Error('验证码只能是数字'));
+        }else{
+            callback();
+        }
+    }
+}
 // 确认密码验证
-export const validatePassConfirm = (rule, value, callback,target) => {
+export const validatePassConfirm = (rule, value, callback) => {
     console.log(rule);
     console.log(value);
     console.log(callback);

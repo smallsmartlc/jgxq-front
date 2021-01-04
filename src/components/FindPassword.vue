@@ -9,8 +9,8 @@
             <el-input v-model="user.email" placeholder="请输入电子邮箱" prefix-icon="el-icon-message" clearable/>
           </el-form-item>
           <el-form-item prop="verificationCode">
-            <el-input v-model.number="user.verificationCode" placeholder="请输入验证码" prefix-icon="el-icon-key" clearable>
-              <el-button slot="append" @click="sendCode" :disabled="disabled">{{codeInfo}}</el-button>
+            <el-input v-model="user.verificationCode" placeholder="请输入验证码" prefix-icon="el-icon-key" clearable>
+              <el-button :loading="b_loading" slot="append" @click="sendCode" :disabled="disabled">{{codeInfo}}</el-button>
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import {validateEmail,validatePass} from "@/utils/validateInput"
+import {validateEmail,validatePass,validateVerCode} from "@/utils/validateInput"
 import {getCode,findPassword} from '@/api/findPassword'
 export default {
   name: 'JGReg',
@@ -52,19 +52,21 @@ export default {
       codeInfo : "获取验证码",
       disabled : false,
       loading : null,
+      b_loading : null,
 
       rules: {
         email : [{validator:validateEmail,trigger:'blur'}],
         password : [{validator:validatePass, trigger: 'blur' },],
         checkpass : [{validator:validatePassConfirm, trigger: 'blur' },],
-        verificationCode : [{ required: true, message: '请输入验证码'},{type: "number", message: '验证码必须为数字'}],
-        nickName : [{required: true, message: '昵称不能为空哦'}]
+        verificationCode : [{validator:validateVerCode, trigger: 'blur' },],
+        nickName : [{required: true, message: '昵称不能为空哦'}],
       }
     }
   },
   methods:{
     sendCode(){
-      if(this.desabled) return;
+      if(this.b_loading||this.desabled) return;
+      this.b_loading = true;
       this.$refs['regForm'].validateField('email',(valid) => {
         if(!valid){
           getCode(this.user.email).then((res)=>{
@@ -91,7 +93,8 @@ export default {
                 });
               }
             }
-        })
+            this.b_loading = false; 
+          })
         }else{
           return false;
         }
@@ -114,8 +117,8 @@ export default {
                 type: 'error'
               });
             }
+            this.loading = false;
           })
-          this.loading = false;
         }
       })
     }

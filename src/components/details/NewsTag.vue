@@ -3,19 +3,27 @@
       <div>
         <diamond-title :dstyle="{'margin-bottom':'10px'}" dname="相关标签"/>
         <div v-if="(tag.teams||tag.players)">
-            <div v-for="team in tag.teams" :key="'team'+team.id" class="tagbox">
-                <el-image
-            style="width: 40px; height: 40px"
-            :src="$utils.url2img(team.logo)"
-            fit="cover"></el-image>
-                <div>{{team.name}}</div>
+            <div v-for="team in tag.teams" :key="'team'+team.id">
+                <router-link :to="`/team/${team.id}`">
+                    <div class="tagbox">
+                        <el-image
+                        style="width: 40px; height: 40px"
+                        :src="$utils.url2img(team.logo)"
+                        fit="cover"></el-image>
+                        <div>{{team.name}}</div>
+                    </div>
+                </router-link>
             </div>
-            <div v-for="player in tag.players" :key="'player'+player.id" class="tagbox">
-                <el-image
-            style="width: 40px; height: 40px"
-            :src="$utils.url2img(player.headImage)"
-            fit="cover"></el-image>
-                <div>{{player.name}}</div>
+            <div v-for="player in tag.players" :key="'player'+player.id">
+                <router-link :to="`/player/${player.id}`">
+                    <div class="tagbox">
+                        <el-image
+                        style="width: 40px; height: 40px"
+                        :src="$utils.url2img(player.headImage)"
+                        fit="cover"></el-image>
+                        <div>{{player.name}}</div>
+                    </div>
+                </router-link>
             </div>
         </div>
       </div>

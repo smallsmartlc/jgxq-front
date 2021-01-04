@@ -26,7 +26,7 @@
                 <div><el-link :underline="false" @click="thumb" :style="{'color':comment.hits.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{comment.hits.thumbs}}</div>
                 <div><el-link :underline="false" @click="doComment"><i class="el-icon-chat-dot-round"/></el-link></div>
             </div>
-            <div v-if="comment.userkey.userkey === user.userkey">
+            <div v-if="user && comment.userkey.userkey === user.userkey">
                 <el-popconfirm cancel-button-type="warning" @confirm="deleteComment" title="确定要删除这条评论吗?">   
                     <el-link slot="reference" :underline="false"><i 
                 class="el-icon-delete"/></el-link>
