@@ -33,3 +33,8 @@ export const updateHomeTeam = (teamId)=>request({
     method:"put",
     url : `/user/homeTeam/${teamId}`
 })
+export const updateUser = (data)=>request({
+    method:"put",
+    url : `/user/info`,
+    data,
+})

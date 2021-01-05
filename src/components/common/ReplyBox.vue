@@ -13,8 +13,8 @@
         <div class="name">
             <div style="display:flex;align-items:center">
                 <div style="font-weight:bold;font-size:20px">{{reply.userkey.nickName}}&nbsp;</div>
-                <router-link :to="`/team/${reply.userkey.homeTeam.id}`">
-                <el-image v-if="reply.userkey.homeTeam" style="width:20px;height:20px;"
+                <router-link v-if="reply.userkey.homeTeam" :to="`/team/${reply.userkey.homeTeam.id}`">
+                <el-image style="width:20px;height:20px;"
                     :src="$utils.url2img(reply.userkey.homeTeam.logo)"
                     fit="cover"/></router-link>
             </div>

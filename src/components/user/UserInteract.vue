@@ -3,10 +3,11 @@
   <div class="Interactmain">
     <div class="mask_bg" :style="{'background-image':'url('+$utils.url2img(user.userInfo.headImage)+')'}"></div>
     <div class="info">
+      <router-link :to="'/center/info'">
       <el-avatar :size="80" 
         :src="$utils.url2img(user.userInfo.headImage)" 
         fit="cover"
-        style="border:4px solid #fc0;background:transparent;"></el-avatar>
+        style="border:4px solid #fc0;background:transparent;"></el-avatar></router-link>
       <div style="display:flex;align-items:center">
         <div style="color:#fff;font-size:20px">{{user.userInfo.nickName}}&nbsp;</div>
         <el-image v-if="user.userInfo.homeTeam" style="width:20px;height:20px;"

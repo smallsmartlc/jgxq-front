@@ -14,3 +14,6 @@ export function url2img(str){
         return defaultimg; 
     } 
 }
+export function editor2Text(str){
+    return str.replace(/<[^>]+>|&[^>]+;/g,"").replace(/<img.*?(?:>|\/>)/gi,"[图片]").trim();
+}
