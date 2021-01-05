@@ -29,3 +29,7 @@ export const getCollectNews = (pageNum,pageSize) => request({
         pageNum,pageSize
     }
 })
+export const updateHomeTeam = (teamId)=>request({
+    method:"put",
+    url : `/user/homeTeam/${teamId}`
+})

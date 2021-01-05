@@ -58,7 +58,8 @@
       <div v-if="!homeTeam" style="height:300px;text-align:center">
           <span style="display:inline-block;margin-top:120px">
             <div style="color:#666;font-size:16px;margin-bottom:10px">你还没有设置最爱球队</div>
-            <el-button>立即设置</el-button>
+            <el-button @click="dialogVisible=true">立即设置</el-button>
+            <team-update @close="close" @updateTeam="updateTeam" :dialogVisible="dialogVisible" />
           </span>
       </div>
   </div>
@@ -69,38 +70,45 @@ import MatchBox from '../common/MatchBox.vue'
 import NewsBox from '../common/NewsBox.vue'
 import NoMore from '../common/NoMore.vue'
 import PageLoading from '../common/PageLoading.vue'
+import TeamUpdate from '../common/TeamUpdate.vue'
 import MatchList from './MatchList.vue'
 import PlayerList from './PlayerList.vue'
 import TeamInfo from './TeamInfo.vue'
 import {pageNewsByTag} from '@/api/news'
 import {homeMatches} from '@/api/match'
 export default {
-    components: { MatchBox,NewsBox,MatchList,PlayerList,TeamInfo,PageLoading, NoMore,},
+    components: { MatchBox,NewsBox,MatchList,PlayerList,TeamInfo,PageLoading, NoMore, TeamUpdate,},
     mounted() {
         if(this.homeTeam){
            this.loadMatch();
         } 
     },
     methods: {
-      load () {
-        this.loading = true,
-        this.cur ++;
-        pageNewsByTag(this.cur,this.pageSize,this.homeTeam.id,0).then((res)=>{
-            if(res.code == 200){
-                var temp = res.data.records;
-                this.total = res.data.total
-                this.news = this.news.concat(temp);
-            }else this.cur--;
-        })
-        this.loading = false;
-      },
-      loadMatch(){
-          homeMatches(2,this.homeTeam.id).then((res)=>{
-              if(res.code==200){
-                  this.matches = res.data;
-              }
-          })
-      }
+        load () {
+            this.loading = true,
+            this.cur ++;
+            pageNewsByTag(this.cur,this.pageSize,this.homeTeam.id,0).then((res)=>{
+                if(res.code == 200){
+                    var temp = res.data.records;
+                    this.total = res.data.total
+                    this.news = this.news.concat(temp);
+                }else this.cur--;
+            })
+            this.loading = false;
+        },
+        loadMatch(){
+            homeMatches(2,this.homeTeam.id).then((res)=>{
+                if(res.code==200){
+                    this.matches = res.data;
+                }
+            })
+        },
+        close(){
+            this.dialogVisible = false;
+        },
+        updateTeam(id) {
+            this.$emit("update",id);
+        },
     },
     props:{
         homeTeam : Object,
@@ -112,7 +120,8 @@ export default {
             total : 1,
             cur: 0,
             pageSize:10,
-            loading: false
+            loading: false,
+            dialogVisible : false
         }
     },
     computed: {
@@ -121,7 +130,7 @@ export default {
       },
       disabled () {
         return this.loading || this.noMore
-      }
+      },
     },
 }
 </script>
@@ -152,4 +161,5 @@ export default {
         vertical-align: top;
         text-align: center;
     }
+    
 </style>
