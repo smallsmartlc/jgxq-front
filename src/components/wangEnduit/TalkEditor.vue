@@ -1,6 +1,9 @@
 <template>
   <div class="editor">
     <div ref="toolbar" class="toolbar">
+      <div style="position:absolute;right:5px;top:2px">
+        <el-button @click="submit" type="primary" round size="medium">发布</el-button>
+      </div>
     </div>
     <div ref="editor" class="text">
     </div>
@@ -8,6 +11,7 @@
 </template>
 
 <script>
+import { BaseUrl } from '@/constants/index'
   import E from 'wangeditor'
   export default {
     name: 'editoritem',
@@ -52,20 +56,23 @@
       this.editor.txt.html(this.value)
     },
     methods: {
+      submit(){
+        this.$emit("submit")
+      },
       seteditor() {
         // http://192.168.2.125:8080/admin/storage/create
         this.editor = new E(this.$refs.toolbar, this.$refs.editor)
         // 兼容老版本
         let config = this.editor.customConfig ? this.editor.customConfig : this.editor.config;
         config.uploadImgShowBase64 = false // base 64 存储图片
-        config.uploadImgServer = 'http://localhost:6800/file/img/upload/headimg'// 配置服务器端地址
+        config.uploadImgServer = BaseUrl + '/file/img/upload/talkimg'// 配置服务器端地址
         config.uploadImgHeaders = {
-          "access-control-allow-origin": '*',
-          "Content-Type" :"multipart/form-data;charset=UTF-8"
+          "Access-Control-Allow-Origin": '*',
+          // "Content-Type" :"multipart/form-data;charset=UTF-8"
         }// 自定义 header
         config.uploadFileName = 'file' // 后端接受上传文件的参数名
         config.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
-        config.uploadImgMaxLength = 6 // 限制一次最多上传 6 张图片
+        config.uploadImgMaxLength = 1 // 限制一次最多上传 6 张图片
         config.uploadImgTimeout = 3 * 60 * 1000 // 设置超时时间
         config.placeholder = '说点什么吧···';
         config.withCredentials = true
@@ -86,15 +93,41 @@
         config.uploadImgHooks = {
           fail: (xhr, editor, result) => {
             // 插入图片失败回调
+            this.$message({
+                  message: '插入图片失败',
+                  type: 'warning'
+              });
           },
           success: (xhr, editor, result) => {
             // 图片上传成功回调
+            this.$message({
+                message: '图片上传成功',
+                type: 'success'
+            });
           },
           timeout: (xhr, editor) => {
             // 网络超时的回调
+            this.$message({
+                message: '网络超时',
+                type: 'warning'
+            });
           },
-          error: (xhr, editor) => {
+          
+          error: (xhr,resData)=>{
+            var code = xhr.status;
             // 图片上传错误的回调
+            if(code == '401'){
+              this.$message({
+                  message: '请先登陆再操作',
+                  type: 'warning'
+              });
+              this.$router.push('/login')
+            }else{
+              this.$message({
+                  message: '图片上传错误',
+                  type: 'warning'
+              });
+            }
           },
           customInsert: (insertImg, result, editor) => {
             // 图片上传成功，插入图片的回调
@@ -104,7 +137,7 @@
              //循环插入图片
             // for (let i = 0; i < 1; i++) {
               // console.log(result)
-              let url = this.$utils.url2img(result.url);
+              let url = this.$utils.url2img(result.data);
               insertImg(url)
             // }
           }

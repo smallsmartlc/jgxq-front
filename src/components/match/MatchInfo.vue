@@ -19,14 +19,14 @@
         <div style="margin-bottom : 30px">
             <div>
                 <match-group :matches="matches"></match-group>
-                <!-- <p v-if="loading"><page-loading/></p>
-                <p v-if="noMore"><no-more/></p> -->
-                <div class="loadmore">
+                <p v-if="loading"><page-loading/></p>
+                <p v-if="noMore"><no-more/></p>
+                <!-- <div class="loadmore">
                     <el-link v-if="!noMore" style="width:100%" :underline="false" type="primary" @click="load">
                         <span v-if="loading"><i class="el-icon-loading"></i>加载中</span>
                         <span v-else >点击加载更多<i class="el-icon-arrow-down"/></span></el-link>
                     <div v-else style="color:#fc0;text-align:center">没有更多了</div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -62,11 +62,18 @@ export default {
         return this.matches.length >= this.total
       },
       disabled () {
-        return this.loading || this.noMore
+        var val = this.loading || this.noMore;
+        this.$emit("update:disabled",val);
+        return val
       }
     },
     mounted() {
         this.load();
+    },
+    watch: {
+        disabled(newVal, oldVal) {
+            this.$emit("disabled",newVal);
+        }
     },
     methods: {
         changeTime(){
@@ -90,8 +97,8 @@ export default {
                     this.total = res.data.total;
                     this.matches = this.matches.concat(temp);
                 }else{this.cur--;}
+                this.loading = false
             })
-            this.loading = false
         },
     },
 }

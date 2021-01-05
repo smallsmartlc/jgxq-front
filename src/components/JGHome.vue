@@ -1,7 +1,8 @@
 <template>
+<div>
     <div>
       <el-row>
-        <el-col :span="16">
+        <el-col v-loading.fullscreen.lock="loading" :span="16">
           <home-title :news="news"/>
           <home-news :news="news"/>
         </el-col>
@@ -11,6 +12,7 @@
         </el-col>
       </el-row>
     </div>
+</div>
 </template>
 
 <script>
@@ -24,7 +26,8 @@ export default {
   name: 'JGHome',
   data () {
     return {
-      news : []
+      news : [],
+      loading : false,
     }
   },
   props:{
@@ -47,8 +50,8 @@ export default {
           var temp = res.data;
           this.news = temp;
         }
+        this.loading = false
       })
-      this.loading = false
     }
   }
 }

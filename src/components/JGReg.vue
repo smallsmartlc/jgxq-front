@@ -69,9 +69,9 @@ export default {
   methods:{
     sendCode(){
       if(this.b_loading||this.desabled) return;
-      this.b_loading = true;
       this.$refs['regForm'].validateField('email',(valid) => {
         if(!valid){
+          this.b_loading = true;
           getCode(this.user.email).then((res)=>{
             if(res.code==200){
               if(res.data){
@@ -96,8 +96,10 @@ export default {
                 });
               }
               this.disabled = false;
-              this.b_loading = false;
             }
+            this.b_loading = false;
+          }).catch((err)=>{
+            this.b_loading = false;
           })
         }else{
           return false;
@@ -109,6 +111,7 @@ export default {
         if (valid) {
           this.loading = true;
           userRegister(this.user).then((res)=>{
+            console.log(res);
             if(res.code==200){
               this.$message({
                 message: '注册成功,快去登陆吧!',
@@ -143,7 +146,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: 1;
 }
 .container{
   width: 480px;

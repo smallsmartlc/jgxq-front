@@ -206,6 +206,7 @@ data() {
     flex-grow:1;
     flex-direction: column;
 }
+
 .name{
     width: 100%;
     display: flex;
@@ -230,5 +231,15 @@ data() {
 }
 .interact i:hover{
     color : #fc0!important;
+}
+</style>
+<style>
+.message img{
+    max-width: 300px!important;
+    height: auto;
+}
+.w-e-text img{
+    max-width: 300px!important;
+    height: auto;
 }
 </style>

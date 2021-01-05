@@ -126,7 +126,7 @@ http.interceptors.response.use(
                         message: error.response.data.message || '服务器异常，请联系管理员',
                         type: 'error',
                         duration: messageTime
-                    })
+                    })  
                 }
                 if (error.response.status === 404) {
                     router.push({
@@ -142,11 +142,13 @@ http.interceptors.response.use(
                         type: 'error'
                     });
                 }
+                let errorInfo =  error.response.data.error ? error.response.data.error.message : error.response.data;
+                return Promise.reject(errorInfo);
             }
             // let errorInfo = error.message ? error.message : error.data
             tryHideFullScreenLoading()
             // return Promise.reject(errorInfo)
-            return Promise.reject(error.response)
+            // return Promise.reject(error.response)
         }
     }
 )

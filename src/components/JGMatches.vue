@@ -1,7 +1,7 @@
 <template>
     <el-row>
         <el-col :span="20" :offset="2">
-          <match-info/>
+          <match-info @disabled="changedisabled"  ref="matchinfo"/>
         </el-col>
     </el-row>
 </template>
@@ -13,7 +13,24 @@ export default {
   name: 'JGMatches',
   data () {
     return {
-      
+    }
+  },  
+  mounted(){
+    this.load();
+  },
+  methods:{
+    load(){
+      this.$refs.matchinfo.load();
+    },
+    changedisabled(val){
+      this.$emit("disabled",val);
+    }
+  },
+  computed:{
+    disabled2 () {
+      console.log("变化");
+      this.$emit("update:disabled",this.disabled);
+      return val;
     }
   }
 }

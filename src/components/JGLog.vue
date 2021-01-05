@@ -148,6 +148,11 @@ export default {
                     type: 'warning'
                 });
               }
+            }else{
+              this.$message({
+                message: res.msg,
+                type: 'warning'
+              });
             }
             this.b_loading = false;
           })
@@ -180,7 +185,7 @@ yellow rgb(232,226,47)
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: 1;
 }
 .container{
   width: 480px;

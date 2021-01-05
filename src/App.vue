@@ -1,11 +1,19 @@
 <template>
-  <div>
-    <el-row>
-      <el-col :span="24" style="margin-bottom:40px"><jg-header @logout="logout" :user="user"></jg-header></el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="20" :offset="2"><router-view @login="login" :user="user"></router-view></el-col>
-    </el-row>
+  <div class="app-component" style="height:100vh;">
+    <el-scrollbar style="height:100%">
+      <div class="list" :infinite-scroll-immediate="false" v-infinite-scroll="load" infinite-scroll-distance="10" infinite-scroll-disabled="disabled">
+        <el-row style="z-index:100">
+          <el-col :span="24" style="margin-bottom:40px"><jg-header @logout="logout" :user="user"></jg-header></el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="20" :offset="2">
+            <div>
+              <router-view @disabled = "changedisabled" ref="children" @login="login" :user="user"/>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </el-scrollbar>
     <back-top/>
   </div>
 </template>
@@ -37,14 +45,29 @@ export default {
     logout(){
       this.user = null;
       this.$router.push({ path:'/login'})
+    },
+    load(){
+      if(this.$refs.children.load){this.$refs.children.load();}
+    },
+    changedisabled(val){
+      this.disabled = val; 
     }
-    
   },
   data(){
     return {
       user : null,
+      disabled : false,
     }
-  }
+  },
+  computed:{
+    // disabled () {
+    //   if(this.$refs.children.disabled) {
+    //     return this.$refs.children.disabled
+    //   }
+    //   return false;
+    // }
+  },
+
 }
 </script>
 

@@ -70,6 +70,7 @@ export default {
       this.$refs['regForm'].validateField('email',(valid) => {
         if(!valid){
           getCode(this.user.email).then((res)=>{
+            console.log(res);
             if(res.code==200){
               if(res.data){
                 this.codeInfo = 60;
@@ -92,6 +93,11 @@ export default {
                     type: 'warning'
                 });
               }
+            }else{
+              this.$message({
+                    message: res.msg,
+                    type: 'warning'
+                });
             }
             this.b_loading = false; 
           })
@@ -130,16 +136,16 @@ export default {
 <style scoped>
 .main{
   background-image: linear-gradient(to bottom right,#f6d365, #fda085);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
   width: 100vw;
   height: 100vh;
   margin-top:-101px ;
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: 1;
 }
 .container{
   width: 480px;
