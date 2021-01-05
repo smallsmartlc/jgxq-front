@@ -3,7 +3,7 @@
     <el-scrollbar style="height:100%">
       <div class="list" :infinite-scroll-immediate="false" v-infinite-scroll="load" infinite-scroll-distance="10" infinite-scroll-disabled="disabled">
         <el-row style="z-index:100">
-          <el-col :span="24" style="margin-bottom:40px"><jg-header @logout="logout" :user="user"></jg-header></el-col>
+          <el-col :span="24" style="margin-bottom:40px"><jg-header @logout="logout" :message="message" :user="user"></jg-header></el-col>
         </el-row>
         <el-row>
           <el-col :span="20" :offset="2">
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import {hasMessage} from '@/api/message'
 import {checkUser} from '@/api/login'
 import BackTop from './components/common/BackTop.vue'
 import JGHeader from './components/JGHeader.vue'
@@ -36,6 +37,14 @@ export default {
       checkUser().then((res)=>{
         if(res.code==200){
           this.user = res.data;
+          this.hasMessage();
+        }
+      })
+    },
+    hasMessage(){
+      hasMessage().then((res)=>{
+        if(res.code == 200){
+          this.message = res.data;
         }
       })
     },
@@ -57,6 +66,7 @@ export default {
     return {
       user : null,
       disabled : false,
+      message : false
     }
   },
   computed:{

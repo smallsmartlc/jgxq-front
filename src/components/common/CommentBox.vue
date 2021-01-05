@@ -104,6 +104,7 @@ methods: {
             objectId : this.comment.objectId,
             content : this.reply,
             parentId : this.comment.id,
+            target : this.comment.userkey.userkey,
         }
         commentObj(commentReq).then((res)=>{
             if(res.code == 200){

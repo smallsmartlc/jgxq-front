@@ -92,6 +92,7 @@ methods: {
             content : this.replytxt,
             parentId : this.reply.parentId,
             replyId : this.reply.id,
+            target : this.reply.userkey.userkey,
         }
         commentObj(commentReq).then((res)=>{
             if(res.code == 200){

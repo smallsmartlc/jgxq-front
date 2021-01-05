@@ -89,6 +89,7 @@ methods: {
             type : 1,
             objectId : this.talk.id,
             content : this.comment,
+            target : this.talk.author.userkey,
         }
         commentObj(commentReq).then((res)=>{
             if(res.code == 200){

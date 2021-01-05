@@ -1,7 +1,7 @@
 <template>
     <div v-if="user.userInfo" class="userInfoBox">
         <div class="title">
-            <router-link to="/center">
+            <router-link to="/center/info">
                 <el-avatar :size="90" 
                     :src="$utils.url2img(user.userInfo.headImage)" 
                     fit="cover"
