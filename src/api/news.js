@@ -20,6 +20,10 @@ export const pageNews = (cur,pageSize) =>request({
     method: 'get',
     url: `news/page/${cur}/${pageSize}`,
 })
+export const pageAuthorNews = (cur,pageSize) =>request({
+    method: 'get',
+    url: `news/page/author/${cur}/${pageSize}`,
+})
 export const homeNews = (size)=>request({
     method : "get",
     url: `news/home/top`,

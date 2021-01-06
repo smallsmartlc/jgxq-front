@@ -3,7 +3,7 @@
         <div class = "news-box">
             <el-image
                 style="margin-right:20px"
-                :style="{'width':imgSize,'height':imgSize}"
+                :style="{'width':imgSize,'height':imgSize,'min-width':imgSize}"
                 :src="$utils.url2img(news.cover)"
                 fit="cover"></el-image>
             <div class="title_box">

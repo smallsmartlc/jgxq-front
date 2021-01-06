@@ -24,6 +24,10 @@ import TalkDetail from '@/components/details/TalkDetail'
 import PlayerDetail from '@/components/details/PlayerDetail'
 import TeamDetail from '@/components/details/TeamDetail'
 
+
+import AddNews from '@/components/author/AddNews'
+import EditNews from '@/components/author/EditNews'
+
 Vue.use(Router)
 
 const originalPush = Router.prototype.push
@@ -138,6 +142,14 @@ export default new Router({
           component : AuthorCenter,
         }
       ]
-    }
+    },
+    {
+      path: '/author/news',
+      component: AddNews
+    },
+    {
+      path: '/author/news/:id',
+      component: EditNews
+    },
   ]
 })

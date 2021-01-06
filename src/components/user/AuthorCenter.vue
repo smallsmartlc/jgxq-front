@@ -1,31 +1,181 @@
 <template>
-<div>
-  <div v-if="user.author">
+<div style="padding:40px;">
+  <div v-if="user.userInfo&&user.userInfo.author">
+    <div style="font-size:30px">{{nowNoon}}好, {{user.userInfo.nickName}}</div>
+    <div class="main">
+      <div class="info_container">
+        <div class="info_item">
+          <div class="number">{{infos.publishNum}}</div>
+          <span>发表</span>
+        </div>
+        <div class="info_item">
+          <div class="number">{{infos.thumbs}}</div>
+          <span>点赞</span>
+        </div>
+        <div class="info_item">
+          <div class="number">{{infos.comments}}</div>
+          <span>评论</span>
+        </div>
+        <div class="info_item">
+          <div class="number">{{infos.collects}}</div>
+          <span>收藏</span>
+        </div>
+      </div>
+      <div class="main_right">
+        <div style="text-align:center">
+          <div class="chicken_soup">{{chickenSoup}}</div>
+          <a href="/author/news"><el-button type="primary" round>开始创作</el-button></a>
+        </div>
+      </div>
+    </div>
   </div>
   <div v-else style="width:100%;height:400px;display:flex;justify-content:center;align-items:center">
     <i class="iconfont icon-unie605"></i> 您还不能发表新闻哦,去申请成为创作者吧!!!
+  </div>
+  <div class="news">
+    <div style="font-size:20px;margin-bottom:10px">最近创作</div>
+    <el-scrollbar style="height:100%;">
+      <ul
+      class="list"
+      v-infinite-scroll="loadNews"
+      infinite-scroll-disabled="disabled">
+      <li class="news_item" style="position:relative"  v-for="item in news" :key="item.id">
+        <router-link :to="'/news/'+item.id">
+          <news-l-box :news='item' :imgSize='"80px"' :width="'450px'" style="width:100%;height:100px"/>
+        </router-link>
+        <div class="button" style="position:absolute;right:70px;top:10px;">
+          <a :href="`/author/news/${item.id}`"><el-button type="primary" round>编辑</el-button></a>
+        </div>
+      </li>
+      </ul>
+      <p v-if="loading"><page-loading/></p>
+      <p v-if="noMore"><no-more/></p>
+    </el-scrollbar>
   </div>
 </div>
     
 </template>
 
 <script>
-
+import {pageAuthorNews} from '@/api/news'
+import {getAuthorInfo} from '@/api/author'
+import NewsLBox from '../common/NewsLBox.vue'
+import PageLoading from '../common/PageLoading.vue'
+import NoMore from '../common/NoMore.vue'
 export default {
-  name: 'UserCollect',
+  components: { NewsLBox, PageLoading, NoMore },
   data () {
     return {
-      
+      infos : {},
+      chickenSoups : [
+        '嘘寒问暖三千日，不及凉时一身衣',
+        '但愿你比冬天先来',
+        '晚来天欲雪，能涮一锅无',
+        '没有一个冬天不能逾越，没有一个春天不会到来',
+        '春天终究会来的 你也是'
+        ],
+      news : [], 
+      hover : -1,
+      cur : 0,
+      size : 10,
+      total : 1,
+      loading : false,
     }
+  },
+  mounted() {
+    this.loading = true;
+    getAuthorInfo().then((res)=>{
+      if(res.code == 200){
+        this.infos = res.data;
+      }
+      this.loading = false;
+    });
   },
   props:{
     user:Object,
+  },
+  computed:{
+    nowNoon(){
+      var time = this.$moment().hour();
+      if(time>19||time<7) {return "晚上"}
+      if(time>14) {return "下午"}
+      if(time>12){return "中午"} 
+      else {return "早上"}
+    },
+    loadNews(){
+      this.cur++;
+      pageAuthorNews(this.cur,this.size).then((res)=>{
+        if(res.code==200){
+          this.news = res.data.records;
+          this.total = res.data.total;
+        }else {this.cur--}
+      })
+    },
+    noMore () {
+      return this.news.length >= this.total
+    },
+    disabled () {
+      return this.loading || this.noMore
+    },
+    chickenSoup(){
+      return this.chickenSoups[Math.floor((Math.random()*this.chickenSoups.length))]
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-
+.main{
+  margin-top:40px;
+  width: 100%;
+  display: flex;
+}
+.info_container{
+  display: flex;
+  width: 400px;
+  padding: 20px;
+  background-color: #fbfbfb;
+  border-radius: 20px;
+  justify-content: center;
+  margin-right: 50px;
+}
+.main_right{
+  width: 300px;
+  background-color: #fafafa;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.info_item{
+  width:100px;
+  height: 60px;
+  text-align: center;
+}
+.number{
+  font-size: 30px;
+}
+.chicken_soup{
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.news{
+  margin-top: 40px;
+  height: 200px;
+  width: 700px;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #fafafa;
+}
+.button{
+  visibility:hidden;
+  transition:display 0.2s;
+  -moz-transition:display 0.2s; /* Firefox 4 */
+  -webkit-transition:display 0.2s; /* Safari and Chrome */
+  -o-transition:display 0.2s; /* Opera */
+}
+.news_item:hover .button{
+  visibility: visible;
+}
 </style>
