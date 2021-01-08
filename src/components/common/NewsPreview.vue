@@ -3,7 +3,7 @@
         <div class="newsbox">
           <div class="title">{{news.title?news.title:'标题'}}</div>
           <div class="author">
-              <el-link :underline="false" style="font-size:16px;margin-right:10px">我</el-link>
+              <el-link :underline="false" style="font-size:16px;margin-right:10px">{{news.author?news.author.nickName:'我'}}</el-link>
               <span>{{fromNowStr(news.createAt?news.createAt:new Date())}}</span>
           </div>
           <el-divider></el-divider>
@@ -24,7 +24,7 @@ computed : {
             var now = this.$moment();
             var temp =  this.$moment(time);
             if((now-temp) > (3*24*3600*1000)){
-                return temp.format('MM-DD HH:mm');
+                return temp.format('YY-MM-DD HH:mm');
             }else{
                 return temp.fromNow();
             }

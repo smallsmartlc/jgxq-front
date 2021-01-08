@@ -45,8 +45,8 @@ import { BaseUrl } from '@/constants/index'
         if (value !== this.editor.txt.html()) {
           this.editor.txt.html(this.value)
         }
-      }
-      //value为编辑框输入的内容，这里我监听了一下值，当父组件调用得时候，如果给value赋值了，子组件将会显示父组件赋给的值
+        //value为编辑框输入的内容，这里我监听了一下值，当父组件调用得时候，如果给value赋值了，子组件将会显示父组件赋给的值
+      },
     },
     mounted() {
       this.seteditor();
@@ -68,7 +68,7 @@ import { BaseUrl } from '@/constants/index'
         config.uploadImgMaxLength = 1 // 限制一次最多上传 1 张图片
         config.uploadImgTimeout = 3 * 60 * 1000 // 设置超时时间
         config.customAlert = (info)=>{}
-        config.placeholder = '发布新闻';
+        config.placeholder = '输入内容';
         config.withCredentials = true
 
         // 配置菜单

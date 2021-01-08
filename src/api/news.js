@@ -31,8 +31,17 @@ export const homeNews = (size)=>request({
         size,
     }
 })
-export const userAddNews = (data)=>request({
+export const authorAddNews = (data)=>request({
     method : "post",
     url: `news`,
+    data ,
+})
+export const authorDeleteNews = (id)=>request({
+    method : "delete",
+    url: `/news/${id}`,
+})
+export const authorUpdateNews = (id,data)=>request({
+    method : "put",
+    url: `news/${id}`,
     data ,
 })

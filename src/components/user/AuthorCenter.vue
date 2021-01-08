@@ -43,7 +43,7 @@
           </router-link>
           <div class="button" style="position:absolute;right:30px;top:10px;">
             <a :href="`/author/news/${item.id}`"><el-button icon="el-icon-edit" type="primary" circle></el-button></a>
-            <el-button icon="el-icon-delete" type="error" circle/>
+            <el-button icon="el-icon-delete" @click="deleteNews(item.id)" type="danger" plain circle/>
           </div>
         </li>
         </ul>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import {pageAuthorNews} from '@/api/news'
+import {pageAuthorNews,authorDeleteNews} from '@/api/news'
 import {getAuthorInfo} from '@/api/author'
 import NewsLBox from '../common/NewsLBox.vue'
 import PageLoading from '../common/PageLoading.vue'
@@ -86,7 +86,10 @@ export default {
     }
   },
   mounted() {
-    if(this.user&&this.user.author){
+    this.getAuthorInfo();
+  },
+  methods: {
+    getAuthorInfo(){
       this.loading = true;
       getAuthorInfo().then((res)=>{
         if(res.code == 200){
@@ -94,6 +97,23 @@ export default {
         }
         this.loading = false;
       });
+    },
+    deleteNews(id){
+      this.$confirm('你将删除这条新闻, 是否继续?',  {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        authorDeleteNews(id).then((res)=>{
+          if(res.code == 200){
+            if(res.data){
+              this.news = this.news.filter(n=>n.id!=id);
+              this.$message.success("删除成功")
+            }
+          }
+        })
+      }).catch();
+      
     }
   },
   props:{

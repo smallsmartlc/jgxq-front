@@ -1,7 +1,7 @@
 <template>
   <el-row>
       <el-col :span="14" :offset="2">
-        <div v-if="player.id">
+        <div v-if="player">
             <div class="title">
                 <div class="info">
                     <p class="cn_name">
@@ -101,7 +101,7 @@ export default {
     },
     data() {
         return {
-            player : {},
+            player : null,
             news : [],
             playerList : [],
             cur: 0,

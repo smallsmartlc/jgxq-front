@@ -85,7 +85,7 @@ import NewsEditor from '../wangEnduit/NewsEditor.vue'
 import NewsPreview from '../common/NewsPreview.vue'
 import { BaseUrl } from '@/constants/index'
 import {searchTag} from '@/api/search'
-import {userAddNews} from '@/api/news'
+import {authorAddNews} from '@/api/news'
 export default {
   components: { NewsEditor, NewsPreview, },
   data() {
@@ -116,12 +116,19 @@ export default {
       loading:false,
     }
   },
+  watch: {
+    user : function(newVal,oldVal){
+      if(!this.user.author){
+        this.$router.replace('/center/author');
+      }
+    }
+  },
   methods: {
     submitNews(formName){
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loading = true;
-          userAddNews(this.newsReq).then((res)=>{
+          authorAddNews(this.newsReq).then((res)=>{
             this.newsReq = {};
             this.$message.success("发布成功")
             this.loading = false;
@@ -171,6 +178,10 @@ export default {
     uploadImgUrl(){
       return BaseUrl + '/file/img/upload/cover'
     }
+  },
+  props:{
+    user : Object,
+    
   }
 }
 </script>

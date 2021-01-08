@@ -13,12 +13,7 @@
     </div>
     <div class="info_box" style="padding:20px">
       <el-form-item  label='发布时间'>
-        <el-date-picker
-        v-model="newsReq.createAt"
-        type="datetime"
-        readonly
-        value-format = "timestamp">
-        </el-date-picker>
+        <span>{{$moment(newsReq.createAt).format('YY-MM-DD HH:mm')}}</span>
       </el-form-item>
       <el-form-item label='封面' prop="cover">
         <el-upload
@@ -84,7 +79,7 @@ import NewsEditor from '../wangEnduit/NewsEditor.vue'
 import NewsPreview from '../common/NewsPreview.vue'
 import { BaseUrl } from '@/constants/index'
 import {searchTag} from '@/api/search'
-import {userAddNews} from '@/api/news'
+import {getNewsById,authorUpdateNews} from '@/api/news'
 export default {
   components: { NewsEditor, NewsPreview, },
   data() {
@@ -105,18 +100,40 @@ export default {
     }
   },
   mounted() {
-    
+    this.loadNews();
+  },
+  watch: {
+    user : function(newVal,oldVal){
+      if(!this.user.author){
+        this.$router.replace('/center/author');
+      }
+    }
   },
   methods: {
+    loadNews(){
+      this.loading = true;
+      getNewsById(this.$route.params.id).then((res)=>{
+        if(res.code == 200){
+          this.newsReq = res.data;
+        }
+        this.loading = false;
+      }).catch((err)=>{
+        this.loading = false;
+      })
+    },
     submitNews(formName){
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loading = true;
-          userAddNews(this.newsReq).then((res)=>{
-            this.newsReq = {};
-            this.$message.success("发布成功")
+          authorUpdateNews(this.$route.params.id,this.newsReq).then((res)=>{
+            if(res.data){
+              this.newsReq = {};
+              this.$message.success("修改成功")
+              this.$router.replace('/center/author')
+            }else{
+              this.$message.error("修改失败,新闻不存在或没有权限修改")
+            }
             this.loading = false;
-            this.$router.replace('/center/author')
           }).catch((err)=>{
             this.loading = false;
           })
@@ -162,6 +179,9 @@ export default {
     uploadImgUrl(){
       return BaseUrl + '/file/img/upload/cover'
     }
+  },
+  props:{
+    user : Object,
   }
 }
 </script>
