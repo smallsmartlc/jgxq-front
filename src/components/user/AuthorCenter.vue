@@ -41,8 +41,9 @@
           <router-link :to="'/news/'+item.id">
             <news-l-box :news='item' :imgSize='"80px"' :width="'450px'" style="width:100%;height:100px"/>
           </router-link>
-          <div class="button" style="position:absolute;right:70px;top:10px;">
-            <a :href="`/author/news/${item.id}`"><el-button type="primary" round>编辑</el-button></a>
+          <div class="button" style="position:absolute;right:30px;top:10px;">
+            <a :href="`/author/news/${item.id}`"><el-button icon="el-icon-edit" type="primary" circle></el-button></a>
+            <el-button icon="el-icon-delete" type="error" circle/>
           </div>
         </li>
         </ul>
@@ -174,10 +175,6 @@ export default {
 }
 .button{
   visibility:hidden;
-  transition:display 0.2s;
-  -moz-transition:display 0.2s; /* Firefox 4 */
-  -webkit-transition:display 0.2s; /* Safari and Chrome */
-  -o-transition:display 0.2s; /* Opera */
 }
 .news_item:hover .button{
   visibility: visible;

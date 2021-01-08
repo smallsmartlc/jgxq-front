@@ -154,4 +154,9 @@ padding:40px;
 .content img{
     max-width: 500px!important;
 }
+.content iframe{
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+}
 </style>

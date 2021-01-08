@@ -1,7 +1,7 @@
 <template>
   <el-row>
       <el-col :span="14" :offset="2">
-        <div v-if="team.id">
+        <div v-if="team">
             <div class="title">
                 <div class="img">
                     <el-image
@@ -100,7 +100,7 @@ export default {
     },
     data() {
         return {
-            team : {},
+            team : null,
             news : [],
             playerList : [],
             cur: 0,

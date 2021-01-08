@@ -174,4 +174,7 @@ import { BaseUrl } from '@/constants/index'
     height: 400px;
     margin: 0 auto;
   }
+  .text img{
+    max-width: 500px!important;
+  }
 </style>

@@ -2,7 +2,18 @@
   <div v-if="tag">
       <div>
         <diamond-title :dstyle="{'margin-bottom':'10px'}" dname="相关标签"/>
-        <div v-if="(tag.teams||tag.players)">
+        <div v-for="(item,index) in tag" :key="index">
+            <router-link :to="`/${item.type==0?'team':'player'}/${item.objectId}`">
+                <div class="tagbox">
+                    <el-image
+                    style="width: 40px; height: 40px"
+                    :src="$utils.url2img(item.logo)"
+                    fit="cover"></el-image>
+                    <div>{{item.name}}</div>
+                </div>
+            </router-link>
+        </div>
+        <!-- <div v-if="(tag.teams||tag.players)">
             <div v-for="team in tag.teams" :key="'team'+team.id">
                 <router-link :to="`/team/${team.id}`">
                     <div class="tagbox">
@@ -25,7 +36,7 @@
                     </div>
                 </router-link>
             </div>
-        </div>
+        </div> -->
       </div>
       
       <div style="margin-top:40px">
@@ -44,7 +55,7 @@ import NewsBox from '../common/NewsBox.vue'
 export default {
 components: { DiamondTitle, NewsBox },
 props:{
-    tag:Object,
+    tag:Array,
 },
 data() {
     return {

@@ -10,7 +10,7 @@
                 <div class="box_wrap"  v-infinite-scroll="loadTeam" infinite-scroll-distance="10" infinite-scroll-disabled="tdisabled">
                     <div class="teamItem" v-for="item in teams" :key="item.id">
                         <div @click="focusThis(item.id)" style="position:relative">
-                            <el-image :class="focus===item.id?'isactive':''"
+                            <el-image  class="team_hover" :class="focus===item.id?'isactive':''"
                             :src="$utils.url2img(item.logo)"
                             fit="contain"><el-badge class="mark" :value="12" /></el-image>
                             <div v-if="focus===item.id" style="position:absolute;bottom:0;right:0;">
@@ -127,6 +127,10 @@ export default {
     .teamItem{
         margin: 15px;
         /* display: flex; */
+    }
+    .team_hover:hover{
+        border: 2px solid #fc0!important;
+        background-color: rgba(255,204,0,0.2)!important;
     }
     .teamItem .el-image{
         border: 2px solid #fff;

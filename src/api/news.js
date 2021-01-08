@@ -31,3 +31,8 @@ export const homeNews = (size)=>request({
         size,
     }
 })
+export const userAddNews = (data)=>request({
+    method : "post",
+    url: `news`,
+    data ,
+})

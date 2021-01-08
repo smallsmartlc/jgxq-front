@@ -1,5 +1,5 @@
 <template>
-  <el-form class="newsEditor" :model="newsReq" :rules="rules" ref="newsForm">
+  <el-form v-loading="loading" class="newsEditor" :model="newsReq" :rules="rules" ref="newsForm">
   <div style="width:800px;margin: 0 auto;">
     <div class="info_box">
       <el-form-item prop="title">
@@ -27,11 +27,11 @@
       <el-form-item label='标签'>
         <el-tag
           style="margin:5px"
-          :key="tag.id"
-          v-for="tag in newsReq.tags"
+          :key="index"
+          v-for="(tag,index) in newsReq.tags"
           closable
           :disable-transitions="false"
-          @close="handleClose(tag.id)"
+          @close="handleClose(tag)"
           effect="plain">
           <img :src="$utils.url2img(tag.logo)" style="height:18px;vertical-align: middle;">
           <span class="name">{{ tag.name }}</span>
@@ -42,12 +42,14 @@
         v-model="keyword"
         ref="saveTagInput"
         size="small"
+        suffix-icon="el-icon-search"
         :fetch-suggestions="querySearch"
         placeholder="搜索标签"
+        popper-class = "input_popper"
         :trigger-on-focus="false"
         @select="handleSelect">
           <template slot-scope="{ item }">
-            <div class="name">{{ item.name }}</div>
+            <div><img :src="$utils.url2img(item.logo)" style="height:16px;vertical-align: middle;"><span style="font-size:12px">{{ item.name }}</span></div>
             <!-- <span class="addr">{{ item.address }}</span> -->
           </template>
         </el-autocomplete>
@@ -57,11 +59,22 @@
         <el-date-picker
         v-model="newsReq.createAt"
         type="datetime"
+        :picker-options="pickerOptions"
         value-format = "timestamp"
         placeholder="选择发布时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item><el-button type="primary" @click="submitNews('newsForm')">提交</el-button></el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitNews('newsForm')" round>发布</el-button>
+        <el-button @click="centerDialogVisible = true" round plain>预览</el-button>
+        <el-dialog
+          title="预览"
+          :visible.sync="centerDialogVisible"
+          width="50%"
+          center>
+          <news-preview  :news="newsReq"/>
+        </el-dialog>
+      </el-form-item>
     </div>
   </div>
   </el-form>
@@ -69,9 +82,12 @@
 
 <script>
 import NewsEditor from '../wangEnduit/NewsEditor.vue'
+import NewsPreview from '../common/NewsPreview.vue'
 import { BaseUrl } from '@/constants/index'
+import {searchTag} from '@/api/search'
+import {userAddNews} from '@/api/news'
 export default {
-  components: { NewsEditor },
+  components: { NewsEditor, NewsPreview, },
   data() {
     return {
       newsReq:{
@@ -89,18 +105,30 @@ export default {
         text : [{required: true, message: '内容不少于20个字'},{'min': 20, message: '内容不少于20个字', trigger: 'blur'}],
         cover : [{required: true, message: '必须上传封面'}]
       },
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now();
+        },
+      },
       inputVisible : false,
       keyword : "",
+      centerDialogVisible : false,
+      loading:false,
     }
   },
   methods: {
     submitNews(formName){
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
+          this.loading = true;
+          userAddNews(this.newsReq).then((res)=>{
+            this.newsReq = {};
+            this.$message.success("发布成功")
+            this.loading = false;
+            this.$router.replace('/center/author')
+          }).catch((err)=>{
+            this.loading = false;
+          })
         }
       });
     },
@@ -120,8 +148,8 @@ export default {
       }
       return isIMG && isLt2M;
     },
-    handleClose(id) {
-      this.newsReq.tags = this.newsReq.tags.filter(n=>n.id!=id);
+    handleClose(tag) {
+      this.newsReq.tags = this.newsReq.tags.filter(n=>(n.type!=tag.type || n.objectId != tag.objectId));
     },
     showInput() {
       this.inputVisible = true;
@@ -130,31 +158,10 @@ export default {
       });
     },
     querySearch(queryString, cb){
-      // todo: 搜索的方法
-      var res = [
-        {
-          "id" : 10,
-          "type" : 0,
-          "objectId" : 1,
-          "name" : "很厉害",
-          "logo" : "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-        },
-        {
-          "id" : 11,
-          "type" : 0,
-          "objectId" : 1,
-          "name" : "有点厉害",
-          "logo" : "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-        },
-        {
-          "id" : 12,
-          "type" : 0,
-          "objectId" : 1,
-          "name" : "特别厉害",
-          "logo" : "images/jgxq/headimg/abbaff7386d74a5286a73c8bf59c608e.png"
-        },
-      ]
-      cb(res);
+      searchTag(queryString).then((res)=>{
+        var resdata = res.data;
+        cb(resdata);
+      })
     },
     handleSelect(item) {
       this.newsReq.tags.push(item);
@@ -192,12 +199,19 @@ export default {
     height: 100px;
     display: block;
   }
-  .info_box{
+  .newsEditor .info_box{
     /* padding: 20px 0; */
     background-color:#fff;
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.04);
   }
-  .input-new-tag{
-    width: 120px;
+  .input_popper{
+    width: 180px!important;
   }
+</style>
+<style scoped>
+
+  .input-new-tag{
+    width: 100px;
+  }
+  
 </style>
