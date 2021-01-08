@@ -89,7 +89,7 @@ export default {
               });
             }
             this.loading = false;
-          })
+          }).catch((err)=>{this.loading = false;})
         }else{
           return false;
         }
@@ -114,7 +114,7 @@ export default {
               });
             }
             this.loading = false; 
-          })
+          }).catch((err)=>{this.loading = false;})
         }else{
           return false;
         }
@@ -155,7 +155,7 @@ export default {
               });
             }
             this.b_loading = false;
-          })
+          }).catch((err)=>{this.b_loading = false;})
         }else{
           return false;
         }

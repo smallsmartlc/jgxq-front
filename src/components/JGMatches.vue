@@ -16,10 +16,10 @@ export default {
     }
   },  
   mounted(){
-    this.load();
+    this.load_scoll();
   },
   methods:{
-    load(){
+    load_scoll(){
       this.$refs.matchinfo.load();
     },
     changedisabled(val){

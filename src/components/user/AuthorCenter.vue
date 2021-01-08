@@ -1,56 +1,58 @@
 <template>
 <div style="padding:40px;">
   <div v-if="user.userInfo&&user.userInfo.author">
-    <div style="font-size:30px">{{nowNoon}}好, {{user.userInfo.nickName}}</div>
-    <div class="main">
-      <div class="info_container">
-        <div class="info_item">
-          <div class="number">{{infos.publishNum}}</div>
-          <span>发表</span>
+    <div>
+      <div style="font-size:30px">{{nowNoon}}好, {{user.userInfo.nickName}}</div>
+      <div class="main">
+        <div class="info_container">
+          <div class="info_item">
+            <div class="number">{{infos.publishNum}}</div>
+            <span>发表</span>
+          </div>
+          <div class="info_item">
+            <div class="number">{{infos.thumbs}}</div>
+            <span>点赞</span>
+          </div>
+          <div class="info_item">
+            <div class="number">{{infos.comments}}</div>
+            <span>评论</span>
+          </div>
+          <div class="info_item">
+            <div class="number">{{infos.collects}}</div>
+            <span>收藏</span>
+          </div>
         </div>
-        <div class="info_item">
-          <div class="number">{{infos.thumbs}}</div>
-          <span>点赞</span>
-        </div>
-        <div class="info_item">
-          <div class="number">{{infos.comments}}</div>
-          <span>评论</span>
-        </div>
-        <div class="info_item">
-          <div class="number">{{infos.collects}}</div>
-          <span>收藏</span>
+        <div class="main_right">
+          <div style="text-align:center">
+            <div class="chicken_soup">{{chickenSoup}}</div>
+            <a href="/author/news"><el-button type="primary" round>开始创作</el-button></a>
+          </div>
         </div>
       </div>
-      <div class="main_right">
-        <div style="text-align:center">
-          <div class="chicken_soup">{{chickenSoup}}</div>
-          <a href="/author/news"><el-button type="primary" round>开始创作</el-button></a>
-        </div>
-      </div>
+    </div>
+    <div class="news">
+      <div style="font-size:20px;margin-bottom:10px">最近创作</div>
+      <el-scrollbar style="height:100%;">
+        <ul
+        class="list"
+        v-infinite-scroll="loadNews"
+        infinite-scroll-disabled="disabled">
+        <li class="news_item" style="position:relative"  v-for="item in news" :key="item.id">
+          <router-link :to="'/news/'+item.id">
+            <news-l-box :news='item' :imgSize='"80px"' :width="'450px'" style="width:100%;height:100px"/>
+          </router-link>
+          <div class="button" style="position:absolute;right:70px;top:10px;">
+            <a :href="`/author/news/${item.id}`"><el-button type="primary" round>编辑</el-button></a>
+          </div>
+        </li>
+        </ul>
+        <p v-if="loading"><page-loading/></p>
+        <p v-if="noMore"><no-more/></p>
+      </el-scrollbar>
     </div>
   </div>
   <div v-else style="width:100%;height:400px;display:flex;justify-content:center;align-items:center">
     <i class="iconfont icon-unie605"></i> 您还不能发表新闻哦,去申请成为创作者吧!!!
-  </div>
-  <div class="news">
-    <div style="font-size:20px;margin-bottom:10px">最近创作</div>
-    <el-scrollbar style="height:100%;">
-      <ul
-      class="list"
-      v-infinite-scroll="loadNews"
-      infinite-scroll-disabled="disabled">
-      <li class="news_item" style="position:relative"  v-for="item in news" :key="item.id">
-        <router-link :to="'/news/'+item.id">
-          <news-l-box :news='item' :imgSize='"80px"' :width="'450px'" style="width:100%;height:100px"/>
-        </router-link>
-        <div class="button" style="position:absolute;right:70px;top:10px;">
-          <a :href="`/author/news/${item.id}`"><el-button type="primary" round>编辑</el-button></a>
-        </div>
-      </li>
-      </ul>
-      <p v-if="loading"><page-loading/></p>
-      <p v-if="noMore"><no-more/></p>
-    </el-scrollbar>
   </div>
 </div>
     
@@ -83,13 +85,15 @@ export default {
     }
   },
   mounted() {
-    this.loading = true;
-    getAuthorInfo().then((res)=>{
-      if(res.code == 200){
-        this.infos = res.data;
-      }
-      this.loading = false;
-    });
+    if(this.user&&this.user.author){
+      this.loading = true;
+      getAuthorInfo().then((res)=>{
+        if(res.code == 200){
+          this.infos = res.data;
+        }
+        this.loading = false;
+      });
+    }
   },
   props:{
     user:Object,

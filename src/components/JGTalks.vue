@@ -1,6 +1,6 @@
 <template>
-  <div style="background-color:#fff">
-    <talk-editor v-loading="submiting" @submit="submit" v-model="talk" :isClear="isClear" @change="change"/>
+  <div>
+    <talk-editor v-loading="submiting" @submit="submit" v-model="talk" :isClear="isClear" @change="editorChange"/>
     <div style="padding:40px;background:#fff" v-for="item in talks" :key = "item.id">
       <talk-box @delete="deleteComment(item.id)" :talk="item" :user="user"/>
     </div>
@@ -82,9 +82,10 @@ export default {
     change(val){
       if(val > 0){
         this.cur = val;
-        this.load();
       }
+      this.load();
     },
+    editorChange(){},
     deleteComment(id){
       this.talks = this.talks.filter(t=>t.id!=id)
       this.total--;

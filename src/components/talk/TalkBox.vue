@@ -239,6 +239,10 @@ data() {
     max-width: 300px!important;
     height: auto;
 }
+.message iframe{
+    width: 600px;
+    height: 400px;
+}
 .w-e-text img{
     max-width: 300px!important;
     height: auto;

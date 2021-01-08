@@ -72,8 +72,15 @@ import { BaseUrl } from '@/constants/index'
         }// 自定义 header
         config.uploadFileName = 'file' // 后端接受上传文件的参数名
         config.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
-        config.uploadImgMaxLength = 1 // 限制一次最多上传 6 张图片
+        config.uploadImgMaxLength = 1 // 限制一次最多上传 1 张图片
         config.uploadImgTimeout = 3 * 60 * 1000 // 设置超时时间
+        config.customAlert = (info)=>{
+          // info 是需要提示的内容
+          // this.$message({
+          //   message: info,
+          //   type: 'warning'
+          // });
+        }
         config.placeholder = '说点什么吧···';
         config.withCredentials = true
 
@@ -94,9 +101,9 @@ import { BaseUrl } from '@/constants/index'
           fail: (xhr, editor, result) => {
             // 插入图片失败回调
             this.$message({
-                  message: '插入图片失败',
-                  type: 'warning'
-              });
+                message: '插入图片失败',
+                type: 'warning'
+            });
           },
           success: (xhr, editor, result) => {
             // 图片上传成功回调
@@ -157,14 +164,16 @@ import { BaseUrl } from '@/constants/index'
   .editor {
     width: 100%;
     margin: 0 auto;
+    margin-bottom : 20px;
     position: relative;
     z-index: 0;
   }
   .toolbar {
-    border: 1px solid #ccc;
+    border-bottom: 1px solid #f7f7f7;
+    background-color: #fcfcfc;
   }
   .text {
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     min-height: 200px;
   }
 </style>

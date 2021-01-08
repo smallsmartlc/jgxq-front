@@ -43,7 +43,7 @@ export default {
     }
   },
   mounted(){
-    this.load();
+    this.load_scoll();
   },
   watch: {
     disabled(newVal, oldVal) {
@@ -60,7 +60,7 @@ export default {
     }
   },
   methods: {
-    load () {
+    load_scoll () {
       this.loading = true
       this.cur ++;
       pageNews(this.cur,this.pageSize).then((res) => {

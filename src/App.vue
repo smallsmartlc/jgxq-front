@@ -37,7 +37,9 @@ export default {
       checkUser().then((res)=>{
         if(res.code==200){
           this.user = res.data;
-          this.hasMessage();
+          if(this.user){
+            this.hasMessage();
+          }
         }
       })
     },
@@ -56,7 +58,7 @@ export default {
       this.$router.push({ path:'/login'})
     },
     load(){
-      if(this.$refs.children.load){this.$refs.children.load();}
+      if(this.$refs.children.load_scoll){this.$refs.children.load_scoll();}
     },
     changedisabled(val){
       this.disabled = val; 

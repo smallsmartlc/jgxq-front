@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { BaseUrl } from '@/constants/index'
   import E from 'wangeditor'
   export default {
     name: 'editoritem',
@@ -58,19 +59,21 @@
         // 兼容老版本
         let config = this.editor.customConfig ? this.editor.customConfig : this.editor.config;
         config.uploadImgShowBase64 = false // base 64 存储图片
-        config.uploadImgServer = 'http://localhost:6800/file/img/upload/headimg'// 配置服务器端地址
-        config.uploadImgHeaders = { }// 自定义 header
+        config.uploadImgServer = BaseUrl + '/file/img/upload/newsimg'// 配置服务器端地址
+        config.uploadImgHeaders = {
+          "Access-Control-Allow-Origin": '*',
+        }// 自定义 header
         config.uploadFileName = 'file' // 后端接受上传文件的参数名
         config.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
-        config.uploadImgMaxLength = 6 // 限制一次最多上传 6 张图片
+        config.uploadImgMaxLength = 1 // 限制一次最多上传 1 张图片
         config.uploadImgTimeout = 3 * 60 * 1000 // 设置超时时间
+        config.customAlert = (info)=>{}
+        config.placeholder = '发布新闻';
+        config.withCredentials = true
 
         // 配置菜单
         config.menus = [
-          'head', // 标题
           'bold', // 粗体
-          'fontSize', // 字号
-          'fontName', // 字体
           'italic', // 斜体
           'underline', // 下划线
           'strikeThrough', // 删除线
@@ -78,30 +81,53 @@
           'backColor', // 背景颜色
           'link', // 插入链接
           'list', // 列表
-          'justify', // 对齐方式
           'quote', // 引用
           'emoticon', // 表情
           'image', // 插入图片
           'table', // 表格
           'video', // 插入视频
-          'code', // 插入代码
           'undo', // 撤销
           'redo', // 重复
-          'fullscreen' // 全屏
         ]
 
         config.uploadImgHooks = {
           fail: (xhr, editor, result) => {
             // 插入图片失败回调
+            this.$message({
+                message: '插入图片失败',
+                type: 'warning'
+            });
           },
           success: (xhr, editor, result) => {
             // 图片上传成功回调
+            this.$message({
+                message: '图片上传成功',
+                type: 'success'
+            });
           },
           timeout: (xhr, editor) => {
             // 网络超时的回调
+            this.$message({
+                message: '网络超时',
+                type: 'warning'
+            });
           },
           error: (xhr, editor) => {
             // 图片上传错误的回调
+            var code = xhr.status;
+            // 图片上传错误的回调
+            if(code == '401'){
+              this.$message({
+                  message: '请先登陆再操作',
+                  type: 'warning'
+              });
+              this.$router.push('/login')
+            }else{
+              this.$message({
+                  message: '图片上传错误',
+                  type: 'warning'
+              });
+            }
           },
           customInsert: (insertImg, result, editor) => {
             // 图片上传成功，插入图片的回调
@@ -109,11 +135,8 @@
             // console.log(result.data[0].url)
             //insertImg()为插入图片的函数
              //循环插入图片
-            // for (let i = 0; i < 1; i++) {
-              // console.log(result)
-              let url = "http://otp.cdinfotech.top"+result.url
+              let url = this.$utils.url2img(result.data);
               insertImg(url)
-            // }
           }
         }
         config.onchange = (html) => {
@@ -127,18 +150,28 @@
   }
 </script>
 
-<style lang="css">
+<style scoped>
   .editor {
     width: 100%;
     margin: 0 auto;
+    margin-top : 20px;
     position: relative;
     z-index: 0;
   }
   .toolbar {
-    border: 1px solid #ccc;
+    border-bottom: 1px solid #f7f7f7;
+    background-color: #fcfcfc;
   }
   .text {
-    border: 1px solid #ccc;
-    min-height: 500px;
+    border: 1px solid #f7f7f7;
+    min-height: 400px;
+  }
+
+</style>
+<style>
+  .text iframe{
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
   }
 </style>
