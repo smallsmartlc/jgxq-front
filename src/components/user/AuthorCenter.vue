@@ -30,26 +30,28 @@
         </div>
       </div>
     </div>
-    <div class="news">
-      <div style="font-size:20px;margin-bottom:10px">最近创作</div>
-      <el-scrollbar style="height:100%;">
-        <ul
-        class="list"
-        v-infinite-scroll="loadNews"
-        infinite-scroll-disabled="disabled">
-        <li class="news_item" style="position:relative"  v-for="item in news" :key="item.id">
-          <router-link :to="'/news/'+item.id">
-            <news-l-box :news='item' :imgSize='"80px"' :width="'450px'" style="width:100%;height:100px"/>
-          </router-link>
-          <div class="button" style="position:absolute;right:30px;top:10px;">
-            <a :href="`/author/news/${item.id}`"><el-button icon="el-icon-edit" type="primary" circle></el-button></a>
-            <el-button icon="el-icon-delete" @click="deleteNews(item.id)" type="danger" plain circle/>
-          </div>
-        </li>
-        </ul>
-        <p v-if="loading"><page-loading/></p>
-        <p v-if="noMore"><no-more/></p>
-      </el-scrollbar>
+    <div class="news_container">
+      <div style="font-size:20px;margin-bottom:10px;">最近创作</div>
+      <div style="height: 200px;">
+        <el-scrollbar style="height:100%;">
+          <ul
+          class="list"
+          v-infinite-scroll="loadNews"
+          infinite-scroll-disabled="disabled">
+          <li class="news_item" style="position:relative"  v-for="item in news" :key="item.id">
+            <router-link :to="'/news/'+item.id">
+              <news-l-box :news='item' :imgSize='"80px"' :width="'450px'" style="width:100%;height:100px"/>
+            </router-link>
+            <div class="button" style="position:absolute;right:30px;top:10px;">
+              <a :href="`/author/news/${item.id}`"><el-button icon="el-icon-edit" type="primary" circle></el-button></a>
+              <el-button icon="el-icon-delete" @click="deleteNews(item.id)" type="danger" plain circle/>
+            </div>
+          </li>
+          </ul>
+          <p v-if="loading"><page-loading/></p>
+          <p v-if="noMore"><no-more/></p>
+        </el-scrollbar>
+      </div>
     </div>
   </div>
   <div v-else style="width:100%;height:400px;display:flex;justify-content:center;align-items:center">
@@ -113,8 +115,16 @@ export default {
           }
         })
       }).catch();
-      
-    }
+    },
+    loadNews(){
+      this.cur++;
+      pageAuthorNews(this.cur,this.size).then((res)=>{
+        if(res.code==200){
+          this.news = this.news.concat(res.data.records);
+          this.total = res.data.total;
+        }else {this.cur--}
+      })
+    },
   },
   props:{
     user:Object,
@@ -126,15 +136,6 @@ export default {
       if(time>14) {return "下午"}
       if(time>12){return "中午"} 
       else {return "早上"}
-    },
-    loadNews(){
-      this.cur++;
-      pageAuthorNews(this.cur,this.size).then((res)=>{
-        if(res.code==200){
-          this.news = res.data.records;
-          this.total = res.data.total;
-        }else {this.cur--}
-      })
     },
     noMore () {
       return this.news.length >= this.total
@@ -185,9 +186,8 @@ export default {
   font-size: 14px;
   margin-bottom: 10px;
 }
-.news{
+.news_container{
   margin-top: 40px;
-  height: 200px;
   width: 700px;
   padding: 20px;
   border-radius: 20px;

@@ -185,7 +185,7 @@ export default {
 .championbox{
     display:flex;
     align-items:center;
-    height:40px;
+    min-height:40px;
     background-color:#fff
 }
 .championbox div{

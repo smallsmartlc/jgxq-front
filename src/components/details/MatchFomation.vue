@@ -3,7 +3,7 @@
 <div class="fomations">
     <div class="fomation">
         <div v-for="(item,index) in homeGroup(matchInfo)" :key="'home'+index" class="line">
-            <div v-for="player in item" :key="player.id">
+            <div v-for="(player,index2) in item" :key="`home${index}-${index2}`">
                 <div class="player home">{{player.number}}</div>
                 <div style="color:#fff;font-size:14px">{{player.name}}</div>
             </div>
@@ -11,7 +11,7 @@
     </div>
     <div class="fomation">
         <div v-for="(item,index) in visitingGroup(matchInfo).reverse()" :key="'home'+index" class="line">
-            <div v-for="player in item" :key="player.id">
+            <div v-for="(player,index2) in item" :key="`visit${index}-${index2}`">
                 <div class="player visiting">{{player.number}}</div>
                 <div style="color:#fff;font-size:14px">{{player.name}}</div>
             </div>
