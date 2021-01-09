@@ -84,6 +84,10 @@ computed: {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 40px;
+}
+.player_container div{
+    white-space: nowrap; 
 }
 .row{
     display: flex;

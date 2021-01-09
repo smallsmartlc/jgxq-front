@@ -35,7 +35,7 @@
                 <diamond-title style="margin-bottom:20px" dname="荣誉"/>
                 <div class="championbox" v-for="(item,index) in team.infos.champions" :key="index">
                     <div style="color:#fc0;"><i class="el-icon-trophy-1" style="font-size:30px"/></div>
-                    <div style="color:#fc0;">{{item.name}}×{{item.time.length}}</div>
+                    <div style="color:#fc0;white-space: nowrap;">{{item.name}}×{{item.time.length}}</div>
                     <div style="display:flex;flex-wrap:wrap;font-size:14px">
                         <div v-for="time in item.time" :key="time">{{time}}</div>
                     </div>
