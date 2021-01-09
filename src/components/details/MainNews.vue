@@ -36,11 +36,16 @@ computed : {
         return (time)=>{
             var now = this.$moment();
             var temp =  this.$moment(time);
-            if((now-temp) > (3*24*3600*1000)){
-                return temp.format('MM-DD HH:mm');
+            if(now.year() == temp.year()){
+                if((now-temp) > (3*24*3600*1000)){
+                    return temp.format('MM-DD HH:mm');
+                }else{
+                    return temp.fromNow();
+                }
             }else{
-                return temp.fromNow();
+                return temp.format('YYYY-MM-DD HH:mm');
             }
+            
         }
     }
 },

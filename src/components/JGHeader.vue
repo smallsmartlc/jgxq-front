@@ -141,7 +141,7 @@ export default {
   border-bottom: 2px solid #FFCC00 !important;
 }
 .right{
-  float: right;
+  float: right!important;
 }
 .is-opened{
   background-color: #fff !important;
