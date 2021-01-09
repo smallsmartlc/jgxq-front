@@ -75,6 +75,9 @@ methods: {
     pageNewsByTag(){
         this.cur++;
         var temp1 = this.tags[0];
+        if(!temp1){
+            return ;
+        }
         pageNewsByTag(this.cur,this.pageSize,temp1.objectId,temp1.type).then((res)=>{
             if(res.code == 200){
                 var temp = res.data.records;
