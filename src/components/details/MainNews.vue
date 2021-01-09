@@ -75,6 +75,7 @@ methods: {
                         type: 'success'
                     });
                     this.news.hit.collect = !this.news.hit.collect;
+                    this.news.hit.collects +=  this.news.hit.collect?1:-1;
                 }else{
                     var str = this.news.hit.collect?"取消收藏失败":"收藏失败"
                     this.$message({
