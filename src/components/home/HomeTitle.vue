@@ -2,13 +2,15 @@
     <div class="block" style="width:100%">
         <el-carousel trigger="click" height="400px" indicator-position="outside" style="background-color:#fff;border:10px solid #fff;box-sizing:border-box;">
             <el-carousel-item v-for="item in news.slice(0,5)" :key="item.id" style="display:relative">
-                <div style="width:100%;height:100%;overflow:hidden;display:flex;align-items:center">
-                    <el-image
-                    style="width:100%;"
-                    :src="$utils.url2img(item.cover)"
-                    fit="cover"></el-image>
-                    <div class="small">{{ item.title }}</div>
-                </div>
+                <router-link :to="`/news/${item.id}`">
+                    <div style="width:100%;height:100%;overflow:hidden;display:flex;align-items:center">
+                        <el-image
+                        style="width:100%;"
+                        :src="$utils.url2img(item.cover)"
+                        fit="cover"></el-image>
+                        <div class="small">{{ item.title }}</div>
+                    </div>
+                </router-link>
             </el-carousel-item>
         </el-carousel>
     </div>
