@@ -2,7 +2,7 @@
     <div v-if="news" class="dynamic infinite-list-wrapper" style="margin-top:20px;width:800px;overflow:auto">
         <ul
         class="list">
-            <li v-for="item in news" :key="item.id" style="background-color:#fff;border-bottom:1px solid #E6E4DC">
+            <li v-for="item in news" :key="item.id" style="background-color:#fff;border-bottom:1px solid #E6E4DC;padding:10px">
               <router-link :to="'/news/'+item.id">
                 <news-box :news='item' width='600px' imgSize="80px" style="width:100%;height:100px"></news-box>
               </router-link>

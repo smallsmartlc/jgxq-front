@@ -94,7 +94,6 @@ export default {
     }
     .main{
         padding:2px;
-        border-left:1px solid #F5F5EB;
         border-right:1px solid #F5F5EB;
         font-size:10px;
         box-sizing:border-box;
