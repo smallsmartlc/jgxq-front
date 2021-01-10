@@ -1,6 +1,6 @@
 import jsCookie from 'js-cookie'
-import { jgCookie } from '@/constants/index'
+import { jgCookie,cookieDomain } from '@/constants/index'
 
 export function logOut(){
-    jsCookie.remove(jgCookie);
+    jsCookie.remove(jgCookie, { domain: cookieDomain });
 }

@@ -6,5 +6,6 @@ module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   IMG_URL : '"http://localhost:6800/images/"',
   BASE_URL : '"http://localhost:6800"',
-  JG_COOKIE : '"smart_jgxq_cookie"'
+  JG_COOKIE : '"smart_jgxq_cookie"',
+  COOKIE_DOMAIN : '"localhost"',
 })
