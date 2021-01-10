@@ -61,7 +61,7 @@ export default {
         display: flex;
         justify-content:space-between;
         align-items: center;
-        padding: 6px;
+        padding: 15px;
         box-sizing: border-box;
         height: 100%;
     }
