@@ -17,6 +17,9 @@
         </div>
         <div v-if="user.userInfo.homeTeam" style="color:#fff;opacity:0.8;font-size:12px">{{user.userInfo.homeTeam.name}}球迷</div>
         <div style="color:#fff;font-size:12px">{{user.userInfo.city}}&nbsp;注册经管雄起账号<span style="color:#fc0">{{parseInt((new Date() - new Date(user.userInfo.createAt))/(1*24*60*60*1000))}}</span>天</div>
+        <div style="margin-top:10px" v-if="notMe">
+          <el-button @click="focusOther" :style="user.focused?{}:bStyle" :icon="user.focused?'el-icon-check':'el-icon-plus'">{{user.focused?'已关注':'关注'}}</el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -33,6 +36,7 @@
 </template>
 
 <script>
+import {focusUser} from '@/api/user'
 import CenterComment from '@/components/user/CenterComment'
 import CenterIssue from '@/components/user/CenterIssue'
 import CenterFocus from '@/components/user/CenterFocus'
@@ -41,16 +45,46 @@ export default {
   components: { CenterComment,CenterIssue,CenterFocus,CenterFans },
   name: 'UserInteract',
   props:{
-    user : Object
+    user : Object,
+    notMe : {
+      type : Boolean,
+      default : false,
+    },
   },
   data () {
     return {
+      bStyle : {
+          'border-color' : '#fc0',
+          'color' : '#fc0'
+      }
     }
   },
   computed:{
     defaultActive(){
       var flag = this.$route.params.info;
       return flag?flag:'issue';
+    }
+  },
+  methods:{
+    focusOther(){
+      focusUser(this.user.userInfo.userkey,this.user.focused).then((res)=>{
+        if(res.code == 200){
+          if(res.data == true){
+              var str = this.user.focused?"取消关注成功":"关注成功!";
+              this.$message({
+                  message: str,
+                  type: 'success'
+              });
+              this.user.focused = !this.user.focused
+          }else{
+              var str = this.user.focused?"取消关注失败":"已关注"
+              this.$message({
+                  message: str,
+                  type: 'warning'
+              });
+          }
+        }
+      })
     }
   }
 }

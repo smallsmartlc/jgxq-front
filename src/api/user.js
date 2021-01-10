@@ -38,3 +38,11 @@ export const updateUser = (data)=>request({
     url : `/user/info`,
     data,
 })
+export const focusUser = (target,focused)=>request({
+    method:"put",
+    url : `/focus`,
+    params : {
+        target,
+        focused
+    }
+})

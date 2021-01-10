@@ -5,11 +5,13 @@
     <div class="box">
       <div class="header">
         <div style="margin-right:10px">
-          <el-avatar :size="40" 
-              :src="$utils.url2img(item.user.headImage)" 
-              fit="cover"
-              style="background:transparent;"
-              ></el-avatar>
+          <router-link :to="`/user/${item.user.userkey}`">
+            <el-avatar :size="40" 
+            :src="$utils.url2img(item.user.headImage)" 
+            fit="cover"
+            style="background:transparent;"
+            ></el-avatar>
+          </router-link>
         </div>
         <div class="title">
           <div class="name">{{item.user.nickName}}</div>

@@ -1,5 +1,5 @@
 <template>
-  <user-interact :user="user"/>
+  <user-interact notMe :user="user"/>
 </template>
 
 <script>

@@ -16,7 +16,7 @@
         <div class="newsbox">
           <div class="title">{{news.title}}</div>
           <div class="author">
-              <el-link :underline="false" style="font-size:16px;margin-right:10px">{{news.author.nickName}}</el-link>
+              <router-link :to="`/user/${news.author.userkey}`"><el-link :underline="false" style="font-size:16px;margin-right:10px">{{news.author.nickName}}</el-link></router-link>
               <span>{{fromNowStr(news.createAt)}}</span>
           </div>
           <el-divider></el-divider>
