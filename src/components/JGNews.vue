@@ -24,7 +24,7 @@
 
 <script>
 import {pageNews} from '@/api/news'
-import NewsBox from './common/NewsBox'
+import NewsBox from './common/NewsBox.vue'
 import NoMore from './common/NoMore.vue'
 import PageLoading from './common/PageLoading.vue'
 import DiamondTitle from './common/DiamondTitle.vue'

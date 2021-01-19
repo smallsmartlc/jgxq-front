@@ -1,5 +1,5 @@
 <template>
-  <div class="main" v-if="news.id">
+   <div class="main" v-if="news.id">
         <div class="interact">
             <el-badge :value="news.hit.thumbs" class="item" type="primary">
                 <el-button @click="thumb" :style="{'color': news.hit.thumb?'#fc0':'#666'}" icon="iconfont icon-zan" circle></el-button> 
@@ -21,8 +21,8 @@
           </div>
           <el-divider></el-divider>
           <div class="content" v-html="news.text"></div>
-      </div>
-  </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -114,6 +114,7 @@ methods: {
     width:100%;
     display: flex;
     justify-content: center;
+    position: relative;
 }
 .title{
     font-size: 28px;
@@ -138,7 +139,7 @@ methods: {
    width:60px;
    position: fixed;
    background-color: #fff;
-   left: 160px;
+   margin-left: -52%;
    background-color: transparent;
    z-index: 1000;
 }
