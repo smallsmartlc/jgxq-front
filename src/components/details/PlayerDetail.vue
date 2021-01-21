@@ -6,13 +6,13 @@
                 <div class="info">
                     <p class="cn_name">
                         {{player.name}}
-                        <router-link :to="`/team/${player.team.id}`">
-                        <img v-if="player.team" :src="$utils.url2img(player.team.logo)" alt></router-link>
+                        <router-link v-if="player.team" :to="`/team/${player.team.id}`">
+                        <img :src="$utils.url2img(player.team.logo)" alt></router-link>
                     </p>
                     <p class="en_name">{{player.enName}}</p>
                     <div class="detail_info">
                         <ul>
-                            <li><span>俱乐部：</span>{{player.team.name}}</li>
+                            <li v-if="player.team"><span>俱乐部：</span>{{player.team.name}}</li>
                             <li><span>国籍：</span>{{player.nation}}</li>
                             <li><span>身高：</span>{{player.height}}CM</li>
                         </ul>
@@ -133,7 +133,7 @@ export default {
             this.loading = false;
         },
         loadPlayers(){
-            // if(!this.player.team) return;
+            if(!this.player.team) return;
             getTeamMembers(this.player.team.id).then((res)=>{
                 if(res.code==200){
                     this.playerList = res.data;
