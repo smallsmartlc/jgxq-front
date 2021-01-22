@@ -145,7 +145,6 @@ export default {
                     color:"#ea3443",
                     icon : "el-icon-bottom",
                 },
-                
             ],
             match : {},
 

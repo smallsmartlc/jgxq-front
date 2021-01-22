@@ -2,7 +2,7 @@
 <div>
 <div class="fomations">
     <div class="fomation">
-        <div v-for="(item,index) in homeGroup(matchInfo)" :key="'home'+index" class="line">
+        <div v-for="(item,index) in homeGroup" :key="'home'+index" class="line">
             <div class="player_container" v-for="(player,index2) in item" :key="`home${index}-${index2}`">
                 <div class="player home">{{player.number}}</div>
                 <div style="color:#fff;font-size:14px">{{player.name}}</div>
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="fomation">
-        <div v-for="(item,index) in visitingGroup(matchInfo).reverse()" :key="'home'+index" class="line">
+        <div v-for="(item,index) in visitingGroup.reverse()" :key="'home'+index" class="line">
             <div class="player_container" v-for="(player,index2) in item" :key="`visit${index}-${index2}`">
                 <div class="player visiting">{{player.number}}</div>
                 <div style="color:#fff;font-size:14px">{{player.name}}</div>
@@ -50,30 +50,26 @@ matchInfo:Object,
 },
 computed: {
     homeGroup(){
-        return (matchInfo)=>{
-            var newArr = [];
-            if(!this.matchInfo.homeLineUp) return;
-            this.matchInfo.homeLineUp.forEach(e => {
-                if(!newArr[e.matchPos]){
-                    newArr[e.matchPos] = [];
-                }
-                newArr[e.matchPos].push(e);
-            });
-            return newArr;
-        }
+        var newArr = [];
+        if(!this.matchInfo.homeLineUp) return;
+        this.matchInfo.homeLineUp.forEach(e => {
+            if(!newArr[e.matchPos]){
+                newArr[e.matchPos] = [];
+            }
+            newArr[e.matchPos].push(e);
+        });
+        return newArr;
     },
     visitingGroup(){
-        return (matchInfo)=>{
-            var newArr = [];
-            if(!this.matchInfo.visitingLineUp) return;
-            this.matchInfo.visitingLineUp.forEach(e => {
-                if(!newArr[e.matchPos]){
-                    newArr[e.matchPos] = [];
-                }
-                newArr[e.matchPos].push(e);
-            });
-            return newArr;
-        }
+        var newArr = [];
+        if(!this.matchInfo.visitingLineUp) return;
+        this.matchInfo.visitingLineUp.forEach(e => {
+            if(!newArr[e.matchPos]){
+                newArr[e.matchPos] = [];
+            }
+            newArr[e.matchPos].push(e);
+        });
+        return newArr;
     }
 },
 }

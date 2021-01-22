@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="background:#fff">
     <talk-editor v-loading="submiting" @submit="submit" v-model="talk" :isClear="isClear" @change="editorChange"/>
-    <div style="padding:40px;background:#fff" v-for="item in talks" :key = "item.id">
+    <div style="padding:40px;" v-for="item in talks" :key = "item.id">
       <talk-box @delete="deleteComment(item.id)" :talk="item" :user="user"/>
     </div>
     <div class="block">

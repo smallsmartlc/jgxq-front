@@ -18,12 +18,12 @@
                         </ul>
                         <ul>
                             <li><span>位置：</span>{{player.position}}</li>
-                            <li><span>年龄：</span>{{$moment().diff($moment(player.birthday),'year')}}岁</li>
+                            <li v-if="player.birthday"><span>年龄：</span>{{$moment().diff($moment(player.birthday),'year')}}岁</li>
                             <li><span>体重：</span>{{player.weight}}KG</li>
                         </ul>
                         <ul>
                             <li><span>号码：</span>{{player.number}}号</li>
-                            <li><span>生日：</span>{{$moment(player.birthday).format("YYYY-MM-DD")}}</li>
+                            <li v-if="player.birthday"><span>生日：</span>{{$moment(player.birthday).format("YYYY-MM-DD")}}</li>
                             <li><span>惯用脚：</span>{{player.strongFoot}}</li>
                         </ul>
                     </div>
