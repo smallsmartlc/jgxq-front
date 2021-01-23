@@ -17,7 +17,7 @@
                                 <el-badge class="mark" value="选好了" />
                             </div> 
                         </div>
-                        <div style="font-size:14px">{{item.name}}</div>
+                        <div class="name">{{item.name}}</div>
                     </div>
                 </div>
             </el-scrollbar>
@@ -124,6 +124,12 @@ export default {
         display: flex;
         flex-wrap: wrap;
     }
+    .teamItem .name{
+        max-width:60px;
+        font-size:14px;
+        line-height:16px;
+        text-align: center;
+    }
     .teamItem{
         margin: 15px;
         /* display: flex; */
@@ -140,6 +146,7 @@ export default {
         height: 60px;
         padding:10px;
         cursor: pointer;
+        box-sizing: border-box;
     }
     .isactive{
         border: 2px solid #fc0!important;

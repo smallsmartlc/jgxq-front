@@ -4,7 +4,8 @@
     <div class="fomation">
         <div v-for="(item,index) in homeGroup" :key="'home'+index" class="line">
             <div class="player_container" v-for="(player,index2) in item" :key="`home${index}-${index2}`">
-                <div class="player home">{{player.number}}</div>
+                <router-link :to="`/player/${player.playerId}`" v-if="player.playerId"><div class="player home">{{player.number}}</div></router-link>
+                <div v-else class="player home">{{player.number}}</div>
                 <div style="color:#fff;font-size:14px">{{player.name}}</div>
             </div>
         </div>
@@ -12,7 +13,8 @@
     <div class="fomation">
         <div v-for="(item,index) in visitingGroup.reverse()" :key="'home'+index" class="line">
             <div class="player_container" v-for="(player,index2) in item" :key="`visit${index}-${index2}`">
-                <div class="player visiting">{{player.number}}</div>
+                <router-link :to="`/player/${player.playerId}`" v-if="player.playerId"><div class="player home">{{player.number}}</div></router-link>
+                <div v-else class="player visiting">{{player.number}}</div>
                 <div style="color:#fff;font-size:14px">{{player.name}}</div>
             </div>
         </div>

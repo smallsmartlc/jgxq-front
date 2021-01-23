@@ -27,13 +27,6 @@ export default {
         width :String,
     },
     computed : {
-        dateDiff(){
-            return function(timeStr){
-               var time = new Date(timeStr)
-                return new Date()-time; 
-            }
-            
-        },
     }
 
 }
