@@ -9,7 +9,7 @@
           :src="$utils.url2img(user.userInfo.headImage)" 
           fit="cover"
           style="border:4px solid #fc0;background:transparent;"></el-avatar></router-link>
-        <div style="display:flex;align-items:center">
+        <div v-if="user.userInfo.homeTeam" style="display:flex;align-items:center">
           <div style="color:#fff;font-size:20px">{{user.userInfo.nickName}}&nbsp;</div>
           <el-image v-if="user.userInfo.homeTeam" style="width:20px;height:20px;"
             :src="$utils.url2img(user.userInfo.homeTeam.logo)"

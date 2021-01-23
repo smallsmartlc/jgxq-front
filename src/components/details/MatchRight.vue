@@ -4,7 +4,7 @@
     <div v-for="match in matches" :key="match.id">
     <a :href="`/match/${match.id}`">
         <div class="match_box">
-            <div class="imgbox">
+            <div v-if="match.homeTeam" class="imgbox">
                 <el-image style="width:40px;height:40px"
                 :src="$utils.url2img(match.homeTeam.logo)"
                 fit="cover"/>
@@ -15,7 +15,7 @@
                 <div style="font-size:25px" v-if="dateDiff(match.startTime)>0">{{match.homeScore}}&nbsp;-&nbsp;{{match.visitingScore}}</div>
                 <div v-else>VS</div>
             </div>
-            <div class="imgbox">
+            <div v-if="match.visitingTeam" class="imgbox">
                 <el-image style="width:40px;height:40px"
                 :src="$utils.url2img(match.visitingTeam.logo)"
                 fit="cover"/>

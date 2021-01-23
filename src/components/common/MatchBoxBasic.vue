@@ -4,8 +4,9 @@
             <div style="font-size:12px;">{{this.$moment(match.startTime).format('HH:mm')}} {{match.title}}</div>
         </div>
         <div style="display:flex;justify-content:center;align-items:center;width:100%;">
-            <div style="width:100px;text-align:right">{{match.homeTeam.name}}</div>
+            <div v-if="match.homeTeam" style="width:100px;text-align:right">{{match.homeTeam.name}}</div>
             <el-image
+            v-if="match.homeTeam"
             style="width: 24px; height: 24px;margin: 0 4px"
             :src="$utils.url2img(match.homeTeam.logo)"
             fit="cover"></el-image>
@@ -15,10 +16,11 @@
                 <span v-else><i class="el-icon-message-solid"></i></span>
             </div>
             <el-image
+            v-if="match.visitingTeam"
             style="width: 24px; height: 24px;margin: 0 4px"
             :src="$utils.url2img(match.visitingTeam.logo)"
             fit="cover"></el-image>
-            <div style="width:100px;text-align:left">{{match.visitingTeam.name}}</div>
+            <div v-if="match.visitingTeam" style="width:100px;text-align:left">{{match.visitingTeam.name}}</div>
         </div>
     </div>
 </template>

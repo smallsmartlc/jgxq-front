@@ -3,7 +3,7 @@
       <el-col :span="14" :offset="2">
         <div>
             <div class="matchTitle" v-if="match.id">
-                <router-link :to="`/team/${match.homeTeam.id}`">
+                <router-link v-if="match.homeTeam" :to="`/team/${match.homeTeam.id}`">
                 <div>
                     <el-image style="width:60px;height:60px"
                     :src="$utils.url2img(match.homeTeam.logo)"
@@ -25,7 +25,7 @@
                         <div v-else>未开始</div>
                     </div>
                 </div>
-                <router-link :to="`/team/${match.visitingTeam.id}`">
+                <router-link v-if="match.visitingTeam" :to="`/team/${match.visitingTeam.id}`">
                 <div>
                     <el-image style="width:60px;height:60px"
                     :src="$utils.url2img(match.visitingTeam.logo)"

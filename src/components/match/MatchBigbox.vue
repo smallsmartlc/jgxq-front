@@ -3,7 +3,7 @@
     <div style="width:10%;text-align:center">{{this.$moment(match.startTime).format('HH:mm')}}</div>
     <div style="width:10%;text-align:center">{{match.title}}</div>
     <div class="match" style="width:60%">
-      <div style="width:40%;display:flex;align-items:center;justify-content:flex-end">
+      <div v-if="match.homeTeam" style="width:40%;display:flex;align-items:center;justify-content:flex-end">
         <div style="text-align:right">{{match.homeTeam.name}}</div>
         <el-image
         style="width: 40px; height: 40px;margin: 0 4px"
@@ -14,7 +14,7 @@
           <span v-if='dateDiff(match.startTime)>0'>{{match.homeScore}}-{{match.visitingScore}}</span>
           <span v-else>VS</span>
       </div>
-      <div style="width:40%;display:flex;align-items:center;">
+      <div v-if="match.visitingTeam" style="width:40%;display:flex;align-items:center;">
         <el-image
         style="width: 40px; height: 40px;margin: 0 4px"
         :src="$utils.url2img(match.visitingTeam.logo)"
