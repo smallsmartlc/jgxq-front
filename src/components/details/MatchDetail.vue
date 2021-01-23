@@ -138,12 +138,12 @@ export default {
                 {
                     name : "换上",
                     color:"#fc0",
-                    icon : "el-icon-top",
+                    icon : "iconfont icon-shang",
                 },
                 {
                     name : "换下",
                     color:"#ea3443",
-                    icon : "el-icon-bottom",
+                    icon : "iconfont icon-xia",
                 },
             ],
             match : {},

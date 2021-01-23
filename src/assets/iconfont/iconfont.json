@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "9352010",
+      "name": "下",
+      "font_class": "xia",
+      "unicode": "e784",
+      "unicode_decimal": 59268
+    },
+    {
+      "icon_id": "9352013",
+      "name": "上",
+      "font_class": "shang",
+      "unicode": "e785",
+      "unicode_decimal": 59269
+    },
+    {
+      "icon_id": "828077",
+      "name": "没有权限",
+      "font_class": "unie605",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
       "icon_id": "4482839",
       "name": "助攻",
       "font_class": "zhugong",
