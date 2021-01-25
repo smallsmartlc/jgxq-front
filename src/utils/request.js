@@ -65,15 +65,6 @@ http.interceptors.response.use(
     res => {
         // code为非200是抛错
         if (res.status != 200) {
-            if(res.status == 204){
-                Message({
-                    message: '您还不能发表新闻哦,去申请成为创作者吧!!!',
-                    type: 'warning',
-                    duration: messageTime
-                })
-                tryHideFullScreenLoading()
-                return Promise.reject(res.message)
-            }
             Message({
                 message: res.statusText,
                 type: 'error',
@@ -147,8 +138,8 @@ http.interceptors.response.use(
                     //     path: '/error/403'
                     // })
                     Message({
-                        message: '没有权限！',
-                        type: 'error'
+                        message: '没有作者权限,去申请成为创作者吧!!!',
+                        type: 'warning'
                     });
                 }
                 let errorInfo =  error.response.data.error ? error.response.data.error.message : error.response.data;
