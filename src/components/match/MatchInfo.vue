@@ -7,7 +7,6 @@
                 v-model="time"
                 type="date"
                 placeholder="选择日期"
-                :picker-options="pickerOptions"
                 value-format="yyyy-MM-dd"
                 :editable = "false"
                 :clearable = "false"
@@ -49,11 +48,6 @@ export default {
         total : 1,
         loading: false,
         time: new Date(),
-        pickerOptions: {
-          disabledDate(time) {
-            return time.getTime() > Date.now();
-          },
-        },
          matches : [],
       };
     },
