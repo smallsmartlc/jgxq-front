@@ -177,4 +177,7 @@ import { BaseUrl } from '@/constants/index'
   .text img{
     max-width: 500px!important;
   }
+  .text video{
+    max-width: 100%;
+  }
 </style>

@@ -13,30 +13,6 @@
                 </div>
             </router-link>
         </div>
-        <!-- <div v-if="(tag.teams||tag.players)">
-            <div v-for="team in tag.teams" :key="'team'+team.id">
-                <router-link :to="`/team/${team.id}`">
-                    <div class="tagbox">
-                        <el-image
-                        style="width: 40px; height: 40px"
-                        :src="$utils.url2img(team.logo)"
-                        fit="cover"></el-image>
-                        <div>{{team.name}}</div>
-                    </div>
-                </router-link>
-            </div>
-            <div v-for="player in tag.players" :key="'player'+player.id">
-                <router-link :to="`/player/${player.id}`">
-                    <div class="tagbox">
-                        <el-image
-                        style="width: 40px; height: 40px"
-                        :src="$utils.url2img(player.headImage)"
-                        fit="cover"></el-image>
-                        <div>{{player.name}}</div>
-                    </div>
-                </router-link>
-            </div>
-        </div> -->
       </div>
       
       <div style="margin-top:40px">
@@ -49,7 +25,7 @@
 </template>
 
 <script>
-import {pageNewsByTag} from '@/api/news'
+import {pageNewsByTags} from '@/api/news'
 import DiamondTitle from '../common/DiamondTitle.vue'
 import NewsBox from '../common/NewsBox.vue'
 export default {
@@ -68,17 +44,16 @@ data() {
 watch : {
     tag : function (newVal,oldVal) {
         this.tags = newVal;
-        newVal && this.pageNewsByTag();
+        newVal && this.pageNewsByTags();
     }
 },  
 methods: {
-    pageNewsByTag(){
+    pageNewsByTags(){
         this.cur++;
-        var temp1 = this.tags[0];
-        if(!temp1){
+        if(!this.tags[0]){
             return ;
         }
-        pageNewsByTag(this.cur,this.pageSize,temp1.objectId,temp1.type).then((res)=>{
+        pageNewsByTags(this.cur,this.pageSize,this.tags).then((res)=>{
             if(res.code == 200){
                 var temp = res.data.records;
                 this.news = this.news.concat(temp);

@@ -218,11 +218,13 @@ export default {
   .input_popper{
     width: 180px!important;
   }
+  .el-picker-panel__footer .el-button--text.el-picker-panel__link-btn {
+    display: none;
+  }
 </style>
 <style scoped>
 
   .input-new-tag{
     width: 100px;
   }
-  
 </style>

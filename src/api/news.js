@@ -16,6 +16,11 @@ export const pageNewsByTag = (cur,pageSize,objectId,type) =>request({
         type
     }
 })
+export const pageNewsByTags = (cur,pageSize,data) =>request({
+    method: 'post',
+    url: `news/page/tags/${cur}/${pageSize}`,
+    data
+})
 export const pageNews = (cur,pageSize) =>request({
     method: 'get',
     url: `news/page/${cur}/${pageSize}`,
