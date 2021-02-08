@@ -2,9 +2,9 @@
   <div>
     <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal" 
     text-color="#111"
-    active-text-color="#fff" style="min-width :900px"
+    active-text-color="#fff" style="min-width :1000px"
     router>
-      <el-menu-item class="just-box" style=" background-color: #fff!important;border-bottom: 2px solid #fff !important; ">
+      <el-menu-item style="background-color: #fff!important;border-bottom: 2px solid #fff !important;">
         <div style="display:flex;align-items:center;height:100%">
           <el-image
             style="width: 50px; height: 50px;display:block;"
@@ -15,6 +15,19 @@
         </div>
       </el-menu-item>
       <el-menu-item v-for="(nav,index) in navs" :index='nav.route' :key='index'>{{nav.name}}</el-menu-item>
+      <el-menu-item style="background-color: transparent;border-bottom: 2px solid transparent;padding:0;margin-left:40px;height:100%;display:flex;align-items:center;">
+        <el-autocomplete
+          style="width:25vw"
+          class="inline-input"
+          v-model="keyword"
+          :fetch-suggestions="searchKeyword"
+          placeholder="搜索球队/球员/新闻"
+          :trigger-on-focus="false"
+          @select="selectKeyword">
+          <template slot-scope="{ item }">{{item}}</template>
+          <span slot="suffix" style="cursor:pointer;font-size:26px;" @click="search"><i style="color:#fc0;vertical-align: middle;" class="el-icon-search"></i></span>
+        </el-autocomplete>
+      </el-menu-item>
       <el-menu-item v-if="!user" index='/register' class="right">注册</el-menu-item>
       <el-menu-item v-if="!user" index='/login' class="right">登陆</el-menu-item>
       <div style="width:auto;height:100%">
@@ -61,16 +74,33 @@
 </template>
 
 <script>
+import {searchAutocomplete,pageTag} from '@/api/search.js'
 import UserInfo from './UserInfo.vue'
 export default {
   name: 'JGHeader',
   methods:{
     logout(){
       this.$emit("logout");
+    },
+    searchKeyword(queryString,cb){
+      searchAutocomplete(queryString).then((res)=>{
+        if(res.code == 200){
+          cb(res.data);
+        }
+      })
+    },
+    selectKeyword(item){
+      this.keyword = item;
+      this.search();
+    },
+    search(){
+      if (!this.keyword) return;
+      this.$router.push({path : "/search",params: {keyword :this.keyword}})
     }
   },
   data() {
     return {
+      keyword : null,
       activeIndex: '1',
       activeIndex2: '2',
       navs : [{
@@ -170,8 +200,6 @@ sup{
       right: 20% !important;
       top: 20% !important;
   }
-  
-
   .router-link-active {
     text-decoration: none;
   }

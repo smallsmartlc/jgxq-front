@@ -131,10 +131,6 @@ methods: {
     font-size: 16px;
     line-height: 24px;
 }
-.content img{
-    max-width: 500px;
-    height: auto;
-}
 .interact{
    width:60px;
    position: fixed;
@@ -159,7 +155,7 @@ padding:40px;
     top: 20% !important;
 }
 .content img{
-    max-width: 500px!important;
+    max-width: 80%!important;
 }
 .content iframe{
     width: 600px;

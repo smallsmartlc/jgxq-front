@@ -1,10 +1,20 @@
 <template>
     <el-dialog
     v-loading = "dloading"
-    title="选择你的主队"
     :visible.sync="dialogVisible"
     :before-close="close"
     width="400px">
+        <div slot="title" style="text-align:left;">
+            <span class="el-dialog__title">选择你的主队</span>
+            <el-input
+                style="width:160px;margin-left:5px"
+                placeholder="搜索球队"
+                clearable
+                size="small"
+                v-model="keyword">
+                <el-button slot="append" @click="reloadTeam" icon="el-icon-search"></el-button>
+            </el-input>
+        </div>
         <div class="teamBoxes">
             <el-scrollbar style="height:100%;">
                 <div class="box_wrap"  v-infinite-scroll="loadTeam" infinite-scroll-distance="10" infinite-scroll-disabled="tdisabled">
@@ -42,6 +52,7 @@ export default {
             tloading: false,
             dloading : false,
             focus : null,
+            keyword : null,
         }
     },
     props : {
@@ -51,7 +62,7 @@ export default {
         loadTeam(){
             this.tloading = true
             this.tcur++;
-            pageTeams(this.tcur,this.tsize,'HEAT').then((res)=>{
+            pageTeams(this.tcur,this.tsize,{sort:'HEAT',keyword:this.keyword}).then((res)=>{
                 if(res.code == 200){
                     var temp = res.data.data;
                     this.ttotal = res.data.total
@@ -59,6 +70,11 @@ export default {
                 }else this.tcur--;
                 this.tloading = false;
             })
+        },
+        reloadTeam(){
+            this.tcur = 0;
+            this.teams.splice(0,this.teams.length);
+            this.loadTeam();
         },
         focusThis(id){
             if(this.focus == id){

@@ -8,8 +8,8 @@ export const getBasicTeamById = (teamId) => request({
     method: 'get',
     url: `/team/${teamId}`,
 })
-export const pageTeams = (cur,size,sort)=>request({
+export const pageTeams = (cur,size,params)=>request({
     method : 'get',
     url: `/team/page/${cur}/${size}`,
-    params : {sort}
+    params
 })
