@@ -2,7 +2,7 @@
   <div>
     <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal" 
     text-color="#111"
-    active-text-color="#fff" style="min-width :1000px"
+    active-text-color="#fff" style="min-width :900px"
     router>
       <el-menu-item style="background-color: #fff!important;border-bottom: 2px solid #fff !important;">
         <div style="display:flex;align-items:center;height:100%">
@@ -17,7 +17,7 @@
       <el-menu-item v-for="(nav,index) in navs" :index='nav.route' :key='index'>{{nav.name}}</el-menu-item>
       <el-menu-item style="background-color: transparent;border-bottom: 2px solid transparent;padding:0;margin-left:40px;height:100%;display:flex;align-items:center;">
         <el-autocomplete
-          style="width:25vw"
+          style="width:calc(40vw - 220px)"
           class="inline-input"
           v-model="keyword"
           :fetch-suggestions="searchKeyword"

@@ -135,7 +135,7 @@ methods: {
    width:60px;
    position: fixed;
    background-color: #fff;
-   margin-left: -52%;
+   margin-left: calc(-50% - 60px);
    background-color: transparent;
    z-index: 1000;
 }
