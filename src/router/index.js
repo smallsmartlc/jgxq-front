@@ -7,6 +7,7 @@ import JGTalks from '@/components/JGTalks'
 import JGReg from '@/components/JGReg'
 import JGLog from '@/components/JGLog'
 import JGUser from '@/components/JGUser'
+import JGSearch from '@/components/JGSearch'
 import FindPassword from '@/components/FindPassword'
 
 import UserInteract from '@/components/user/UserInteract'
@@ -93,6 +94,10 @@ export default new Router({
     {
       path: '/find-password',
       component: FindPassword
+    },
+    {
+      path: '/search',
+      component: JGSearch
     },
     {
       path: '/user/:userkey',

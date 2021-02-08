@@ -3,7 +3,7 @@
         <div class = "news-box">
             <div class="title_box">
                 <span class="news-title" :style="{'width':width}">{{news.title}}</span>
-                <div style="color:#666660"><i class="el-icon-chat-dot-round"/><span style="font-size:10px">{{news.comments>999?"999+":news.comments}}</span></div>
+                <div v-if="news.comments!=null" style="color:#666660"><i class="el-icon-chat-dot-round"/><span style="font-size:10px">{{news.comments>999?"999+":news.comments}}</span></div>
             </div>
             <el-image
                 :style="{'width':imgSize,'height':imgSize}"

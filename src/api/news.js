@@ -21,9 +21,10 @@ export const pageNewsByTags = (cur,pageSize,data) =>request({
     url: `news/page/tags/${cur}/${pageSize}`,
     data
 })
-export const pageNews = (cur,pageSize) =>request({
+export const pageNews = (cur,pageSize,keyword) =>request({
     method: 'get',
     url: `news/page/${cur}/${pageSize}`,
+    params: {keyword}
 })
 export const pageAuthorNews = (cur,pageSize) =>request({
     method: 'get',

@@ -15,7 +15,7 @@
         </div>
       </el-menu-item>
       <el-menu-item v-for="(nav,index) in navs" :index='nav.route' :key='index'>{{nav.name}}</el-menu-item>
-      <el-menu-item style="background-color: transparent;border-bottom: 2px solid transparent;padding:0;margin-left:40px;height:100%;display:flex;align-items:center;">
+      <el-menu-item style="background-color: transparent!important;border-bottom: 2px solid transparent!important;padding:0;margin-left:40px;height:100%;display:flex;align-items:center;">
         <el-autocomplete
           style="width:calc(40vw - 220px)"
           class="inline-input"
@@ -25,7 +25,7 @@
           :trigger-on-focus="false"
           @select="selectKeyword">
           <template slot-scope="{ item }">{{item}}</template>
-          <span slot="suffix" style="cursor:pointer;font-size:26px;" @click="search"><i style="color:#fc0;vertical-align: middle;" class="el-icon-search"></i></span>
+          <div slot="suffix" style="cursor:pointer;" @click="search"><i style="color:#fc0;font-size:22px" class="el-icon-search"></i></div>
         </el-autocomplete>
       </el-menu-item>
       <el-menu-item v-if="!user" index='/register' class="right">注册</el-menu-item>
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import {searchAutocomplete,pageTag} from '@/api/search.js'
+import {searchAutocomplete} from '@/api/search.js'
 import UserInfo from './UserInfo.vue'
 export default {
   name: 'JGHeader',
@@ -95,7 +95,14 @@ export default {
     },
     search(){
       if (!this.keyword) return;
-      this.$router.push({path : "/search",params: {keyword :this.keyword}})
+      // this.$router.push({path : "/search",query: {keyword :this.keyword}})
+      window.location.href = "/search?keyword="+this.keyword;
+    }
+  },
+  mounted() {
+    var word = this.$route.query.keyword;
+    if(!this.$utils.isEmpty(word)){
+      this.keyword = word;
     }
   },
   data() {
