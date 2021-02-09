@@ -51,6 +51,7 @@ export default {
                 {
                     type : "邮箱",
                     name : "jgxq@foxmail.com",
+                    url : "http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=XzwuKi8rcjU4OTwfLi5xPDAy",
                     extra : "cqupt-jgfc@qq.com",
                     icon : "#icon-youxiang"
                 }
