@@ -63,7 +63,7 @@
             </div>
         </div>
       </el-col>
-      <el-col :span="6" :offset="2" class = "hidden-md-and-down">
+      <el-col :span="6" :offset="2">
         <div class="relative">
             <div style="border-left:5px solid #fc0;padding-left:10px;">相关队员</div>
             <div v-for="item in playerList" :key="item.id" style="font-size:14px">

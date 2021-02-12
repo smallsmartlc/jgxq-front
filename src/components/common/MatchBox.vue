@@ -2,9 +2,9 @@
     <div class="main" :style="{'font-size':fontSize}">
         <div class="match-title">
             <div>{{match.title}}</div>
-            <div v-if="dateDiff(match.startTime)>(120*60*1000)">已结束</div>
-            <div v-else-if="dateDiff(match.startTime)>0">进行中</div>
-            <div v-else>未开始</div>
+            <div style="min-width:40px;text-align:center" v-if="dateDiff(match.startTime)>(120*60*1000)">已结束</div>
+            <div style="min-width:40px;text-align:center" v-else-if="dateDiff(match.startTime)>0">进行中</div>
+            <div style="min-width:40px;text-align:center" v-else>未开始</div>
         </div>
         <div v-if="match.homeTeam" class="team-box">
             <div class="info">
@@ -108,6 +108,7 @@ export default {
         display: flex;
         justify-content:space-between;
         align-items: center;
+        min-width: ;
     }
     .el-image{
         width: 20px; 

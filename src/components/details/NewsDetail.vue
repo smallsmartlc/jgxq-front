@@ -4,7 +4,7 @@
           <main-news :news="getnews"/>
           <news-comment :user="user" id="newsComment"/>
       </el-col>
-      <el-col :span="6" :offset="2" class = "hidden-md-and-down">
+      <el-col :span="6" :offset="2">
           <news-tag :tag="news.tags"/>
       </el-col>
   </el-row>

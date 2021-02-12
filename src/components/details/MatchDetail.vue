@@ -78,7 +78,7 @@
             </el-tabs>
         </div>
       </el-col>
-      <el-col :span="6" :offset="2" class = "hidden-md-and-down">
+      <el-col :span="6" :offset="2">
         <match-right/>
       </el-col>
   </el-row>

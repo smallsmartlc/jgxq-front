@@ -6,7 +6,7 @@
           <home-title :news="news"/>
           <home-news :news="news"/>
         </el-col>
-        <el-col :span="6" :offset="2" class = "hidden-md-and-down">
+        <el-col :span="6" :offset="2">
           <home-team :homeTeam="user?user.homeTeam:null"/>
           <last-matches style="margin-top:60px"></last-matches>
         </el-col>
