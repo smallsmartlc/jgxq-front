@@ -27,7 +27,7 @@
             </div>
             <div class="score" :style="{'margin-right':margin}">
                 <div v-if="dateDiff(match.startTime)>0">{{match.visitingScore}}</div>
-                <div v-else>{{startTimeStr(match.startTime)}}</div>
+                <div v-else>{{startTimeStr(match.startTime)}}</div> 
             </div>
         </div>
     </div>
