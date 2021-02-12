@@ -126,6 +126,10 @@ computed: {
 }
 .fomations{
     height:1000px;
+    width: 100%;
+    /* height: calc(134vw * 35 / 72); */
+    /* zoom: 1; */
+    box-sizing: border-box;
     background:  url("../../assets/playground.jpg") no-repeat;
     background-size: 100% 100%; 
 }

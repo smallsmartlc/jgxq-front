@@ -1,14 +1,16 @@
 <template>
     <div>
         <div class = "news-box">
-            <div class="title_box">
-                <span class="news-title" :style="{'width':width}">{{news.title}}</span>
+            <div class="title_box" :style="{'max-width':width}">
+                <span class="news-title">{{news.title}}</span>
                 <div v-if="news.comments!=null" style="color:#666660"><i class="el-icon-chat-dot-round"/><span style="font-size:10px">{{news.comments>999?"999+":news.comments}}</span></div>
             </div>
-            <el-image
+            <div :style="{'width':imgSize}">
+                <el-image
                 :style="{'width':imgSize,'height':imgSize}"
                 :src="$utils.url2img(news.cover)"
                 fit="cover"></el-image>
+            </div>
         </div>
     </div>
 </template>
@@ -54,7 +56,7 @@ export default {
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
-        width: 230px;
+        /* width: 230px; */
     }
     .news-box{
         font-weight: 500;

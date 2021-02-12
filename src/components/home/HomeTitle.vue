@@ -46,7 +46,7 @@ export default {
         overflow:hidden;
     }
     .el-carousel{
-        width: 800px;
+        width: 100%;
     }
     .el-carousel__item h3 {
     color: #696447;

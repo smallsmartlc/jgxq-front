@@ -16,7 +16,7 @@
               </div>
             </div>
         </el-col>
-            <el-col :span="6" :offset="2">
+        <el-col :span="6" :offset="2" class = "hidden-md-and-down" >
             <follow-us/>
         </el-col>
     </el-row>

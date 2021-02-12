@@ -1,5 +1,5 @@
 <template>
-    <div v-if="news" class="dynamic infinite-list-wrapper" style="margin-top:20px;width:800px;overflow:auto">
+    <div v-if="news" class="dynamic infinite-list-wrapper" style="margin-top:20px;width:100%;overflow:auto">
         <ul
         class="list">
             <li v-for="item in news" :key="item.id" style="background-color:#fff;border-bottom:1px solid #E6E4DC;padding:10px">

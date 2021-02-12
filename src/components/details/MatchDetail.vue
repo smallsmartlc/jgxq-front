@@ -1,7 +1,7 @@
 <template>
   <el-row>
       <el-col :span="14" :offset="2">
-        <div>
+        <div style="width:720px">
             <div class="matchTitle" v-if="match.id">
                 <router-link v-if="match.homeTeam" :to="`/team/${match.homeTeam.id}`">
                 <div>
@@ -78,7 +78,7 @@
             </el-tabs>
         </div>
       </el-col>
-      <el-col :span="6" :offset="2">
+      <el-col :span="6" :offset="2" class = "hidden-md-and-down">
         <match-right/>
       </el-col>
   </el-row>
