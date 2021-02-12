@@ -27,7 +27,7 @@
             </div>
             <div class="score" :style="{'margin-right':margin}">
                 <div v-if="dateDiff(match.startTime)>0">{{match.visitingScore}}</div>
-                <div v-else>{{startTimeStr(match.startTime)}}</div> 
+                <div v-else>{{startTimeStr(match.startTime)}}</div>
             </div>
         </div>
     </div>
@@ -108,7 +108,6 @@ export default {
         display: flex;
         justify-content:space-between;
         align-items: center;
-        min-width: ;
     }
     .el-image{
         width: 20px; 
