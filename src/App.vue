@@ -1,5 +1,5 @@
 <template>
-  <div class="app-component" style="height:100vh;min-width:900px">
+  <div class="app-component" style="height:100vh;">
     <el-scrollbar style="height:100%">
       <div class="list" :infinite-scroll-immediate="false" v-infinite-scroll="load" infinite-scroll-distance="10" infinite-scroll-disabled="disabled">
         <el-row style="z-index:100">
@@ -7,7 +7,7 @@
         </el-row>
         <el-row>
           <el-col :span="20" :offset="2">
-            <div>
+            <div style="min-width:900px">
               <router-view @disabled = "changedisabled" ref="children" @login="login" :user="user"/>
             </div>
           </el-col>
