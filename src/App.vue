@@ -1,6 +1,6 @@
 <template>
   <div class="app-component" style="height:100vh;">
-    <el-scrollbar wrap-class="main_wrap" style="height:100%;overflow-y:scroll">
+    <el-scrollbar wrap-class="main_wrap" style="height:100%;">
       <div class="list" :infinite-scroll-immediate="false" v-infinite-scroll="load" infinite-scroll-distance="10" infinite-scroll-disabled="disabled">
         <el-row style="z-index:100">
           <el-col :span="24" style="margin-bottom:40px"><jg-header @logout="logout" :message="message" :user="user"></jg-header></el-col>
@@ -85,7 +85,7 @@ export default {
 
 <style>
 .main_wrap{
-  overflow-x: scroll!important;
+  /* overflow-x: scroll!important; */
 }
 </style>
  

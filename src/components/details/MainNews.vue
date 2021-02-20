@@ -101,7 +101,7 @@ methods: {
         var url = window.location.href;
         var title = this.news.title;
         var summary = this.news.text.substring(0, 30);
-        var pics = $utils.url2img(this.news.cover);
+        var pics = this.$utils.url2img(this.news.cover);
         var link =  "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url="+url+"&sharesource=qzone&title="+title+"&pics="+pics+"&summary="+summary;
         window.open(link);
     }

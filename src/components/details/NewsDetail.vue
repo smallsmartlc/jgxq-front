@@ -17,10 +17,20 @@ import MainNews from './MainNews.vue'
 import NewsComment from './NewsComment.vue'
 import NewsTag from './NewsTag.vue'
 export default {
-  components: { MainNews, NewsTag, NewsComment },
+components: { MainNews, NewsTag, NewsComment },
 data() {
   return {
     news : {},
+  }
+},
+metaInfo(){
+  return {
+    // title: this.news.title,
+    meta: [
+      { itemprop: 'name', content: this.news.title },
+      { itemprop: 'image', content: this.$utils.url2img(this.news.cover) },
+      { name:'description', itemprop: 'description', content: this.$utils.editor2Text(this.news.text).substring(0,30) }
+    ]
   }
 },
 mounted() {
