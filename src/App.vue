@@ -64,6 +64,11 @@ export default {
       this.disabled = val; 
     }
   },
+  watch:{
+    $route : (newVal, oldVal)=>{
+      document.title = "经管雄起"
+    }
+  },
   data(){
     return {
       user : null,

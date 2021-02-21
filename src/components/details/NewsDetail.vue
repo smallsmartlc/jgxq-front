@@ -23,16 +23,16 @@ data() {
     news : {},
   }
 },
-metaInfo(){
-  return {
-    // title: this.news.title,
-    meta: [
-      { itemprop: 'name', content: this.news.title },
-      { itemprop: 'image', content: this.$utils.url2img(this.news.cover) },
-      { name:'description', itemprop: 'description', content: this.$utils.editor2Text(this.news.text).substring(0,30) }
-    ]
-  }
-},
+// metaInfo(){
+//   return {
+//     // title: this.news.title,
+//     meta: [
+//       { itemprop: 'name', content: this.news.title },
+//       { itemprop: 'image', content: this.$utils.url2img(this.news.cover) },
+//       { name:'description', itemprop: 'description', content: this.$utils.editor2Text(this.news.text).substring(0,30) }
+//     ]
+//   }
+// },
 mounted() {
     this.getNewsById(this.$route.params.id);
 },
@@ -40,14 +40,11 @@ methods: {
     getNewsById(id){
         getNewsById(id).then((res)=>{
             if(res.code == 200){
-                this.news = res.data
+                this.news = res.data;
+                document.title = this.news.title;
+                // this.setShare();
             }
         })
-        // axios.get('http://localhost:6800/news/'+id)
-        // .then((response)=> {
-        //   console.log(response);
-        //   this.news = response.data.data
-        // })  
     },
 },
 computed : {

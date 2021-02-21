@@ -9,12 +9,10 @@ import 'element-ui/lib/theme-chalk/display.css';
 import moment from "moment"
 import './assets/iconfont/iconfont.css'
 import './assets/iconfont/iconfont.js'
-import Meta from 'vue-meta'
 import * as utils from '@/utils/common'
 
 Vue.prototype.$utils = utils
 Vue.use(ElementUI);
-Vue.use(Meta)
 
 Vue.config.productionTip = false
 Vue.prototype.$moment = moment;
