@@ -33,7 +33,7 @@ data() {
 //     ]
 //   }
 // },
-mounted() {
+created() {
     this.getNewsById(this.$route.params.id);
 },
 methods: {
