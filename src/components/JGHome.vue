@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import {homeNews} from '@/api/news' 
+  import {homeNews,pageNews} from '@/api/news' 
   import HomeTitle from './home/HomeTitle.vue'
   import HomeTeam from './home/HomeTeam.vue'
   import HomeNews from './home/HomeNews.vue'
@@ -26,6 +26,8 @@ export default {
   name: 'JGHome',
   data () {
     return {
+      topNews : [],
+      newsList : [],
       news : [],
       loading : false,
     }
@@ -45,14 +47,23 @@ export default {
   methods: {
     load () {
       this.loading = true
-      homeNews(10).then((res)=>{
+      homeNews().then((res)=>{
         if(res.code == 200){
           var temp = res.data;
-          this.news = temp;
+          this.news = temp.concat(this.news);
         }
         this.loading = false
       })
+      // todo 可能更换成热点话题
+      pageNews(1,10,{topNews:true}).then((res) => {
+        if(res.code == 200){
+            var temp = res.data.records;
+            this.news = this.news.concat(temp);
+        }
+      })
     }
+  },
+  computed: {
   }
 }
 </script>

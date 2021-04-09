@@ -89,7 +89,7 @@ methods: {
     load_scoll () {
       this.nloading = true
       this.ncur ++;
-      pageNews(this.ncur,this.nsize,this.keyword).then((res) => {
+      pageNews(this.ncur,this.nsize,{keyword : this.keyword}).then((res) => {
         if(res.code == 200){
             var temp = res.data.records;
             this.ntotal = res.data.total
