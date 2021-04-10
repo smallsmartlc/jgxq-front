@@ -66,7 +66,6 @@ export default {
                     return "今天";      
                 }else if(days<(86400000*2)){ return "明天"}
                 else {return (time.getMonth()+1)+'-'+time.getDate()}
-                return new Date()-time; 
             }
         },
         startTimeStr(){
