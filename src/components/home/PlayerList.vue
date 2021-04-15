@@ -43,8 +43,6 @@ export default {
     },
     data() {
         return {
-          count: 2,
-          loading: false,
           playerList : []
         }
     },
