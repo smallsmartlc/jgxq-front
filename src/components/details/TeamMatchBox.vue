@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div style="width:20%;text-align:center">{{this.$moment(match.startTime).format('MM:DD HH:mm')}}</div>
+    <div style="width:20%;text-align:center">{{this.$moment(match.startTime).format('MM-DD HH:mm')}}</div>
     <div style="width:20%;text-align:center">{{match.title}}</div>
     <div class="match" style="width:60%">
       <div style="width:40%;display:flex;align-items:center;justify-content:flex-end">
