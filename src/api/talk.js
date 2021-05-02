@@ -24,5 +24,5 @@ export const pageTalkList = (params) => request({
 export const addTalk = (text) => request({
     method: 'post',
     url: `/talk`,
-    params : {text},
+    data : {text},
 })
