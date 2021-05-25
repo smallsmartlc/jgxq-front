@@ -43,7 +43,6 @@ export default {
     };
     return {
       user:{
-        nickName : "",
         email : "",
         verificationCode : "",
         password : "",
@@ -58,8 +57,7 @@ export default {
         email : [{validator:validateEmail,trigger:'blur'}],
         password : [{validator:validatePass, trigger: 'blur' },],
         checkpass : [{validator:validatePassConfirm, trigger: 'blur' },],
-        verificationCode : [{validator:validateVerCode, trigger: 'blur' },],
-        nickName : [{required: true, message: '昵称不能为空哦'}],
+        verificationCode : [{validator:validateVerCode, trigger: 'blur' },]
       }
     }
   },
