@@ -1,10 +1,11 @@
 <template>
 <div>
-  <div class="contain" v-for="item in collects" :key="item.id">
+  <div class="contain" v-for="item in collects" :key="item.id" >
     <div style="font-size:12px;color:#666">{{fromNowStr(item.createTime)}}</div>
-    <router-link :to="`/news/${item.news.id}`">
-    <news-l-box :news='item.news'  imgSize="80px" width="600px" />
+    <router-link v-if="item.news" :to="`/news/${item.news.id}`">
+      <news-l-box :news='item.news'  imgSize="80px" width="600px" />
     </router-link>
+    <news-l-box v-else :news='{title:"已删除"}'  imgSize="80px" width="600px" />
     <el-divider/>
   </div>
     <div class="loadmore">
