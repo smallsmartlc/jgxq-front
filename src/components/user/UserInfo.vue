@@ -104,7 +104,6 @@ export default {
       }).catch(()=>{});
     },
     changeHeadImg(url){
-      console.log(url);
       updateUser({"headImage":url}).then((res)=>{
         if(res.code == 200){
           if(res.data){
