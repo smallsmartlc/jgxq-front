@@ -134,7 +134,6 @@ export default {
     };
   },
   props : {
-    user : Object,
     message : Boolean,
   },
   components : {
@@ -145,6 +144,9 @@ export default {
       var res = '/' + this.$route.path.split('/')[1]
       return res;
     },
+    user(){
+      return this.$store.getters.userInfo;
+    }
   }
     
 }

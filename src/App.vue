@@ -3,12 +3,12 @@
     <el-scrollbar wrap-class="main_wrap" style="height:100%;">
       <div class="list" :infinite-scroll-immediate="false" v-infinite-scroll="load" infinite-scroll-distance="10" infinite-scroll-disabled="disabled">
         <el-row style="z-index:100">
-          <el-col :span="24" style="margin-bottom:40px"><jg-header @logout="logout" :message="message" :user="user"></jg-header></el-col>
+          <el-col :span="24" style="margin-bottom:40px"><jg-header @logout="logout" :message="message"></jg-header></el-col>
         </el-row>
         <el-row>
           <el-col :span="20" :offset="2">
             <div style="min-width:900px">
-              <router-view @disabled = "changedisabled" ref="children" @login="login" :user="user"/>
+              <router-view @disabled = "changedisabled" ref="children" @login="login"/>
             </div>
           </el-col>
         </el-row>
@@ -36,8 +36,8 @@ export default {
     checkUser(){
       checkUser().then((res)=>{
         if(res.code==200){
-          this.user = res.data;
-          if(this.user){
+          this.$store.commit("setUserInfo", res.data);
+          if(this.$store.getters.userInfo){
             this.hasMessage();
           }
         }
@@ -51,10 +51,10 @@ export default {
       })
     },
     login(data){
-      this.user = data;
+      this.$store.commit("setUserInfo",data);
     },
     logout(){
-      this.user = null;
+      this.$store.commit("setUserInfo",null);
       this.$router.push({ path:'/login'})
     },
     load(){
@@ -71,7 +71,6 @@ export default {
   },
   data(){
     return {
-      user : null,
       disabled : false,
       message : false
     }

@@ -91,8 +91,10 @@ export default {
       this.total--;
     }
   },
-  props : {
-    user : Object,
+  computed : {
+    user(){
+      return this.$store.getters.userInfo;
+    }
   }
 }
 </script>

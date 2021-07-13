@@ -32,8 +32,10 @@ export default {
       loading : false,
     }
   },
-  props:{
-    user:Object,
+  computed : {
+    user(){
+      return this.$store.getters.userInfo;
+    }
   },
   components : {
     HomeTitle,
@@ -62,8 +64,6 @@ export default {
         }
       })
     }
-  },
-  computed: {
   }
 }
 </script>
