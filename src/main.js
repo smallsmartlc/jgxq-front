@@ -11,6 +11,8 @@ import './assets/iconfont/iconfont.css'
 import './assets/iconfont/iconfont.js'
 import * as utils from '@/utils/common'
 
+import store from './store' // Vue-x
+
 Vue.prototype.$utils = utils
 Vue.use(ElementUI);
 
@@ -22,6 +24,7 @@ moment.locale('zh-cn');
 export default new Vue({
   el: '#app',
   router,
+  store, //全局使用vuex
   components: { App },
   template: '<App/>',
   render: h => h(App)
