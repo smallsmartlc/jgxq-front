@@ -96,7 +96,9 @@ import NewsBox from '../common/NewsBox.vue';
 export default {
   components: { DiamondTitle, NewsBox },
     mounted() {
-        this.getPlayerById();
+        this.getPlayerById().then(()=>{
+            this.loadPlayers();
+        });
         this.loadNews();
     },
     data() {
@@ -111,11 +113,10 @@ export default {
         }
     },
     methods: {
-        getPlayerById(){
-            getPlayerById(this.$route.params.id).then((res)=>{
+        async getPlayerById(){
+            await getPlayerById(this.$route.params.id).then((res)=>{
                 if(res.code == 200){
                     this.player = res.data;
-                    this.loadPlayers();
                 }
             })
         },
