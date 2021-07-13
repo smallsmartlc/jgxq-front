@@ -46,7 +46,7 @@
               </div>
             </div>
             <el-dropdown-menu slot="dropdown" show-timeout="0">
-              <user-info @logout="logout" :message = "message"></user-info>
+              <user-info :message = "message"></user-info>
             </el-dropdown-menu>
           </el-dropdown>
         </el-menu-item>
@@ -79,9 +79,6 @@ import UserInfo from './UserInfo.vue'
 export default {
   name: 'JGHeader',
   methods:{
-    logout(){
-      this.$emit("logout");
-    },
     searchKeyword(queryString,cb){
       searchAutocomplete(queryString).then((res)=>{
         if(res.code == 200){

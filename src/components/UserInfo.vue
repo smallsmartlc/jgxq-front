@@ -98,7 +98,6 @@
     </div>
 </template>
 <script>
-import {userLogOut} from '@/api/login'
 import {getUserInfo} from '@/api/user'
 export default {
     data() {
@@ -124,8 +123,8 @@ export default {
             })
         },
         logOut(){
-            // userLogOut();
-            this.$emit("logout")
+            this.$store.commit("setUserInfo",null);
+            this.$router.push({ path:'/login'})
         },
     },
     props : {

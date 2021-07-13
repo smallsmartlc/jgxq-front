@@ -3,12 +3,12 @@
     <el-scrollbar wrap-class="main_wrap" style="height:100%;">
       <div class="list" :infinite-scroll-immediate="false" v-infinite-scroll="load" infinite-scroll-distance="10" infinite-scroll-disabled="disabled">
         <el-row style="z-index:100">
-          <el-col :span="24" style="margin-bottom:40px"><jg-header @logout="logout" :message="message"></jg-header></el-col>
+          <el-col :span="24" style="margin-bottom:40px"><jg-header :message="message"></jg-header></el-col>
         </el-row>
         <el-row>
           <el-col :span="20" :offset="2">
             <div style="min-width:900px">
-              <router-view @disabled = "changedisabled" ref="children" @login="login"/>
+              <router-view @disabled = "changedisabled" ref="children"/>
             </div>
           </el-col>
         </el-row>
@@ -30,16 +30,17 @@ export default {
     BackTop
   },
   mounted() {
-    this.checkUser();
+    this.checkUser().then(()=>{
+      if(this.$store.getters.userInfo){
+        this.hasMessage();
+      }
+    });
   },
   methods: {
-    checkUser(){
-      checkUser().then((res)=>{
+    async checkUser(){
+      await checkUser().then((res)=>{
         if(res.code==200){
           this.$store.commit("setUserInfo", res.data);
-          if(this.$store.getters.userInfo){
-            this.hasMessage();
-          }
         }
       })
     },
@@ -49,13 +50,6 @@ export default {
           this.message = res.data;
         }
       })
-    },
-    login(data){
-      this.$store.commit("setUserInfo",data);
-    },
-    logout(){
-      this.$store.commit("setUserInfo",null);
-      this.$router.push({ path:'/login'})
     },
     load(){
       if(this.$refs.children.load_scoll){this.$refs.children.load_scoll();}

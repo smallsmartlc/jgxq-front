@@ -80,7 +80,7 @@ export default {
                 message: '登陆成功',
                 type: 'success'
               });
-              this.$emit("login",res.data);
+              this.$store.commit("setUserInfo",res.data);
               this.$router.push("/");
             }else{
               this.$message({
@@ -105,7 +105,7 @@ export default {
                 message: '登陆成功',
                 type: 'success'
               });
-              this.$emit("login",res.data);
+              this.$store.commit("setUserInfo",res.data);
               this.$router.push("/");
             }else{
               this.$message({
