@@ -7,7 +7,7 @@
           <home-news :news="news"/>
         </el-col>
         <el-col :span="6" :offset="2">
-          <home-team :homeTeam="user?user.homeTeam:null"/>
+          <home-team/>
           <last-matches style="margin-top:60px"></last-matches>
         </el-col>
       </el-row>
@@ -33,9 +33,6 @@ export default {
     }
   },
   computed : {
-    user(){
-      return this.$store.getters.userInfo;
-    }
   },
   components : {
     HomeTitle,

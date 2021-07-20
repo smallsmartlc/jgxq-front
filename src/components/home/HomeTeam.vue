@@ -20,13 +20,7 @@
                 class="list"
                 v-infinite-scroll="load"
                 infinite-scroll-disabled="disabled">
-                <div class="match-boxes" style =' display:flex;justify-content:space-between;'>
-                    <div class="match-box" v-for="match in matches" :key = 'match.id' style="width : 50%; height : 70px;">
-                        <router-link :to="'/match/'+match.id">
-                        <match-box :match='match'></match-box>
-                        </router-link>
-                    </div>
-                </div>
+                <match-banner v-if="homeTeam" :homeTeam="homeTeam"></match-banner>
                 <li  v-for="item in news" :key="item.id">
                     <router-link :to="'/news/'+item.id">
                     <news-box :news='item' :imgSize='"60px"' style="width:100%;height:80px"></news-box>
@@ -66,23 +60,17 @@
 </template>
 
 <script>
-import MatchBox from '../common/MatchBox.vue'
 import NewsBox from '../common/NewsBox.vue'
 import NoMore from '../common/NoMore.vue'
 import PageLoading from '../common/PageLoading.vue'
 import TeamUpdate from '../common/TeamUpdate.vue'
 import MatchList from './MatchList.vue'
 import PlayerList from './PlayerList.vue'
+import MatchBanner from './MatchBanner.vue'
 import TeamInfo from './TeamInfo.vue'
 import {pageNewsByTag} from '@/api/news'
-import {homeMatches} from '@/api/match'
 export default {
-    components: { MatchBox,NewsBox,MatchList,PlayerList,TeamInfo,PageLoading, NoMore, TeamUpdate,},
-    mounted() {
-        if(this.homeTeam){
-           this.loadMatch();
-        } 
-    },
+    components: {NewsBox,MatchList,PlayerList,TeamInfo,PageLoading, NoMore, TeamUpdate,MatchBanner},
     methods: {
         load () {
             this.loading = true,
@@ -96,13 +84,6 @@ export default {
             })
             this.loading = false;
         },
-        loadMatch(){
-            homeMatches(2,this.homeTeam.id).then((res)=>{
-                if(res.code==200){
-                    this.matches = res.data;
-                }
-            })
-        },
         close(){
             this.dialogVisible = false;
         },
@@ -110,12 +91,8 @@ export default {
             this.$emit("update",id);
         },
     },
-    props:{
-        homeTeam : Object,
-    },
     data() {
         return {
-            matches:[],
             news:[],
             total : 1,
             cur: 0,
@@ -125,12 +102,16 @@ export default {
         }
     },
     computed: {
-      noMore () {
-        return this.news.length >= this.total
-      },
-      disabled () {
-        return this.loading || this.noMore
-      },
+        noMore () {
+            return this.news.length >= this.total
+        },
+        disabled () {
+            return this.loading || this.noMore
+        },
+        homeTeam(){
+            var user = this.$store.getters.userInfo;
+            return user?user.homeTeam:null;
+        }
     },
 }
 </script>
