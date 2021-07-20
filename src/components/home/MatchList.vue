@@ -19,7 +19,7 @@
       </li>
       </ul>
       <p v-if="loading"><page-loading/></p>
-      <p v-if="noMore"><no-more/></p>
+      <p v-if="noMore"><no-more text="最近没有比赛"/></p>
     </div>
   </el-scrollbar>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="main" :style="lstyle?{'height':lstyle.height,'font-size':lstyle.fontSize}:''">
-      <div class="item">没有更多了</div>
+      <div class="item">{{text}}</div>
   </div>
 </template>
 
@@ -13,7 +13,10 @@ data() {
 },
 props : {
     lstyle : Object,
-
+    text : {
+        type : String,
+        default : "没有更多了"
+    }
 }
 }
 </script>

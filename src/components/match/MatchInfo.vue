@@ -9,7 +9,6 @@
                 placeholder="选择日期"
                 value-format="yyyy-MM-dd"
                 :editable = "false"
-                :clearable = "false"
                 @change="changeTime"
                 >
                 </el-date-picker>
@@ -47,22 +46,33 @@ export default {
         pageSize:10,
         total : 1,
         loading: false,
-        time: new Date(),
-         matches : [],
+        time: null,
+        matchDownList : [],
+        matchUpList:[],
       };
     },
     computed: {
-      noMore () {
-        return this.matches.length >= this.total
-      },
-      disabled () {
-        var val = this.loading || this.noMore;
-        this.$emit("update:disabled",val);
-        return val
-      }
+        noMore () {
+            return this.matchDownList.length >= this.total
+        },
+        disabled () {
+            var val = this.loading || this.noMore;
+            this.$emit("update:disabled",val);
+            return val
+        },
+        matches(){
+            return this.time?this.matchDownList:[...this.matchUpList,...this.matchDownList]
+        },
+        start(){
+            return this.time?this.$moment(this.time).format("YYYY/MM/DD HH:mm:ss"):null;
+        }
     },
     mounted() {
-        this.load();
+        this.load().then(()=>{
+            if(this.matchDownList.length < 1){
+                this.loadUp();
+            }
+        });
     },
     watch: {
         disabled(newVal, oldVal) {
@@ -72,27 +82,40 @@ export default {
     methods: {
         changeTime(){
             this.cur = 1;
-            pageMatches({pageNum:this.cur,pageSize:this.pageSize,start : this.$moment(this.time).format("YYYY/MM/DD HH:mm:ss")})
+            pageMatches({pageNum:this.cur,pageSize:this.pageSize,start : this.start})
             .then((res)=>{
                 if(res.code == 200){
                     this.total = res.data.total;
-                    this.matches = res.data.records;;
+                    this.matchDownList = res.data.records;
                 }
             })
         },
-        load () {
+        async load () {
             if(this.disabled) return;
             this.loading = true
             this.cur++;
-            pageMatches({pageNum:this.cur,pageSize:this.pageSize,start : this.$moment(this.time).format("YYYY/MM/DD HH:mm:ss")})
+            await pageMatches({pageNum:this.cur,pageSize:this.pageSize,start : this.start})
             .then((res)=>{
                 if(res.code == 200){
                     var temp = res.data.records;
                     this.total = res.data.total;
-                    this.matches = this.matches.concat(temp);
+                    this.matchDownList = this.matchDownList.concat(temp);
                 }else{this.cur--;}
                 this.loading = false
             })
+        },
+        loadUp() {
+            pageMatches({
+                    pageNum: 1,
+                    pageSize: 10,
+                    past: true
+                })
+                .then((res) => {
+                    if (res.code == 200) {
+                        var temp = res.data.records;
+                        this.matchUpList = temp.reverse();
+                    }
+                })
         },
     },
 }

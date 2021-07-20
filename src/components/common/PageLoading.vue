@@ -1,6 +1,6 @@
 <template>
   <div class="main" :style="lstyle">
-      <div class="item"><i class="el-icon-loading"></i><span>加载中</span></div>
+      <div class="item"><i class="el-icon-loading"></i><span>{{text}}</span></div>
   </div>
 </template>
 
@@ -13,6 +13,10 @@ data() {
 },
 props : {
     lstyle : Object,
+    text : {
+        type : String,
+        default : "加载中"
+    }
 }
 }
 </script>
