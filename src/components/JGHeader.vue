@@ -198,10 +198,6 @@ sup{
     }
 </style>
 <style>
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
   .head-message sup{
       right: 20% !important;
       top: 20% !important;

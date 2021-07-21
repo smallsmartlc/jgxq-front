@@ -1,7 +1,7 @@
 <template>
-  <div style="background:#fff">
+  <div>
     <talk-editor v-loading="submiting" @submit="submit" v-model="talk" :isClear="isClear" @change="editorChange"/>
-    <div style="padding:40px;" v-for="item in talks" :key = "item.id">
+    <div class="talk_wrap" v-for="item in talks" :key = "item.id">
       <talk-box @delete="deleteComment(item.id)" :talk="item" :user="user"/>
     </div>
     <div class="block">
@@ -101,6 +101,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.talk_wrap{
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
 
 </style>

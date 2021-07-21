@@ -82,8 +82,22 @@ export default {
 </script>
 
 <style>
-.main_wrap{
-  /* overflow-x: scroll!important; */
-}
+  *{
+    margin:0;
+    padding:0;
+    list-style:none;
+    color: rgb(51, 51, 51);
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .el-scrollbar{
+    overflow-x: hidden;
+  }
+  .el-divider{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 </style>
  

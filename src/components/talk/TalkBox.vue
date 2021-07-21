@@ -2,7 +2,7 @@
   <div class="main">
     <div class="info">
         <router-link :to="`/user/${talk.author.userkey}`">
-        <el-avatar :size="60" 
+        <el-avatar :size="50" 
         :src="$utils.url2img(talk.author.headImage)" 
         fit="cover"
         style="background:transparent;"
