@@ -3,14 +3,17 @@
       <div class="comment_input">
         <el-input
         type="textarea"
-        :rows="2"
         placeholder="发表你的评论"
+        :autosize="{ minRows: 2, maxRows: 8}"
+        resize = "none"
+        maxlength="140"
+        show-word-limit
         v-model="content">
         </el-input>
         <div style="text-align:right;margin-top:20px"><el-button @click="commentNews" size="small" type="primary" round>发表</el-button></div>
       </div>
       <div>
-        <div v-for="item in comments" :key="item.id" style="width:100%">
+        <div v-for="item in comments" :key="item.id" class="comment_item">
             <comment-box @delete="deleteComment(item.id)" :comment="item" :user="user"/>
         </div>
       </div>
@@ -108,5 +111,9 @@ export default {
     background-color: #fff;
     box-sizing: border-box;
     margin-top: 40px;
+}
+.comment_item{
+    background-color: #fff;
+    padding: 10px;
 }
 </style>

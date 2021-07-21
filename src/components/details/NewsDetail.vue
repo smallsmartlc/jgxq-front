@@ -121,12 +121,12 @@ methods: {
 computed : {
   getnews(){
     return this.news;
-  }
+  },
+  user(){
+        return this.$store.getters.userInfo;
+    }
 },
 
-props:{
-  user:Object,
-}
 }
 </script>
 

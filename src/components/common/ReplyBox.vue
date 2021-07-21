@@ -1,6 +1,6 @@
 <template>
-  <div class="main">
-    <div class="info">
+  <div class="main-reply">
+    <!-- <div class="info">
         <router-link :to="`/user/${reply.userkey.userkey}`">
         <el-avatar :size="60" 
         :src="$utils.url2img(reply.userkey.headImage)" 
@@ -8,49 +8,51 @@
         style="background:transparent;"
         ></el-avatar>
         </router-link>
-    </div>
+    </div> -->
     <div class="text">
         <div class="name">
-            <div style="display:flex;align-items:center">
-                <div style="font-weight:bold;font-size:20px">{{reply.userkey.nickName}}&nbsp;</div>
-                <router-link v-if="reply.userkey.homeTeam" :to="`/team/${reply.userkey.homeTeam.id}`">
-                <el-image style="width:20px;height:20px;"
-                    :src="$utils.url2img(reply.userkey.homeTeam.logo)"
-                    fit="cover"/></router-link>
-            </div>
-            <div style="font-size:12px;color:#666">{{fromNowStr(reply.createAt)}}</div>
+            <router-link style="color: #fc0;" :to="`/user/${reply.userkey.userkey}`">{{reply.userkey.nickName}}</router-link>
+            <router-link v-if="reply.userkey.homeTeam" :to="`/team/${reply.userkey.homeTeam.id}`">
+            <el-image style="width:20px;height:20px;vertical-align: middle;"
+                :src="$utils.url2img(reply.userkey.homeTeam.logo)"
+                fit="cover"/></router-link>
+            <span v-if="reply.reply!=null">回复<router-link style="color: #fc0;" :to="`/user/${reply.reply.userkey.userkey}`">@{{reply.userkey.nickName}}</router-link></span>
+            <span class="message" v-html="`:${reply.content}`"></span>
         </div>
-        <div style="width:100%;color:#666;font-size:12px;height:24px;align-items:center;display:flex;">{{reply.userkey.city}}</div>
-        <div class="message" v-html="reply.content"></div>
-        <div v-if="reply.reply!=null" style="background-color:#f2f2f2;width:100%;padding:10px;box-sizing:border-box">
-            <div v-if="reply.reply.id" style="display:flex;align-items:center;margin-bottom:10px;">
-                <div style="">{{reply.reply.userkey.nickName}}&nbsp;</div>
-                <el-image v-if="reply.reply.userkey.homeTeam" style="width:20px;height:20px;"
-                    :src="$utils.url2img(reply.reply.userkey.homeTeam.logo)"
-                    fit="cover"/>
-            </div>
-            <div style="color:#666">{{reply.reply.id?reply.reply.content:'该评论已被删除'}}</div>
-        </div>
-        <div class="interact">
-            <div style="display:flex;">
-                <div><el-link :underline="false" @click="thumb" :style="{'color':reply.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{reply.thumbs}}</div>
-                <div><el-link :underline="false" @click="doComment"><i class="el-icon-chat-dot-round"/></el-link></div>
-            </div>
-            <div v-if="reply.userkey.userkey === user.userkey">
-                <el-popconfirm cancel-button-type="warning" @confirm="deleteReply" title="确定要删除这条回复吗?">
-                    <el-link slot="reference" :underline="false"><i class="el-icon-delete"/></el-link>
-                </el-popconfirm>    
+        <div class="interact_wrap">
+            <div>{{fromNowStr(reply.createAt)}}&nbsp;{{reply.userkey.city}}</div>
+            <div class="interact">
+                <div class="i-button"><span class="link" @click="thumb" :style="{'color':reply.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></span>{{reply.thumbs}}</div>
+                <div class="i-button"><span class="link" @click="replyBox=true"><i class="el-icon-chat-dot-round"/></span></div>
+                <div class="i-button" v-if="user && reply.userkey.userkey === user.userkey">
+                    <el-popconfirm cancel-button-type="warning" @confirm="deleteReply" title="确定要删除这条评论吗?">   
+                        <span slot="reference" class="link"><i 
+                    class="el-icon-delete"/></span>
+                    </el-popconfirm>
+                </div>
             </div>
         </div>
-        <div v-if="replyBox" class="reply">
-            <el-input
-                :placeholder="'回复 '+reply.userkey.nickName+'：'"
-                v-model="replytxt"
-                style="flex-grow:1;margin-right:20px"
-                clearable>
-            </el-input>
-            <el-button type="primary" @click="submitComment">评论</el-button>
-        </div>
+        <el-dialog
+            :title="`回复@${reply.userkey.nickName}`"
+            :visible.sync="replyBox"
+            custom-class="comment_dialog"
+            width="600px">
+            <div>
+                <el-input
+                    :placeholder="`回复 ${reply.userkey.nickName}：`"
+                    v-model="replytxt"
+                    type="textarea"
+                    :autosize="{ minRows: 2, maxRows: 8}"
+                    resize = "none"
+                    maxlength="140"
+                    show-word-limit
+                    clearable >
+                </el-input>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" round @click="submitComment"><b>回复</b></el-button>
+            </span>
+        </el-dialog>
     </div>
   </div>
 </template>
@@ -79,9 +81,6 @@ methods: {
             }
         })
     },
-    doComment(){
-        this.replyBox = !this.replyBox;
-    },
     submitComment(){
         if(this.replytxt.length<1){
                 return;
@@ -101,6 +100,19 @@ methods: {
                         message: '评论成功',
                         type: 'success'
                     });
+                    var temp={
+                        id:res.data,
+                        content:this.replytxt,
+                        objectId : this.reply.objectId,
+                        reply : this.reply,
+                        parentId : this.reply.parentId,
+                        thumb: false,
+                        thumbs: 0,
+                        type: this.reply.type,
+                        userkey : this.user,
+                    }
+                    this.replyBox = false;
+                    this.$emit("reply",temp);
                     this.replytxt = ""
                 }
             }
@@ -126,6 +138,7 @@ data() {
         replyBox : false,
         cur : 0,
         pageSize:10,
+        
     }
 },
 computed : {
@@ -150,21 +163,9 @@ computed : {
     justify-content: space-between;
     width: 100%;
 }
-.main{
+.main-reply{
     display: flex;
-    background-color: #F5F5EB;
-    border-bottom: 1px solid #E6E4DC;
-    padding: 10px;
-    padding-right: 20px;
-}
-.info{
-    width:80px;
-    display:flex;
-    justify-content:center;
-    align-items:top;
-    min-height: 100px;
-    margin-right: 10px;
-    border-bottom: 1px solid #f2f2f4;
+    background-color: #fff;
 }
 .text{
     display: flex;
@@ -174,26 +175,46 @@ computed : {
 }
 .name{
     width: 100%;
+    line-height: 24px;
+}.link{
+    cursor: pointer;
+}
+.interact_wrap{
+    color:#939393;
+    width:100%;
     display: flex;
-    justify-content : space-between;
+    justify-content: space-between;
     align-items: center;
-    flex-grow:1;
+    font-size: 12px;
+}
+.main-reply:hover .interact{
+    opacity: 1;
 }
 .interact{
-    padding-top:20px;
-    padding-bottom: 20px;
-    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-top:10px;
+    padding-bottom: 10px;
+    width: 100px;
+    opacity: 0;
+    transition-duration: 0.2s;
+}
+.interact .i-button{
+    margin-right: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    font-size: 14px;
 }
-.message{
-    width: 100%;
+.interact .i-button:hover{
+    color:#fc0;
 }
 .interact i{
     font-size: 20px;
+    padding: 4px;
+    border-radius: 50%;
 }
-.interact i:hover{
-    color : #fc0!important;
+.interact .i-button:hover i{
+    color : #fc0;
+    background-color: #fffae6;
 }
 </style>

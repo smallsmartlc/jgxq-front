@@ -2,7 +2,7 @@
   <div class="main">
     <div class="info">
         <router-link :to="`/user/${comment.userkey.userkey}`">
-        <el-avatar :size="60" 
+        <el-avatar :size="40" 
         :src="$utils.url2img(comment.userkey.headImage)" 
         fit="cover"
         style="background:transparent;"
@@ -10,48 +10,59 @@
     </div>
     <div class="text">
         <div class="name">
-            <div style="display:flex;align-items:center">
-                <div style="font-weight:bold;font-size:20px">{{comment.userkey.nickName}}&nbsp;</div>
-                <router-link  v-if="comment.userkey.homeTeam"  :to="`/team/${comment.userkey.homeTeam.id}`">
-                <el-image style="width:20px;height:20px;"
-                :src="$utils.url2img(comment.userkey.homeTeam.logo)"
-                fit="cover"/></router-link>
-            </div>
-            <div style="font-size:12px;color:#666">{{fromNowStr(comment.createAt)}}</div>
+            <span style="color: #fc0;">{{comment.userkey.nickName}}</span>
+            <router-link v-if="comment.userkey.homeTeam"  :to="`/team/${comment.userkey.homeTeam.id}`">
+            <el-image style="width:20px;height:20px;vertical-align: middle;"
+            :src="$utils.url2img(comment.userkey.homeTeam.logo)"
+            fit="cover"/></router-link>
+            <span class="message" v-html="`:${comment.content}`"></span>
         </div>
-        <div style="width:100%;color:#666;font-size:12px;height:24px;align-items:center;display:flex;">{{comment.userkey.city}}</div>
-        <div class="message" v-html="comment.content"></div>
-        <div class="interact">
-            <div style="display:flex;">
-                <div><el-link :underline="false" @click="thumb" :style="{'color':comment.hits.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></el-link>{{comment.hits.thumbs}}</div>
-                <div><el-link :underline="false" @click="doComment"><i class="el-icon-chat-dot-round"/></el-link></div>
-            </div>
-            <div v-if="user && comment.userkey.userkey === user.userkey">
-                <el-popconfirm cancel-button-type="warning" @confirm="deleteComment" title="确定要删除这条评论吗?">   
-                    <el-link slot="reference" :underline="false"><i 
-                class="el-icon-delete"/></el-link>
-                </el-popconfirm>
+        <div class="interact_wrap">
+            <div>{{fromNowStr(comment.createAt)}}&nbsp;{{comment.userkey.city}}</div>
+            <div class="interact">
+                <div class="i-button"><span class="link" @click="thumb" :style="{'color':comment.hits.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></span>{{comment.hits.thumbs}}</div>
+                <div class="i-button"><span class="link" @click="doComment"><i class="el-icon-chat-dot-round"/></span></div>
+                <div class="i-button" v-if="user && comment.userkey.userkey === user.userkey">
+                    <el-popconfirm cancel-button-type="warning" @confirm="deleteComment" title="确定要删除这条评论吗?">   
+                        <span slot="reference" class="link"><i 
+                    class="el-icon-delete"/></span>
+                    </el-popconfirm>
+                </div>
             </div>
         </div>
-        <div v-if="replyBox" class="comment">
-            <el-input
-                :placeholder="'回复 '+comment.userkey.nickName+'：'"
-                v-model="reply"
-                style="flex-grow:1;margin-right:20px"
-                clearable>
-            </el-input>
-            <el-button type="primary" @click="submitComment">评论</el-button>
+        <div class="reply_wrap">
+            <div v-for="item in replys" :key="item.id" style="width:100%">
+                <reply-box @reply="addReply"  @delete="deleteReply(item.id)" :reply="item" :user="user"/>
+            </div>
+            <div class="reply"  v-if="replys.length<total">
+                <el-link :underline="false" @click="loadingComment">
+                    <span v-if="cur<1">共{{total}}条回复</span>
+                    <span v-else>查看更多回复</span>
+                    <i class="el-icon-arrow-down"></i>
+                </el-link>
+            </div>
         </div>
-        <div v-for="item in replys" :key="item.id" style="width:100%">
-            <reply-box @delete="deleteReply(item.id)" :reply="item" :user="user"/>
-        </div>
-        <div class="reply"  v-if="replys.length<total">
-            <el-link :underline="false" @click="loadingComment">
-                <span v-if="cur<1">共{{total}}条回复</span>
-                <span v-else>查看更多回复</span>
-                <i class="el-icon-arrow-right"></i>
-            </el-link>
-        </div>
+        <el-dialog
+            :title="`回复@${comment.userkey.nickName}`"
+            :visible.sync="replyBox"
+            custom-class="comment_dialog"
+            width="600px">
+            <div>
+                <el-input
+                    :placeholder="`回复 ${comment.userkey.nickName}：`"
+                    v-model="reply"
+                    type="textarea"
+                    :autosize="{ minRows: 2, maxRows: 8}"
+                    resize = "none"
+                    maxlength="140"
+                    show-word-limit
+                    clearable >
+                </el-input>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" round @click="submitComment"><b>回复</b></el-button>
+            </span>
+        </el-dialog>
     </div>
   </div>
 </template>
@@ -70,10 +81,10 @@ data() {
     return {
         replys : [],
         reply : "",
-        replyBox : false,
         cur : 0,
         pageSize:10,
-        total: this.comment.hits.comments
+        total: this.comment.hits.comments,
+        replyBox : false
     }
 },
 methods: {
@@ -93,7 +104,7 @@ methods: {
         })
     },
     doComment(){
-        this.replyBox = !this.replyBox;
+        this.replyBox = true;
     },
     submitComment(){
         if(this.reply.length<1){
@@ -126,12 +137,15 @@ methods: {
                     message: '评论成功',
                     type: 'success'
                 });
-                this.replys.unshift(temp);
+                this.replys.push(temp);
                 this.total++;
             }
         })
-        
+        this.replyBox = false;
         this.reply = "";
+    },
+    addReply(obj){
+        this.replys.push(obj);
     },
     deleteComment(){
         deleteComment(this.comment.id).then((res)=>{
@@ -181,9 +195,21 @@ computed : {
 </script>
 
 <style scoped>
+.reply_wrap{
+    position: relative;
+    padding-left: 10px;
+    width: 100%;
+}
+.reply_wrap:before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    border-left: 2px solid #f2f2f2;
+}
 .reply{
     margin-bottom: 10px;
-    width: 100%;
 }
 .comment{
     display: flex;
@@ -192,19 +218,10 @@ computed : {
 }
 .main{
     display: flex;
-    background-color: #FCFCF2;
-    border-bottom: 1px solid #E6E4DC;
-    padding: 10px;
-    padding-right: 20px;
-}
-.info{
-    width:80px;
-    display:flex;
-    justify-content:center;
-    align-items:top;
-    min-height: 100px;
-    margin-right: 10px;
-    border-bottom: 1px solid #f2f2f4;
+    background-color: #fff;
+    padding: 5px 0;
+    font-size: 14px;
+    width: 100%;
 }
 .text{
     display: flex;
@@ -214,26 +231,49 @@ computed : {
 }
 .name{
     width: 100%;
+    line-height: 24px;
+}
+.link{
+    cursor: pointer;
+}
+.interact_wrap{
+    color:#939393;
+    width:100%;
     display: flex;
-    justify-content : space-between;
+    justify-content: space-between;
     align-items: center;
-    flex-grow:1;
+    font-size: 12px;
 }
 .interact{
+    display: flex;
+    flex-direction: row-reverse;
     padding-top:10px;
     padding-bottom: 10px;
-    width: 100%;
+    width: 100px;
+}
+.interact .i-button{
+    margin-right: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    font-size: 14px;
 }
-.message{
-    width: 100%;
+.interact .i-button:hover{
+    color:#fc0;
 }
 .interact i{
     font-size: 20px;
+    padding: 4px;
+    border-radius: 50%;
 }
-.interact i:hover{
-    color : #fc0!important;
+.interact .i-button:hover i{
+    color : #fc0;
+    background-color: #fffae6;
+}
+
+</style>
+<style>
+.el-dialog.comment_dialog{
+    border-radius: 10px;
+    color: #000;
 }
 </style>

@@ -4,11 +4,14 @@
     <div class="mask_bg" :style="{'background-image':'url('+$utils.url2img(user.userInfo.headImage)+')'}"></div>
     <div class="info_container">
       <div class="info">
-        <router-link :to="'/center/info'">
-        <el-avatar :size="80" 
+        <el-avatar @click.native="showViewer=true" :size="80" 
           :src="$utils.url2img(user.userInfo.headImage)" 
           fit="cover"
-          style="border:4px solid #fc0;background:transparent;"></el-avatar></router-link>
+          style="border:4px solid #fc0;background:transparent;"></el-avatar>
+        <el-image-viewer
+            v-if="showViewer"
+            :on-close="()=>{showViewer=false}"
+            :url-list="[$utils.url2img(user.userInfo.headImage)]" />
         <div v-if="user.userInfo.homeTeam" style="display:flex;align-items:center">
           <div style="color:#fff;font-size:20px">{{user.userInfo.nickName}}&nbsp;</div>
           <el-image v-if="user.userInfo.homeTeam" style="width:20px;height:20px;"
@@ -41,8 +44,9 @@ import CenterComment from '@/components/user/CenterComment'
 import CenterIssue from '@/components/user/CenterIssue'
 import CenterFocus from '@/components/user/CenterFocus'
 import CenterFans from '@/components/user/CenterFans'
+import ElImageViewer from 'element-ui/packages/image/src/image-viewer'
 export default {
-  components: { CenterComment,CenterIssue,CenterFocus,CenterFans },
+  components: { CenterComment,CenterIssue,CenterFocus,CenterFans,ElImageViewer},
   name: 'UserInteract',
   props:{
     user : Object,
@@ -56,7 +60,8 @@ export default {
       bStyle : {
           'border-color' : '#fc0',
           'color' : '#fc0'
-      }
+      },
+      showViewer : false,
     }
   },
   computed:{

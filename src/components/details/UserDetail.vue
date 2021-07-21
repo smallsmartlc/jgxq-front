@@ -13,9 +13,9 @@ mounted() {
 methods:{
     loadingUser(){
         getUserInfo({target:this.$route.params.userkey}).then((res)=>{
-        if(res.code == 200){
-            this.user = res.data;
-        }
+            if(res.code == 200){
+                this.user = res.data;
+            }
         })
     }
 },

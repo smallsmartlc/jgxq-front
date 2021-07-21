@@ -86,7 +86,6 @@ export default {
     margin:0;
     padding:0;
     list-style:none;
-    color: rgb(51, 51, 51);
   }
   a {
     color: inherit;
@@ -98,6 +97,9 @@ export default {
   .el-divider{
     margin-top: 0;
     margin-bottom: 0;
+  }
+  .app-component{
+    color: #333;
   }
 </style>
  
