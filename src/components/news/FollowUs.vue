@@ -62,11 +62,6 @@ export default {
 </script>
 
 <style scoped>
-    .affix{
-        position: sticky;
-        top: 40px;
-        height: 0;
-    }
     .way{
         color: #666;
         font-size: 12px;

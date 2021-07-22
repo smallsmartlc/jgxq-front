@@ -112,5 +112,10 @@ export default {
     -webkit-line-clamp: 2;
     overflow: hidden;
   }
+  .affix{
+      position: sticky;
+      top: 40px;
+      height: 0;
+  }
 </style>
  

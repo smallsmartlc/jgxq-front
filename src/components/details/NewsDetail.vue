@@ -131,13 +131,6 @@ computed : {
 </script>
 
 <style scoped>
-
-.affix{
-    position: sticky;
-    top: 100px;
-    height: 0;
-    z-index: 1000;
-}
 .interact{
    width:60px;
    /* position: absolute; */
