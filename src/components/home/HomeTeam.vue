@@ -1,5 +1,5 @@
 <template>
-  <div class="home-team-title">
+  <div class="home-team-title jg-border">
       <div style="height : 60px;display:flex">
         <div class="window">主队</div>
         <div v-if="homeTeam">
@@ -21,9 +21,9 @@
                 v-infinite-scroll="load"
                 infinite-scroll-disabled="disabled">
                 <match-banner v-if="homeTeam" :homeTeam="homeTeam"></match-banner>
-                <li  v-for="item in news" :key="item.id">
+                <li class="news-item"  v-for="item in news" :key="item.id">
                     <router-link :to="'/news/'+item.id">
-                    <news-box :news='item' :imgSize='"60px"' style="width:100%;height:80px"></news-box>
+                    <news-box :news='item' imgSize="60px" width="230px" style="width:100%;height:80px"></news-box>
                     </router-link>
                 </li>
                 </ul>
@@ -130,7 +130,7 @@ export default {
         min-width:300px;
         background-color:#fff; 
         box-shadow: 0 0 4px rgba(0, 0, 0, .12);
-        border-radius: 2px;
+        border-radius: 8px;
     }
     .window{
         color: #fc0;
@@ -141,6 +141,9 @@ export default {
         line-height: 60px;
         vertical-align: top;
         text-align: center;
+    }
+    .news-item{
+        padding: 4px;
     }
     
 </style>

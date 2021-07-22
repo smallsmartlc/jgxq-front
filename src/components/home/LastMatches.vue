@@ -1,5 +1,5 @@
 <template>
-<div style="background-color:#fff;">
+<div class="jg-border" style="background-color:#fff;border-radius:8px">
     <div class="window">近日比赛</div>
     <el-divider></el-divider> 
         <div class="dynamic infinite-list-wrapper" style="width:100%;height:300px;">
@@ -15,7 +15,7 @@
                 </li>
             </ul>
             <p v-if="loading"><page-loading/></p>
-            <p v-if="noMore"><no-more/></p>
+            <p v-if="noMore"><no-more text="最近没有比赛哦"/></p>
     </el-scrollbar>
         </div>
 </div>
@@ -24,7 +24,7 @@
 import {pageMatches} from '@/api/match'
 import MatchBox from '../common/MatchBox'
 import PageLoading from '../common/PageLoading'
-import NoMore from '../common/NoMore'
+import NoMore from '../common/NoMore.vue'
 export default {
     components : {MatchBox,PageLoading,NoMore},
     data() {

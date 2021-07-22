@@ -1,7 +1,7 @@
 <template>  
-    <div class="block" style="width:100%">
+    <div class="block jg-shadow" style="width:100%">
         <el-carousel trigger="click" height="400px" indicator-position="outside" style="background-color:#fff;border:10px solid #fff;box-sizing:border-box;">
-            <el-carousel-item v-for="item in news.slice(0,5)" :key="item.id" style="display:relative">
+            <el-carousel-item  v-for="item in news.slice(0,5)" :key="item.id" style="display:relative">
                 <router-link :to="`/news/${item.id}`">
                     <div style="width:100%;height:100%;overflow:hidden;display:flex;align-items:center">
                         <el-image
@@ -45,6 +45,7 @@ export default {
     }
     .el-carousel{
         width: 100%;
+        border-radius: 8px;
     }
     .el-carousel__item h3 {
     color: #696447;

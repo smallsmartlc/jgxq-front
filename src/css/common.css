@@ -26,3 +26,9 @@
 .jg-zoom:hover{
     transform: scale(1.05);
 }
+.jg-border{
+    border: 1px solid transparent;
+}
+.jg-border:hover{
+    border-color: #fc0;
+}
