@@ -2,7 +2,7 @@
     <div>
         <div class = "news-box">
             <div class="title_box" :style="{'max-width':width}">
-                <span class="news-title">{{news.title}}</span>
+                <span class="news-title jg-line-2">{{news.title}}</span>
                 <div v-if="news.comments!=null" style="color:#666660"><i class="el-icon-chat-dot-round"/><span style="font-size:10px">{{news.comments>999?"999+":news.comments}}</span></div>
             </div>
             <div :style="{'width':imgSize}">
@@ -48,15 +48,6 @@ export default {
         justify-content:space-between;
         height:100%;
         box-sizing: border-box;
-    }
-    .news-title{
-        vertical-align: middle;
-        overflow:hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        /* width: 230px; */
     }
     .news-box{
         font-weight: 500;

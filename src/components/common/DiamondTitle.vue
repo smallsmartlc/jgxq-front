@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="box" :style="dstyle">
-          <div style="transform: skewX(30deg);">{{dname}}</div>
+          <div style="transform: skewX(10deg);">{{dname}}</div>
         </div>
   </div>
 </template>
@@ -25,6 +25,7 @@ props : {
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    transform: skewX(-30deg);
+    transform: skewX(-10deg);
+    border-radius: 4px;
 }
 </style>

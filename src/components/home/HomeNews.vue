@@ -1,8 +1,8 @@
 <template>
-    <div v-if="news" class="dynamic infinite-list-wrapper" style="margin:20px 0;width:100%;overflow:auto">
+    <div v-if="news" class="dynamic infinite-list-wrapper" style="margin:20px 0;width:100%;">
         <ul
         class="list">
-            <li class="news_item" v-for="item in news" :key="item.id">
+            <li class="news_item jg-shadow jg-zoom" v-for="item in news" :key="item.id">
               <router-link :to="'/news/'+item.id">
                 <news-box :news='item' width='600px' imgSize="80px" style="width:100%;height:100px"></news-box>
               </router-link>
@@ -43,9 +43,5 @@ export default {
   padding: 8px;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 0 0 rgb(56 56 56 / 15%);
-}
-.news_item:hover{
-  box-shadow: 0 6px 12px rgb(56 56 56 / 10%);
 }
 </style>

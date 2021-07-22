@@ -1,7 +1,7 @@
 <template>
-    <div class="affix">
+    <div class="jg-affix">
         <diamond-title dname="关注我们"/>
-        <div class="main">
+        <div class="main jg-shadow">
             <div class="info_box" v-for="(info,index) in infos" :key='index'>
                 <div class="type">{{info.type}}</div>
                 <el-popover v-if="info.qrCode"
@@ -73,6 +73,7 @@ export default {
         background-color:#fff;
         margin-top:10px;
         padding:10px;
+        border-radius: 8px;
     }
     .type{
         width: 60px;

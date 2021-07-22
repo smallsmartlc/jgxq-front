@@ -1,7 +1,7 @@
 <template>
   <el-row>
       <el-col :span="14" :offset="2">
-          <div class="affix">
+          <div class="jg-affix">
               <div class="interact" v-if="news.id">
                   <el-badge :value="news.hit.thumbs" class="item" type="primary">
                       <el-button @click="thumb" :style="{'color': news.hit.thumb?'#fc0':'#666'}" icon="iconfont icon-zan" circle></el-button> 
