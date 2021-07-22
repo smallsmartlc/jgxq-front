@@ -101,5 +101,16 @@ export default {
   .app-component{
     color: #333;
   }
+  .jg-line-1{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .jg-line-2{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
 </style>
  

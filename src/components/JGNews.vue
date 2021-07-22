@@ -1,11 +1,11 @@
 <template>
-    <el-row>
+    <el-row type="flex">
         <el-col :span="16">
             <div>
               <diamond-title dname="最新报道" />
               <div style="margin-top:10px;width:800px;">
                   <ul>
-                      <li  v-for="item in news" :key="item.id" style="background-color:#fff;border-bottom:1px solid #E6E4DC;padding:10px">
+                      <li  v-for="item in news" :key="item.id" class="news_item">
                         <router-link :to="'/news/'+item.id">
                           <news-box :news='item' width='600px' imgSize="80px" style="width:100%;height:100px"></news-box>
                         </router-link>
@@ -78,6 +78,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-
+.news_item{
+  margin-bottom: 12px;
+  padding: 8px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 0 rgb(56 56 56 / 15%);
+}
+.news_item:hover{
+  box-shadow: 0 6px 12px rgb(56 56 56 / 10%);
+}
 </style>

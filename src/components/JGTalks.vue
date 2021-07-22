@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin:0 200px">
     <talk-editor v-loading="submiting" @submit="submit" v-model="talk" :isClear="isClear" @change="editorChange"/>
     <div class="talk_wrap" v-for="item in talks" :key = "item.id">
       <talk-box @delete="deleteComment(item.id)" :talk="item" :user="user"/>
@@ -104,7 +104,7 @@ export default {
 .talk_wrap{
   background-color: #fff;
   padding: 20px;
-  border-radius: 4px;
+  border-radius: 8px;
   margin-bottom: 16px;
 }
 

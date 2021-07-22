@@ -1,30 +1,30 @@
 <template>
-  <div>
-      <diamond-title dname="关注我们"/>
-      <div class="main">
-        <div class="info_box" v-for="(info,index) in infos" :key='index'>
-            <div class="type">{{info.type}}</div>
-            <el-popover v-if="info.qrCode"
-                placement="left"
-                width="200"
-                trigger="hover">
-                <el-image style="width: 200px; height: 200px" :src="info.qrCode" fit="cover"></el-image>
-                <!-- <el-image slot="reference" style="width: 60px; height: 60px" :src="info.img" fit="cover"></el-image> -->
-                <div  slot="reference" style="width:60px;font-size:60px"><svg class="icon" aria-hidden="true"><use :xlink:href="info.icon"></use></svg></div>
-                
-            </el-popover>
-            <!-- <el-image v-else style="width: 60px; height: 60px" :src="info.img" fit="cover"></el-image> -->
-            <svg v-else class="icon" aria-hidden="true"><use :xlink:href="info.icon"></use></svg>
-                <!-- <i class="iconfont" :class="info.icon"></i> -->
+    <div class="affix">
+        <diamond-title dname="关注我们"/>
+        <div class="main">
+            <div class="info_box" v-for="(info,index) in infos" :key='index'>
+                <div class="type">{{info.type}}</div>
+                <el-popover v-if="info.qrCode"
+                    placement="left"
+                    width="200"
+                    trigger="hover">
+                    <el-image style="width: 200px; height: 200px" :src="info.qrCode" fit="cover"></el-image>
+                    <!-- <el-image slot="reference" style="width: 60px; height: 60px" :src="info.img" fit="cover"></el-image> -->
+                    <div  slot="reference" style="width:60px;font-size:60px"><svg class="icon" aria-hidden="true"><use :xlink:href="info.icon"></use></svg></div>
+                    
+                </el-popover>
+                <!-- <el-image v-else style="width: 60px; height: 60px" :src="info.img" fit="cover"></el-image> -->
+                <svg v-else class="icon" aria-hidden="true"><use :xlink:href="info.icon"></use></svg>
+                    <!-- <i class="iconfont" :class="info.icon"></i> -->
 
-            <div class="way">
-                <el-link v-if="info.url" :href="info.url" target="_blank">{{info.name}}</el-link>
-                <div v-else>{{info.name}}</div>
-                <div v-if="info.extra">{{info.extra}}</div>
+                <div class="way">
+                    <el-link v-if="info.url" :href="info.url" target="_blank">{{info.name}}</el-link>
+                    <div v-else>{{info.name}}</div>
+                    <div v-if="info.extra">{{info.extra}}</div>
+                </div>
             </div>
         </div>
-      </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -62,6 +62,11 @@ export default {
 </script>
 
 <style scoped>
+    .affix{
+        position: sticky;
+        top: 40px;
+        height: 0;
+    }
     .way{
         color: #666;
         font-size: 12px;

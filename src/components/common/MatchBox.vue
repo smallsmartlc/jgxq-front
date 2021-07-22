@@ -1,7 +1,7 @@
 <template>
     <div class="main" :style="{'font-size':fontSize}">
         <div class="match-title">
-            <div>{{match.title}}</div>
+            <div class="jg-line-1">{{match.title}}</div>
             <div style="min-width:40px;text-align:center" v-if="dateDiff(match.startTime)>(120*60*1000)">已结束</div>
             <div style="min-width:40px;text-align:center" v-else-if="dateDiff(match.startTime)>0">进行中</div>
             <div style="min-width:40px;text-align:center" v-else>未开始</div>
