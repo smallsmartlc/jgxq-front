@@ -168,6 +168,8 @@ import {emojis} from './emoji.js'
     margin-bottom : 20px;
     position: relative;
     z-index: 0;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
   }
   .toolbar {
     border-bottom: 1px solid #f7f7f7;
