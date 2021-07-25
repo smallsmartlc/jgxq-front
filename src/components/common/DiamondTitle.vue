@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="box" :style="dstyle">
-          <div style="transform: skewX(10deg);">{{dname}}</div>
+          <div class="content">{{dname}}</div>
         </div>
   </div>
 </template>
@@ -27,5 +27,14 @@ props : {
     font-size: 20px;
     transform: skewX(-10deg);
     border-radius: 4px;
+}
+.box:hover{
+  animation:test 0.3s 1;
+}
+@keyframes test{
+  50% {transform: skewX(-40deg)}
+}
+.content{
+  transform: skewX(10deg);
 }
 </style>

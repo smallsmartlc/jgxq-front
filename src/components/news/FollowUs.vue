@@ -10,7 +10,7 @@
                     trigger="hover">
                     <el-image style="width: 200px; height: 200px" :src="info.qrCode" fit="cover"></el-image>
                     <!-- <el-image slot="reference" style="width: 60px; height: 60px" :src="info.img" fit="cover"></el-image> -->
-                    <div  slot="reference" style="width:60px;font-size:60px"><svg class="icon" aria-hidden="true"><use :xlink:href="info.icon"></use></svg></div>
+                    <div class="jg-zoom" slot="reference" style="width:60px;font-size:60px"><svg class="icon" aria-hidden="true"><use :xlink:href="info.icon"></use></svg></div>
                     
                 </el-popover>
                 <!-- <el-image v-else style="width: 60px; height: 60px" :src="info.img" fit="cover"></el-image> -->
