@@ -32,3 +32,7 @@
 .jg-border:hover{
     border-color: #fc0;
 }
+.jg-shadow-box{
+    box-shadow: 0 1px 4px rgba(0,0,0,0.16);
+    border-radius: 8px;
+}
