@@ -5,7 +5,7 @@
                 <div style="background-color:#fc0;transform: skewX(-20deg);width:6px;height:25px;margin-right:10px"></div>
                 <div>{{matchlist.startTime}}</div>
             </div>
-            <ul>
+            <ul class="jg-shadow-box">
                 <li class="match-item" v-for="(item) in matchlist.matchlist" :key="item.id">
                     <router-link :to="'/match/'+item.id">
                     <match-bigbox :match="item"  style="width:100%;height:60px"></match-bigbox>
@@ -54,7 +54,7 @@ export default {
 
 <style scoped>
     .match-item{
-        padding:2px
+        padding:2px;
     }
     .match-item:hover{
         background-color: rgba(255, 255, 255, 0.6)!important;
@@ -62,12 +62,10 @@ export default {
     .match-item:first-child{
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.16);
     }
     .match-item:last-child{
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.16);
     }
     .match-item:nth-child(odd){
         background-color:#fff;
