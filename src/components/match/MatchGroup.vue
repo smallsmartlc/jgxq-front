@@ -53,9 +53,6 @@ export default {
 </script>
 
 <style scoped>
-    .match-item{
-        padding:2px;
-    }
     .match-item:hover{
         background-color: rgba(255, 255, 255, 0.6)!important;
     }

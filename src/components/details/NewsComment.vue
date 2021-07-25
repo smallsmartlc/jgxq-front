@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main jg-shadow-box">
       <div class="comment_input">
         <el-input
         type="textarea"
@@ -99,7 +99,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.main{
+    background-color: #fff;
+}
 .loadmore{
     height: 40px;
     line-height: 40px;
@@ -108,12 +111,10 @@ export default {
 .comment_input{
     width: 100%;
     padding: 20px;
-    background-color: #fff;
     box-sizing: border-box;
     margin-top: 40px;
 }
 .comment_item{
-    background-color: #fff;
-    padding: 10px;
+    padding: 16px;
 }
 </style>

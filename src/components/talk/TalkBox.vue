@@ -30,7 +30,7 @@
     </div>
     <div class="interact">
         <div class="i-toolbar">
-            <div class="i-button"><span class="link" @click="thumb" :style="{'color':talk.hit.thumb?'#fc0':'#666'}"><i class="iconfont icon-zan"></i></span>{{talk.hit.thumbs}}</div>
+            <div class="i-button"><span class="link" :class="talk.hit.thumb?'active':''" @click="thumb"><i class="iconfont icon-zan"></i></span>{{talk.hit.thumbs}}</div>
             <div class="i-button"><span class="link" @click="doComment"><i class="el-icon-chat-dot-round"/></span>{{talk.hit.comments}}</div> 
         </div>
         <div v-if="user && talk.author.userkey === user.userkey">
@@ -272,6 +272,9 @@ data() {
 }
 .link{
     cursor: pointer;
+}
+.link.active{
+    color: #fc0;
 }
 .message{
     width: 100%;

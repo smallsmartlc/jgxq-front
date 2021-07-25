@@ -1,5 +1,5 @@
 <template>
-   <div class="main">
+   <div class="main jg-shadow-box">
         <div class="newsbox" v-if="news.id">
           <div class="title">{{news.title}}</div>
           <div class="author">
@@ -46,6 +46,7 @@ methods: {
     width:100%;
     display: flex;
     justify-content: center;
+    background-color:#fff;
 }
 .title{
     font-size: 28px;
@@ -64,7 +65,6 @@ methods: {
 }
 .newsbox{
     width:100%;
-    background-color:#fff;
     padding:40px;
 }
 

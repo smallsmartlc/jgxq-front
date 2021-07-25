@@ -269,7 +269,9 @@ computed : {
     color : #fc0;
     background-color: #fffae6;
 }
-
+.info{
+    margin-right: 8px;
+}
 </style>
 <style>
 .el-dialog.comment_dialog{

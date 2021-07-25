@@ -4,7 +4,7 @@
         <diamond-title :dstyle="{'margin-bottom':'10px'}" dname="相关标签"/>
         <div v-for="(item,index) in tag" :key="index">
             <router-link :to="`/${item.type==0?'team':'player'}/${item.objectId}`">
-                <div class="tagbox">
+                <div class="tagbox jg-shadow-box jg-zoom">
                     <el-image
                     style="width: 40px; height: 40px"
                     :src="$utils.url2img(item.logo)"
@@ -15,10 +15,12 @@
         </div>
       </div>
       
-      <div style="margin-top:40px">
+      <div style="margin-top:40px;">
           <diamond-title :dstyle="{'margin-bottom':'10px'}" dname="相关新闻"/>
-          <div v-for="item in news" :key="item.id" style="background-color:#fff;padding:10px;border-bottom:1px solid #f2f2f2">
-            <a :href="'/news/'+item.id"><el-link :underline="false">{{item.title}}</el-link></a>
+          <div>
+            <div v-for="item in news" :key="item.id" class="news-item">
+                <a :href="'/news/'+item.id"><el-link :underline="false">{{item.title}}</el-link></a>
+            </div>
           </div>
       </div>
   </div>
@@ -71,8 +73,22 @@ methods: {
     background-color:#fff;
     padding:10px;
     border-bottom: 1px solid #f2f2f2;
+    margin-bottom: 8px;
 }
 .tagbox div{
     margin-right: 10px;
+}
+.news-item{
+    background-color:#fff;
+    padding:10px;
+    border-bottom:1px solid #f2f2f2;
+}
+.news-item:first-child{
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.news-item:last-child{
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 </style>

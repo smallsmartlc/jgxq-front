@@ -33,6 +33,6 @@
     border-color: #fc0;
 }
 .jg-shadow-box{
-    box-shadow: 0 1px 4px rgba(0,0,0,0.16);
+    box-shadow: 0 1px 4px rgba(0,0,0,10%);
     border-radius: 8px;
 }
