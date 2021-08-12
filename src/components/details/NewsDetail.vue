@@ -4,13 +4,13 @@
           <div class="jg-affix">
               <div class="interact" v-if="news.id">
                   <el-badge :value="news.hit.thumbs" class="item" type="primary">
-                      <el-button @click="thumb" :style="{'color': news.hit.thumb?'#fc0':'#666'}" icon="iconfont icon-zan" circle></el-button> 
+                      <el-button @click="thumb" :class="news.hit.thumb?'active':''" icon="iconfont icon-zan" circle></el-button> 
                   </el-badge>
                   <el-badge :value="news.hit.comments" class="item" type="primary">
                       <a href="#newsComment"><el-button icon="el-icon-chat-dot-round" circle></el-button></a> 
                   </el-badge>
                   <el-badge :value="news.hit.collects" class="item" type="primary">
-                      <el-button @click="collect" :style="{'color': news.hit.collect?'#fc0':'#666'}" icon="el-icon-star-off" circle></el-button> 
+                      <el-button @click="collect" :class="news.hit.collect?'active':''" icon="el-icon-star-off" circle></el-button> 
                   </el-badge>
                   <div><el-button @click="shareqq" icon="iconfont icon-qq" circle></el-button></div>
                   <div><el-button @click="shareqzone" icon="iconfont icon-kongjian" circle></el-button></div>  
@@ -141,6 +141,9 @@ computed : {
 }
 .interact .el-button{
   background-color:#fff;
+}
+.active{
+    color: #fc0;
 }
 </style>
 <style>

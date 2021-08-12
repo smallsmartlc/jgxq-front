@@ -1,7 +1,7 @@
 <template>
-  <div style="width:250px">
+  <div style="width:260px">
     <diamond-title dname="近日比赛"/>
-    <div v-for="match in matches" :key="match.id">
+    <div class="match-item jg-shadow-box jg-zoom" v-for="match in matches" :key="match.id">
     <a :href="`/match/${match.id}`">
         <div class="match_box">
             <div v-if="match.homeTeam" class="imgbox">
@@ -68,9 +68,14 @@ export default {
     align-items: center;
 }
 .match_box{
-    height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 12px;
+}
+.match-item{
+    background-color: #fff;
+    padding: 8px;
+    margin-top: 12px;
 }
 </style>
