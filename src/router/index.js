@@ -38,7 +38,7 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
-export default new Router({
+var router = new Router({
   mode: 'history',
   routes: [
     {
@@ -54,7 +54,10 @@ export default new Router({
     {
       path: '/news',
       name: 'JGNews',
-      component: JGNews
+      component: JGNews,
+      meta: {
+        title: '经管雄起-新闻',
+      }
     },
     {
       path:'/news/:id',
@@ -64,7 +67,10 @@ export default new Router({
     {
       path: '/talk',
       name: 'JGTalks',
-      component: JGTalks
+      component: JGTalks,
+      meta: {
+        title: '经管雄起-闲聊',
+      }
     },
     {
       path: '/talk/:id',
@@ -74,7 +80,10 @@ export default new Router({
     {
       path: '/match',
       name: 'JGMatches',
-      component: JGMatches
+      component: JGMatches,
+      meta: {
+        title: '经管雄起-比赛',
+      }
     },
     {
       path: '/match/:id',
@@ -157,4 +166,9 @@ export default new Router({
       component: EditNews
     },
   ]
+});
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title || '经管雄起';
+  next();
 })
+export default router
