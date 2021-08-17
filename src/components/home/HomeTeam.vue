@@ -23,7 +23,7 @@
                 <match-banner v-if="homeTeam" :homeTeam="homeTeam"></match-banner>
                 <li class="news-item jg-shadow-box"  v-for="item in news" :key="item.id">
                     <router-link :to="'/news/'+item.id">
-                    <news-box :news='item' imgSize="60px" width="230px" style="width:100%;height:80px"></news-box>
+                    <news-box :news='item' size="mini" style="width:100%;height:80px"></news-box>
                     </router-link>
                 </li>
                 </ul>

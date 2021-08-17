@@ -1,9 +1,11 @@
 <template>
     <div>
         <div class = "news-box">
-            <div class="title_box" :style="{'max-width':width}">
+            <div class="title_box" :style="{'max-width':titleWidth}">
                 <span class="news-title jg-line-2">{{news.title}}</span>
-                <div v-if="news.comments!=null" style="color:#666660"><i class="el-icon-chat-dot-round"/><span style="font-size:10px">{{news.comments>999?"999+":news.comments}}</span></div>
+                <div v-if="news.comments!=null" style="color:#666660;" :class="size">
+                    <span v-if="top" class="top">置顶</span><i class="el-icon-chat-dot-round"/><span>{{news.comments>999?"999+":news.comments}}</span>
+                </div>
             </div>
             <div :style="{'width':imgSize}">
                 <el-image
@@ -17,7 +19,6 @@
 
 <script>
 export default {
-
     data() {
         return {
             
@@ -25,8 +26,14 @@ export default {
     },
     props : {
         news : Object,
-        imgSize : String,
-        width :String,
+        top : {
+            type : Boolean,
+            default : false,
+        },
+        size : {
+            type : String,
+            default : 'medium'
+        }
     },
     computed : {
         dateDiff(){
@@ -34,8 +41,23 @@ export default {
                var time = new Date(timeStr)
                 return new Date()-time; 
             }
-            
         },
+        titleWidth(){
+            if(this.size == "medium"){
+                return "600px"
+            }else if (this.size = "mini"){
+                return "230px"
+            }
+            return "600px";
+        },
+        imgSize(){
+            if(this.size == "medium"){
+                return "80px"
+            }else if (this.size = "mini"){
+                return "60px"
+            }
+            return "80px";
+        }
     }
 
 }
@@ -57,5 +79,21 @@ export default {
         padding: 6px;
         box-sizing: border-box;
         height: 100%;
+    }
+    .title_box .top{
+        color: #fc0;
+        margin: 0 8px;
+    }
+    .title_box .medium{
+        font-size: 16px;
+    }
+    .title_box .mini{
+        font-size: 12px;
+    }
+    .title_box .medium i{
+        font-size: 20px;
+    }
+    .title_box .mini i{
+        font-size: 16px;
     }
 </style>

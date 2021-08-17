@@ -50,7 +50,7 @@
                 <div style="padding:5px;background-color: #fff;">
                     <div v-for="item in news" :key="item.id">
                         <router-link :to="'/news/'+item.id">
-                        <news-box :news='item' width='600px' imgSize="80px" style="width:100%;height:100px"></news-box>
+                        <news-box :news='item' style="width:100%;height:100px"></news-box>
                         </router-link>
                     </div>
                     <div class="loadmore">
