@@ -39,16 +39,6 @@ data() {
     news : {},
   }
 },
-// metaInfo(){
-//   return {
-//     // title: this.news.title,
-//     meta: [
-//       { itemprop: 'name', content: this.news.title },
-//       { itemprop: 'image', content: this.$utils.url2img(this.news.cover) },
-//       { name:'description', itemprop: 'description', content: this.$utils.editor2Text(this.news.text).substring(0,30) }
-//     ]
-//   }
-// },
 created() {
     this.getNewsById(this.$route.params.id);
 },
@@ -58,7 +48,6 @@ methods: {
             if(res.code == 200){
                 this.news = res.data;
                 document.title = this.news.title;
-                // this.setShare();
             }
         })
     },
@@ -100,13 +89,7 @@ methods: {
         
     },
     shareqq(){
-        var url = window.location.href;
-        var title = this.news.title;
-        var site = url.split('/')[0];
-        var summary = this.news.text.substring(0, 30);
-        var pics = this.$utils.url2img(this.news.cover);
-        var desc = "我在“经管雄起”看到一条新闻，一起来看看吧"
-        var link =  "http://connect.qq.com/widget/shareqq/index.html?url="+url+"&title="+title+"&desc="+desc+"&summary="+summary+"&site="+site+"&pics="+pics
+        var link =  `https://m.q.qq.com/a/p/1111744384?s=subPackages%2FnewsDetail%2FnewsDetail%3Fid%3D${this.news.id}`
         window.open(link);
     },
     shareqzone(){

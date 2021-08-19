@@ -37,7 +37,9 @@
           <ul
           class="list"
           v-infinite-scroll="loadNews"
-          infinite-scroll-disabled="disabled">
+          :infinite-scroll-disabled="disabled"
+          :infinite-scroll-immediate="true"
+          >
           <li class="news_item" style="position:relative"  v-for="item in news" :key="item.id">
             <router-link :to="'/news/'+item.id">
               <news-l-box :news='item' :imgSize='"80px"' :width="'450px'" style="width:100%;height:100px"/>
@@ -88,12 +90,12 @@ export default {
     }
   },
   mounted() {
-    this.getAuthorInfo();
+    this.getAuthorInfo().then(this.loadNews());
   },
   methods: {
-    getAuthorInfo(){
+    async getAuthorInfo(){
       this.loading = true;
-      getAuthorInfo().then((res)=>{
+      await getAuthorInfo().then((res)=>{
         if(res.code == 200){
           this.infos = res.data;
         }
