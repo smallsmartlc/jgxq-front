@@ -13,9 +13,6 @@ import {getTalkById} from '@/api/talk'
 import TalkBox from '../talk/TalkBox.vue';
 export default {
 components:{TalkBox,},
-props:{
-    user : Object
-},
 data() {
     return {
         talk : {}
@@ -34,6 +31,11 @@ methods:{
     },
     deleteTalk(){
         this.talk = {};
+    }
+},
+computed : {
+    user(){
+    return this.$store.getters.userInfo;
     }
 }
 }

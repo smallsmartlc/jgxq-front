@@ -155,7 +155,10 @@ export default {
         font-size: 20px;
         font-weight: bolder;
     }
-
+    .info-num:hover{
+        transition: 0.1s;
+        transform: scale(1.1);
+    }
     .el-divider--horizontal{
         margin: 12px 0;
     }

@@ -54,7 +54,7 @@ export default {
 
 <style scoped>
     .match-item:hover{
-        background-color: rgba(255, 255, 255, 0.6)!important;
+        background-color: #FFFFF0!important;
     }
     .match-item:first-child{
         border-top-left-radius: 8px;
