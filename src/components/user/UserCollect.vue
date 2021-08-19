@@ -1,12 +1,11 @@
 <template>
 <div>
   <div class="contain" v-for="item in collects" :key="item.id" >
-    <div style="font-size:12px;color:#666">{{fromNowStr(item.createTime)}}</div>
+    <div style="font-size:12px;">{{fromNowStr(item.createTime)}}</div>
     <router-link v-if="item.news" :to="`/news/${item.news.id}`">
       <news-l-box :news='item.news'  imgSize="80px" width="600px" />
     </router-link>
     <news-l-box v-else :news='{title:"已删除"}'  imgSize="80px" width="600px" />
-    <el-divider/>
   </div>
     <div class="loadmore">
         <el-link v-if="!noMore" style="width:100%" :underline="false" type="primary" @click="load">点击加载更多<i class="el-icon-arrow-down"/></el-link>
@@ -17,7 +16,6 @@
 </template>
 
 <script>
-import NewsBox from "../common/NewsBox.vue"
 import NewsLBox from '../common/NewsLBox'
 import {getCollectNews} from '@/api/user'
 
@@ -77,6 +75,9 @@ export default {
 <style scoped>
 .contain{
   padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ececec;
+  margin-bottom: 20px;
 }
 
 </style>

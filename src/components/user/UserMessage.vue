@@ -84,10 +84,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.replyBox{
-  background-color: #FCFCF2;
-  padding: 10px;
-  font-size: 14px;
+.userMessage{
+  border: 1px solid #ececec;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 .box{
   padding: 10px;
