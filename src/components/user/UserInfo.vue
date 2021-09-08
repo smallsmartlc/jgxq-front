@@ -1,6 +1,6 @@
 <template>
-<div class="userInfo" v-if="user.userInfo" style="padding:20px">
-  <div style="font-size:30px">个人资料</div>
+<div class="user-info" v-if="user.userInfo">
+  <div style="font-size:30px;margin-bottom:30px">个人资料</div>
   <el-divider style="margin:20px" content-position="left"><span style="font-size:20px">个人信息</span></el-divider>
   <div class="info_row">
      <div><el-avatar :size="80" 
@@ -134,7 +134,7 @@ export default {
 .info_row span{
   margin-right: 25px;
 }
-.userInfo{
+.user-info{
   padding: 20px;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
 <div v-if="user.userInfo" class="userInteract" style="padding-right:20px;">
   <div class="Interactmain">
-    <div class="mask_bg" :style="{'background-image':'url('+$utils.url2img(user.userInfo.headImage)+')'}"></div>
+    <div class="mask_bg" :style="{'background-image':'url('+$utils.url2img(user.userInfo.headImage)+')'}">
+      <div class="card"></div>
+    </div>
     <div class="info_container">
       <div class="info">
         <el-avatar @click.native="showViewer=true" :size="80" 
@@ -18,7 +20,7 @@
             :src="$utils.url2img(user.userInfo.homeTeam.logo)"
             fit="cover"/>
         </div>
-        <div v-if="user.userInfo.homeTeam" style="color:#fff;opacity:0.8;font-size:12px">{{user.userInfo.homeTeam.name}}球迷</div>
+        <div v-if="user.userInfo.homeTeam" style="color:#fff;opacity:0.9;font-size:12px">{{user.userInfo.homeTeam.name}}球迷</div>
         <div style="color:#fff;font-size:12px">{{user.userInfo.city}}&nbsp;注册经管雄起账号<span style="color:#fc0">{{parseInt((new Date() - new Date(user.userInfo.createAt))/(1*24*60*60*1000))}}</span>天</div>
         <div style="margin-top:10px" v-if="notMe">
           <el-button @click="focusOther" :style="user.focused?{}:bStyle" :icon="user.focused?'el-icon-check':'el-icon-plus'">{{user.focused?'已关注':'关注'}}</el-button>
@@ -111,15 +113,29 @@ export default {
   position: relative;
 }
 .mask_bg{
-  border: 1px solid #000;
-  background-size: cover;
-  background-repeat: no-repeat;
   background-position: 0 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
   z-index: 0;
-  filter: brightness(90%) blur(4px);
   position: absolute;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(255,255,255,0.8);
+  border-left: 1px solid rgba(255,255,255,0.8);
+}
+.mask_bg .card{
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255,255,255,0.6),
+    rgba(255,255,255,0.1)
+  );
+  backdrop-filter:brightness(90%) blur(4px);
 }
 .info{
   display: flex;
