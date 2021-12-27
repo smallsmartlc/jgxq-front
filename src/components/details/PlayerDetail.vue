@@ -13,6 +13,7 @@
                     <div class="detail_info">
                         <ul>
                             <li v-if="player.team"><span>俱乐部：</span>{{player.team.name}}</li>
+                            <li v-else><span>自由球员</span></li>
                             <li><span>国籍：</span>{{player.nation}}</li>
                             <li><span>身高：</span>{{player.height}}CM</li>
                         </ul>
