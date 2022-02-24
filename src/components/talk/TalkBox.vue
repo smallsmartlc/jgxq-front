@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import {checkUser} from '@/api/login'
 import {pageComment,deleteTalk} from '@/api/talk'
 import {thumbById} from '@/api/hit'
 import {commentObj} from '@/api/comment'
@@ -105,6 +106,10 @@ methods: {
         })
     },
     doComment(){
+        if(this.user == null){
+            this.$message.error("登录后才能评论哦!")
+            return;
+        }
         this.commentBox = !this.commentBox;
         if(this.comments.length<1 && this.talk.hit.comments > 0){
             this.loadingComment();

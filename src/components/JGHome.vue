@@ -12,6 +12,9 @@
         </el-col>
       </el-row>
     </div>
+    <div class="A-footer">
+      <a href="http://beian.miit.gov.cn" target="_blank">黔ICP备2020011857号-1</a>
+    </div>
 </div>
 </template>
 
@@ -67,6 +70,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .A-footer{
+    height: 48px;
+    text-align:center;
+    vertical-align : middle;
+    font-size: 10px;
 
+  }
 
 </style>
